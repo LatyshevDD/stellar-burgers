@@ -1,9 +1,39 @@
 .section {
-  width: 600px; /* потом поправить */
+  max-width: 600px;
   display: flex;
   flex-direction: column;
 }
 
 .nav {
   display: flex;
+}
+
+.constructor {
+  max-height: 719px;
+  overflow: scroll;
+}
+
+.ingredients {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  min-height: 208px;
+  list-style-type: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.ingredient {
+  max-width: 272px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.price {
+  display: flex;
+  gap: 8px;
 }
