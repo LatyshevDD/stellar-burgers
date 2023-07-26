@@ -1,0 +1,9 @@
+.section {
+  width: 600px; /* потом поправить */
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  display: flex;
+}
