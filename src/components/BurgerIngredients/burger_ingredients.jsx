@@ -29,14 +29,14 @@ export default function BurgerIngredients() {
           Начинки
         </Tab>
       </nav>
-      <div className={styles.constructor}>
-        <p className="text text_type_main-medium mt-10 mb-6">
+      <div className={`${styles.constructor} mt-10 custom-scroll`}>
+        <p className="text text_type_main-medium mb-6">
           Булки
         </p>
-        <ul className={`${styles.ingredients} ${'ml-4'} ${'mr-4'}`}>
+        <ul className={`${styles.ingredients} ml-4`}>
           <li className={styles.ingredient}>
             <img className="ml-4 mr-4" src={N200} alt="Краторная_булка_N-200i" />
-            <div className={`${styles.price} ${'mt-1'} ${'mb-1'}`}>
+            <div className={`${styles.price} mt-1 mb-1}`}>
               <p className="text text_type_digits-default">20</p>
               <CurrencyIcon type="primary" />
             </div>
@@ -47,7 +47,7 @@ export default function BurgerIngredients() {
           </li>
           <li className={styles.ingredient}>
             <img className="ml-4 mr-4" src={R2D3} alt="Флюоресцентная булка R2-D3" />
-            <div className={`${styles.price} ${'mt-1'} ${'mb-1'}`}>
+            <div className={`${styles.price} mt-1 mb-1`}>
               <p className="text text_type_digits-default">20</p>
               <CurrencyIcon type="primary" />
             </div>
@@ -59,10 +59,10 @@ export default function BurgerIngredients() {
         <p className="text text_type_main-medium mt-10 mb-6">
           Соусы
         </p>
-        <ul className={`${styles.ingredients} ${'ml-4'} ${'mr-4'}`}>
+        <ul className={`${styles.ingredients} ml-4`}>
           <li className={styles.ingredient}>
             <img className="ml-4 mr-4" src={SpicyX} alt="Соус Spicy-X" />
-            <div className={`${styles.price} ${'mt-1'} ${'mb-1'}`}>
+            <div className={`${styles.price} mt-1 mb-1`}>
               <p className="text text_type_digits-default">30</p>
               <CurrencyIcon type="primary" />
             </div>
@@ -72,7 +72,7 @@ export default function BurgerIngredients() {
           </li>
           <li className={styles.ingredient}>
             <img className="ml-4 mr-4" src={Space_Sauce} alt="Соус фирменный Space Sauce" />
-            <div className={`${styles.price} ${'mt-1'} ${'mb-1'}`}>
+            <div className={`${styles.price} mt-1 mb-1`}>
               <p className="text text_type_digits-default">30</p>
               <CurrencyIcon type="primary" />
             </div>
@@ -80,19 +80,20 @@ export default function BurgerIngredients() {
               Соус фирменный Space Sauce
             </p>
           </li>
-          <li className={styles.ingredient}>
+          <li className={`${styles.ingredient} mt-8`}>
             <img className="ml-4 mr-4" src={Galaxy} alt="Соус традиционный галактический" />
-            <div className={`${styles.price} ${'mt-1'} ${'mb-1'}`}>
+            <div className={`${styles.price} mt-1 mb-1`}>
               <p className="text text_type_digits-default">30</p>
               <CurrencyIcon type="primary" />
             </div>
             <p className="text text_type_main-default">
               Соус традиционный галактический
             </p>
+            <Counter count={1} size="default" />
           </li>
-          <li className={styles.ingredient}>
+          <li className={`${styles.ingredient} mt-8`}>
             <img className="ml-4 mr-4" src={Antarian} alt="Соус с шипами Антарианского плоскоходца" />
-            <div className={`${styles.price} ${'mt-1'} ${'mb-1'}`}>
+            <div className={`${styles.price} mt-1 mb-1`}>
               <p className="text text_type_digits-default">30</p>
               <CurrencyIcon type="primary" />
             </div>

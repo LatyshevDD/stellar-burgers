@@ -11,6 +11,11 @@
 .constructor {
   max-height: 719px;
   overflow: scroll;
+  overflow-x: hidden;
+}
+
+.constructor::-webkit-scrollbar-track {
+  margin-bottom: 54px;
 }
 
 .ingredients {
@@ -25,7 +30,8 @@
 }
 
 .ingredient {
-  max-width: 272px;
+  width: 272px;
+  height: 208px;
   display: flex;
   flex-direction: column;
   align-items: center;
