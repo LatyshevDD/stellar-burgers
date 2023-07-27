@@ -1,0 +1,40 @@
+.section {
+  width: 600px; /* потом убрать */
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 0;
+  max-height: 719px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.ingredients::-webkit-scrollbar-track {
+  margin-bottom: 90px;
+  margin-top: 90px;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.order {
+  display: flex;
+  gap: 40px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.price {
+  display: flex;
+  gap: 8px;
+}

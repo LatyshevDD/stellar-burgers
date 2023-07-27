@@ -2,6 +2,7 @@ import styles from "./app.module.css";
 import { data } from "../../utils/data";
 import AppHeader from "../AppHeader/app_header";
 import BurgerIngredients from '../BurgerIngredients/burger_ingredients';
+import BurgerConstructor from '../BurgerConstructor/burger_constructor';
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <AppHeader/>
       <main className={styles.main}>
         <BurgerIngredients data={data}/>
-        <div style={{backgroundColor: 'green', width: '600px', height: '912px'}}></div>  
+        <BurgerConstructor data={data}/> 
       </main>
     </>
   );
