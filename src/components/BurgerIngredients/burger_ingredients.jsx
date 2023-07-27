@@ -10,7 +10,7 @@ import Galaxy from '../../images/Соус_традиционный_галакт�
 import Antarian from '../../images/Соус_с_шипами_Антарианского_плоскоходца.png'
 import styles from './burger_ingredients.module.css';
 
-export default function BurgerIngredients() {
+export default function BurgerIngredients({data}) {
   const [current, setCurrent] = React.useState('one');
 
   return(
@@ -34,73 +34,73 @@ export default function BurgerIngredients() {
           Булки
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
-          <li className={styles.ingredient}>
-            <img className="ml-4 mr-4" src={N200} alt="Краторная_булка_N-200i" />
-            <div className={`${styles.price} mt-1 mb-1}`}>
-              <p className="text text_type_digits-default">20</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">
-              Краторная булка N-200i
-            </p>
-            <Counter count={1} size="default" />
-          </li>
-          <li className={styles.ingredient}>
-            <img className="ml-4 mr-4" src={R2D3} alt="Флюоресцентная булка R2-D3" />
-            <div className={`${styles.price} mt-1 mb-1`}>
-              <p className="text text_type_digits-default">20</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">
-              Флюоресцентная булка R2-D3
-            </p>
-          </li>
+          {data.map(item => {
+              if (item.type === 'bun') {
+                return (
+                  <li className={styles.ingredient}>
+                    <img className="ml-4 mr-4" src={item.image} alt={item.name} />
+                    <div className={`${styles.price} mt-1 mb-1}`}>
+                      <p className="text text_type_digits-default">{item.price}</p>
+                      <CurrencyIcon type="primary" />
+                    </div>
+                    <p className="text text_type_main-default">
+                      {item.name}
+                    </p>
+                  </li>
+                )
+              } else {
+                return;
+              }
+            })
+          }
         </ul>
         <p className="text text_type_main-medium mt-10 mb-6">
           Соусы
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
-          <li className={styles.ingredient}>
-            <img className="ml-4 mr-4" src={SpicyX} alt="Соус Spicy-X" />
-            <div className={`${styles.price} mt-1 mb-1`}>
-              <p className="text text_type_digits-default">30</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">
-              Соус Spicy-X
-            </p>
-          </li>
-          <li className={styles.ingredient}>
-            <img className="ml-4 mr-4" src={Space_Sauce} alt="Соус фирменный Space Sauce" />
-            <div className={`${styles.price} mt-1 mb-1`}>
-              <p className="text text_type_digits-default">30</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">
-              Соус фирменный Space Sauce
-            </p>
-          </li>
-          <li className={`${styles.ingredient} mt-8`}>
-            <img className="ml-4 mr-4" src={Galaxy} alt="Соус традиционный галактический" />
-            <div className={`${styles.price} mt-1 mb-1`}>
-              <p className="text text_type_digits-default">30</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">
-              Соус традиционный галактический
-            </p>
-            <Counter count={1} size="default" />
-          </li>
-          <li className={`${styles.ingredient} mt-8`}>
-            <img className="ml-4 mr-4" src={Antarian} alt="Соус с шипами Антарианского плоскоходца" />
-            <div className={`${styles.price} mt-1 mb-1`}>
-              <p className="text text_type_digits-default">30</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">
-              Соус с шипами Антарианского плоскоходца
-            </p>
-          </li>
+          {data.map(item => {
+                if (item.type === 'sauce') {
+                  return (
+                    <li className={styles.ingredient}>
+                      <img className="ml-4 mr-4" src={item.image} alt={item.name} />
+                      <div className={`${styles.price} mt-1 mb-1}`}>
+                        <p className="text text_type_digits-default">{item.price}</p>
+                        <CurrencyIcon type="primary" />
+                      </div>
+                      <p className="text text_type_main-default">
+                        {item.name}
+                      </p>
+                    </li>
+                  )
+                } else {
+                  return;
+                }
+              })
+            } 
+        </ul>
+        <p className="text text_type_main-medium mt-10 mb-6">
+          Начинки
+        </p>
+        <ul className={`${styles.ingredients} ml-4`}>
+          {data.map(item => {
+                if (item.type === 'main') {
+                  return (
+                    <li className={styles.ingredient}>
+                      <img className="ml-4 mr-4" src={item.image} alt={item.name} />
+                      <div className={`${styles.price} mt-1 mb-1}`}>
+                        <p className="text text_type_digits-default">{item.price}</p>
+                        <CurrencyIcon type="primary" />
+                      </div>
+                      <p className="text text_type_main-default">
+                        {item.name}
+                      </p>
+                    </li>
+                  )
+                } else {
+                  return;
+                }
+              })
+            } 
         </ul>
       </div>
     </section>

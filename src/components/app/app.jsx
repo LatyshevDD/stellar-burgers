@@ -8,7 +8,7 @@ function App() {
     <>
       <AppHeader/>
       <main className={styles.main}>
-        <BurgerIngredients/>
+        <BurgerIngredients data={data}/>
         <div style={{backgroundColor: 'green', width: '600px', height: '912px'}}></div>  
       </main>
     </>
