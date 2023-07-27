@@ -15,7 +15,7 @@ export default function BurgerConstructor({data}) {
       <ul className={`${styles.ingredients} mt-25 custom-scroll`}>
       {
         bun.length != 0 && (
-          <li className={`${styles.ingredient} ml-8`} key={bun[0]._id}>
+          <li className={`${styles.ingredient} ml-8 mr-2`} key={bun[0]._id}>
             <ConstructorElement
               type="top"
               text={bun[0].name}
@@ -28,7 +28,7 @@ export default function BurgerConstructor({data}) {
       }  
       {
         ingredients.map(item => (
-          <li className={styles.ingredient} key={item._id}>
+          <li className={`${styles.ingredient} mr-2`} key={item._id}>
             <DragIcon type="primary" />
             <ConstructorElement
               text={item.name}
@@ -40,7 +40,7 @@ export default function BurgerConstructor({data}) {
       }
       {
         bun.length != 0 && (
-          <li className={`${styles.ingredient} ml-8`} key={bun[1]._id}>
+          <li className={`${styles.ingredient} ml-8 mr-8`} key={bun[1]._id}>
             <ConstructorElement
               type="bottom"
               text={bun[1].name}
