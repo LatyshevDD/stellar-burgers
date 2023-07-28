@@ -13,21 +13,20 @@ export default function BurgerConstructor({data}) {
   const bun = data.filter(item => item.type == "bun");
   
   return (
-    <section className={styles.section}>
-      <ul className={`${styles.ingredients} mt-25 custom-scroll`}>
+    <section className={`${styles.section} mt-25`}>
       {
         bun.length != 0 && (
-          <li className={`${styles.ingredient} ml-8 mr-2`} key={bun[0]._id}>
             <ConstructorElement
               type="top"
-              text={bun[0].name}
+              text={bun[0].name + ' ' + '(верх)'}
               price={bun[0].price}
               thumbnail={bun[0].image}
               isLocked='true'
+              extraClass='ml-8 mr-2'
             />
-          </li>
         )
-      }  
+      }
+      <ul className={`${styles.ingredients} custom-scroll`}> 
       {
         ingredients.map(item => (
           <li className={`${styles.ingredient} mr-2`} key={item._id}>
@@ -40,20 +39,19 @@ export default function BurgerConstructor({data}) {
           </li>
         ))
       }
+      </ul> 
       {
         bun.length != 0 && (
-          <li className={`${styles.ingredient} ml-8 mr-8`} key={bun[1]._id}>
             <ConstructorElement
               type="bottom"
-              text={bun[1].name}
+              text={bun[1].name + ' ' + '(низ)'}
               price={bun[1].price}
               thumbnail={bun[1].image}
               isLocked='true'
+              extraClass='ml-8 mr-2'
             />
-          </li>
         )
       }  
-      </ul>
       <div className={`${styles.order} mt-10`}>
         <div className={styles.price}>
           <p className="text text_type_digits-default">

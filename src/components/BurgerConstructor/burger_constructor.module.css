@@ -1,24 +1,18 @@
 .section {
   max-width: 600px;
-  display: flex;
-  flex-direction: column;
 }
 
 .ingredients {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   list-style-type: none;
   padding: 0;
-  margin-bottom: 0;
-  max-height: 656px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  max-height: 464px;
   overflow: auto;
   overflow-x: hidden;
-}
-
-.ingredients::-webkit-scrollbar-track {
-  margin-bottom: 90px;
-  margin-top: 90px;
 }
 
 .ingredient {
