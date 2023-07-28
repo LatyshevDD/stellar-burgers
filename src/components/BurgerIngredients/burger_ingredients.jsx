@@ -3,6 +3,8 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger_ingredients.module.css';
+import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 
 export default function BurgerIngredients({data}) {
   const [current, setCurrent] = React.useState('one');
@@ -106,3 +108,7 @@ export default function BurgerIngredients({data}) {
     </section>
   );
 }
+
+BurgerIngredients.propTypes = {
+  data: ingredientPropType
+}; 
