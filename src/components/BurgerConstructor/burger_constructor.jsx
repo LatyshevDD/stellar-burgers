@@ -11,6 +11,7 @@ export default function BurgerConstructor({data}) {
 
   const ingredients = data.filter(item => item.type == "sauce" || item.type == "main");
   const bun = data.filter(item => item.type == "bun");
+  const price = ingredients.reduce((sum, item) => {return sum + item.price}, 0) + bun.reduce((sum, item) => {return sum + item.price}, 0);
   
   return (
     <section className={`${styles.section} mt-25`}>
@@ -55,11 +56,7 @@ export default function BurgerConstructor({data}) {
       <div className={`${styles.order} mt-10`}>
         <div className={styles.price}>
           <p className="text text_type_digits-default">
-            {
-              ingredients.reduce((sum, item) => {return sum + item.price}, 0)
-              +
-              bun.reduce((sum, item) => {return sum + item.price}, 0)
-            }
+            {price}
           </p>
           <CurrencyIcon type="primary" />
         </div>

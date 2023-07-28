@@ -1,4 +1,5 @@
 import React from "react";
+import { useMemo } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,7 +8,11 @@ import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
 
 export default function BurgerIngredients({data}) {
-  const [current, setCurrent] = React.useState('one');
+  const [current, setCurrent] = React.useState('bun');
+
+  const buns = React.useMemo(() => data.filter((item) => item.type === 'bun'), [data]);
+  const mains = React.useMemo(() => data.filter((item) => item.type === 'main'), [data]);
+  const sauces = React.useMemo(() => data.filter((item) => item.type === 'sauce'), [data]);
 
   return(
     <section className={styles.section}>
@@ -15,13 +20,13 @@ export default function BurgerIngredients({data}) {
         Соберите бургер
       </p>
       <nav className={styles.nav}>
-        <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
           Булки
         </Tab>
-        <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
           Соусы
         </Tab>
-        <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
           Начинки
         </Tab>
       </nav>
@@ -30,9 +35,52 @@ export default function BurgerIngredients({data}) {
           Булки
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
-          {data.map(item => {
-              if (item.type === 'bun') {
-                return (
+          {
+            buns.map(item => (
+                <li className={styles.ingredient} key={item._id}>
+                  <button className={styles.button}>
+                    <img className="ml-4 mr-4" src={item.image} alt={item.name} />
+                    <div className={`${styles.price} mt-1 mb-1}`}>
+                      <p className="text text_type_digits-default">{item.price}</p>
+                      <CurrencyIcon type="primary" />
+                    </div>
+                    <p className="text text_type_main-default">
+                      {item.name}
+                    </p>
+                  </button>
+                </li>
+              )
+            )
+          }
+        </ul>
+        <p className="text text_type_main-medium mt-10 mb-6">
+          Соусы
+        </p>
+        <ul className={`${styles.ingredients} ml-4`}>
+          {
+            sauces.map(item => (
+                <li className={styles.ingredient} key={item._id}>
+                  <button className={styles.button}>
+                    <img className="ml-4 mr-4" src={item.image} alt={item.name} />
+                    <div className={`${styles.price} mt-1 mb-1}`}>
+                      <p className="text text_type_digits-default">{item.price}</p>
+                      <CurrencyIcon type="primary" />
+                    </div>
+                    <p className="text text_type_main-default">
+                      {item.name}
+                    </p>
+                  </button>
+                </li>
+              )
+            )
+          } 
+        </ul>
+        <p className="text text_type_main-medium mt-10 mb-6">
+          Начинки
+        </p>
+        <ul className={`${styles.ingredients} ml-4`}>
+          {
+            mains.map(item => (
                   <li className={styles.ingredient} key={item._id}>
                     <button className={styles.button}>
                       <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -43,65 +91,10 @@ export default function BurgerIngredients({data}) {
                       <p className="text text_type_main-default">
                         {item.name}
                       </p>
-                    </button>
+                    </button>  
                   </li>
-                )
-              } else {
-                return;
-              }
-            })
-          }
-        </ul>
-        <p className="text text_type_main-medium mt-10 mb-6">
-          Соусы
-        </p>
-        <ul className={`${styles.ingredients} ml-4`}>
-          {data.map(item => {
-                if (item.type === 'sauce') {
-                  return (
-                    <li className={styles.ingredient} key={item._id}>
-                      <button className={styles.button}>
-                        <img className="ml-4 mr-4" src={item.image} alt={item.name} />
-                        <div className={`${styles.price} mt-1 mb-1}`}>
-                          <p className="text text_type_digits-default">{item.price}</p>
-                          <CurrencyIcon type="primary" />
-                        </div>
-                        <p className="text text_type_main-default">
-                          {item.name}
-                        </p>
-                      </button>
-                    </li>
-                  )
-                } else {
-                  return;
-                }
-              })
-            } 
-        </ul>
-        <p className="text text_type_main-medium mt-10 mb-6">
-          Начинки
-        </p>
-        <ul className={`${styles.ingredients} ml-4`}>
-          {data.map(item => {
-                if (item.type === 'main') {
-                  return (
-                    <li className={styles.ingredient} key={item._id}>
-                      <button className={styles.button}>
-                        <img className="ml-4 mr-4" src={item.image} alt={item.name} />
-                        <div className={`${styles.price} mt-1 mb-1}`}>
-                          <p className="text text_type_digits-default">{item.price}</p>
-                          <CurrencyIcon type="primary" />
-                        </div>
-                        <p className="text text_type_main-default">
-                          {item.name}
-                        </p>
-                      </button>  
-                    </li>
-                  )
-                } else {
-                  return;
-                }
-              })
+                )  
+              )
             } 
         </ul>
       </div>
