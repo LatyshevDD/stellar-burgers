@@ -14,6 +14,7 @@
 .link {
   display: flex;
   cursor: pointer;
+  transition: opacity .3s;
 }
 
 .link_constructor {

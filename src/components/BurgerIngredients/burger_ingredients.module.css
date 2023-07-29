@@ -47,6 +47,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  transition: opacity .3s;
 }
 
 .button:hover {

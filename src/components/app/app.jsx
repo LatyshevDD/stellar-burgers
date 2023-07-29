@@ -5,6 +5,7 @@ import styles from "./app.module.css";
 import AppHeader from "../AppHeader/app_header";
 import BurgerIngredients from '../BurgerIngredients/burger_ingredients';
 import BurgerConstructor from '../BurgerConstructor/burger_constructor';
+import Modal from "../Modal/modal";
 import { getIngredience } from '../../utils/api';
 
 function App() {
@@ -24,6 +25,11 @@ function App() {
         <BurgerIngredients data={ingredinces}/>
         <BurgerConstructor data={ingredinces}/> 
       </main>
+      <div style={{overflow: 'hidden'}}>
+        <Modal>
+          
+        </Modal>
+      </div>
     </>
   );
 }
