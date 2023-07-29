@@ -1,0 +1,43 @@
+
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+.nav {
+  /* max-width: 1240px; */
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+}
+
+.link {
+  display: flex;
+  cursor: pointer;
+}
+
+.link_constructor {
+  composes: link;
+}
+
+.link_constructor:hover {
+  opacity: .6;
+}
+
+.link_list {
+  composes: link;
+  margin-right: 132px;
+}
+
+.link_list:hover {
+  opacity: .6;
+}
+
+.link_lk {
+  composes: link;
+  margin-left: 308px;
+}
+
+.link_lk:hover {
+  opacity: .6;
+}
