@@ -14,6 +14,7 @@ function App() {
   useEffect(() => {
     getIngredience()
       .then(res => setIngredience([...res.data]))
+      .catch(e => console.log(e))
   }, [])
 
   return (
