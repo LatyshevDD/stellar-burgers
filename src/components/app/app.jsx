@@ -7,19 +7,39 @@ import BurgerIngredients from '../BurgerIngredients/burger_ingredients';
 import BurgerConstructor from '../BurgerConstructor/burger_constructor';
 import Modal from "../Modal/modal";
 import OrderDetails from "../OrderDetails/order_details";
+import IngredientDetails from "../IngredientDetails/ingredient_details";
 import { getIngredience } from '../../utils/api';
 
 function App() {
 
   const [ingredinces, setIngredience] = useState([]);
-  const [modalActive, setModalActive] = useState(false);
+  const [modalActive, setModalActive] = useState({active: false, type: '', ingredient: ''});
 
-  function handleOpenModal() {
-    setModalActive(true);
+  function handleOpenModal(modalType, ingredient = {}) {
+    switch(modalType) {
+      case 'order':
+        setModalActive({
+          ...modalActive,
+          active: true,
+          type: 'order'
+        })
+        break
+      case 'ingredient':
+        setModalActive({
+          ...modalActive,
+          active: true,
+          type: 'ingredient',
+          ingredient: ingredient
+        })
+        break
+    }
   }
 
   function handleCloseModal() {
-    setModalActive(false);
+    setModalActive({
+      ...modalActive,
+      active: false
+    });
   }
 
   useEffect(() => {
@@ -32,15 +52,23 @@ function App() {
     <>
       <AppHeader/>
       <main className={styles.main}>
-        <BurgerIngredients data={ingredinces}/>
+        <BurgerIngredients data={ingredinces} onOpenModal={handleOpenModal}/>
         <BurgerConstructor data={ingredinces} onOpenModal={handleOpenModal}/> 
       </main>
       <div style={{overflow: 'hidden'}}>
         {
-          modalActive &&
+          modalActive.active && (
           <Modal onCloseModal={handleCloseModal}>
-            <OrderDetails/>
+            {
+              modalActive.type === 'order' &&
+              <OrderDetails/>
+            }
+            {
+              modalActive.type === 'ingredient' &&
+              <IngredientDetails ingredient={modalActive.ingredient}/>
+            }          
           </Modal>
+          )
         }
       </div>
     </>

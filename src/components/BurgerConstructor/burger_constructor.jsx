@@ -6,7 +6,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
+import { ingredientsPropType } from '../../utils/prop-types';
 
 export default function BurgerConstructor({data, onOpenModal}) {
 
@@ -61,7 +61,12 @@ export default function BurgerConstructor({data, onOpenModal}) {
           </p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={onOpenModal}>
+        <Button 
+          htmlType="button" 
+          type="primary" 
+          size="large" 
+          onClick={() => {onOpenModal('order')}}
+        >
           Оформить заказ
         </Button>
       </div>
@@ -70,5 +75,6 @@ export default function BurgerConstructor({data, onOpenModal}) {
 }
 
 BurgerConstructor.propTypes = {
-  data: ingredientPropType
+  data: ingredientsPropType,
+  onOpenModal: PropTypes.func.isRequired
 }; 

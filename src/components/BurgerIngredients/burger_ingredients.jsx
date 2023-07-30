@@ -5,9 +5,9 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger_ingredients.module.css';
 import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
+import { ingredientsPropType } from '../../utils/prop-types';
 
-export default function BurgerIngredients({data}) {
+export default function BurgerIngredients({data, onOpenModal}) {
   const [current, setCurrent] = React.useState('bun');
 
   const buns = React.useMemo(() => data.filter((item) => item.type === 'bun'), [data]);
@@ -38,7 +38,12 @@ export default function BurgerIngredients({data}) {
           {
             buns.map(item => (
                 <li className={styles.ingredient} key={item._id}>
-                  <button className={styles.button}>
+                  <button 
+                    className={styles.button} 
+                    onClick={() => {
+                      onOpenModal('ingredient', item)
+                    }}
+                  >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
                     <div className={`${styles.price} mt-1 mb-1}`}>
                       <p className="text text_type_digits-default">{item.price}</p>
@@ -60,7 +65,12 @@ export default function BurgerIngredients({data}) {
           {
             sauces.map(item => (
                 <li className={styles.ingredient} key={item._id}>
-                  <button className={styles.button}>
+                  <button 
+                    className={styles.button}
+                    onClick={() => {
+                      onOpenModal('ingredient', item)
+                    }}
+                  >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
                     <div className={`${styles.price} mt-1 mb-1}`}>
                       <p className="text text_type_digits-default">{item.price}</p>
@@ -82,7 +92,12 @@ export default function BurgerIngredients({data}) {
           {
             mains.map(item => (
                   <li className={styles.ingredient} key={item._id}>
-                    <button className={styles.button}>
+                    <button 
+                      className={styles.button}
+                      onClick={() => {
+                        onOpenModal('ingredient', item)
+                      }}
+                    >
                       <img className="ml-4 mr-4" src={item.image} alt={item.name} />
                       <div className={`${styles.price} mt-1 mb-1}`}>
                         <p className="text text_type_digits-default">{item.price}</p>
@@ -103,5 +118,6 @@ export default function BurgerIngredients({data}) {
 }
 
 BurgerIngredients.propTypes = {
-  data: ingredientPropType
+  data: ingredientsPropType,
+  onOpenModal: PropTypes.func.isRequired
 }; 

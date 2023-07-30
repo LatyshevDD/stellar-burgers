@@ -3,3 +3,23 @@
   flex-direction: column;
   align-items: center;
 }
+
+.title {
+  align-self: flex-start;
+}
+
+.details {
+  display: flex;
+  gap: 20px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
