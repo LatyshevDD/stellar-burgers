@@ -6,11 +6,21 @@ import AppHeader from "../AppHeader/app_header";
 import BurgerIngredients from '../BurgerIngredients/burger_ingredients';
 import BurgerConstructor from '../BurgerConstructor/burger_constructor';
 import Modal from "../Modal/modal";
+import OrderDetails from "../OrderDetails/order_details";
 import { getIngredience } from '../../utils/api';
 
 function App() {
 
   const [ingredinces, setIngredience] = useState([]);
+  const [modalActive, setModalActive] = useState(false);
+
+  function handleOpenModal() {
+    setModalActive(true);
+  }
+
+  function handleCloseModal() {
+    setModalActive(false);
+  }
 
   useEffect(() => {
     getIngredience()
@@ -23,12 +33,15 @@ function App() {
       <AppHeader/>
       <main className={styles.main}>
         <BurgerIngredients data={ingredinces}/>
-        <BurgerConstructor data={ingredinces}/> 
+        <BurgerConstructor data={ingredinces} onOpenModal={handleOpenModal}/> 
       </main>
       <div style={{overflow: 'hidden'}}>
-        <Modal>
-          
-        </Modal>
+        {
+          modalActive &&
+          <Modal onCloseModal={handleCloseModal}>
+            <OrderDetails/>
+          </Modal>
+        }
       </div>
     </>
   );
