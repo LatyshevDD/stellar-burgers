@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { useEffect } from "react";
+import { useRef } from "react";
 import { createPortal } from "react-dom";
 import ModalOverlay from "../ModalOverlay/modal_overlay";
 import styles from './modal.module.css';
@@ -10,6 +11,8 @@ const modalRoot = document.getElementById("react-modals");
 
 export default function Modal({children, onCloseModal}) {
 
+  const modal = useRef();
+
   function handleEscClose(e) {
     if (e.key == "Escape") {
       onCloseModal();
@@ -17,10 +20,11 @@ export default function Modal({children, onCloseModal}) {
   }
 
   function overlayClosePopup(e) {
-    if (e.target.closest('.modal')) {
-      return;
+    console.log(modal.current);
+    if (modal.current && !modal.current.contains(e.target)) {
+      onCloseModal();
     }
-    onCloseModal();
+    return;
   }
 
   React.useEffect(() => {
@@ -36,7 +40,7 @@ export default function Modal({children, onCloseModal}) {
     (
         <div className={styles.modal_container}>
           <ModalOverlay/>
-          <div className={styles.modal}>
+          <div className={styles.modal} ref={modal}>
             {children}
             <button className={styles.button_close} onClick={onCloseModal}>
               <img src={close_image} alt="Закрыть модальное окно"/>
