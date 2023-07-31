@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useMemo } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger_ingredients.module.css';
 import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
+import { ingredientsPropType } from '../../utils/prop-types';
 
-export default function BurgerIngredients({data}) {
+export default function BurgerIngredients({data, onOpenModal}) {
   const [current, setCurrent] = React.useState('bun');
+
+  const bunRef = useRef();
+  const sauceRef = useRef();
+  const mainRef = useRef();
 
   const buns = React.useMemo(() => data.filter((item) => item.type === 'bun'), [data]);
   const mains = React.useMemo(() => data.filter((item) => item.type === 'main'), [data]);
@@ -20,25 +24,66 @@ export default function BurgerIngredients({data}) {
         Соберите бургер
       </p>
       <nav className={styles.nav}>
-        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+        <Tab 
+          value="bun" 
+          active={current === 'bun'} 
+          onClick={
+            () => {
+              setCurrent('bun');
+              bunRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          }
+        >
           Булки
         </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+        <Tab 
+          value="sauce" 
+          active={current === 'sauce'} 
+          onClick={
+            () => {
+              setCurrent('sauce');
+              sauceRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          }
+        >
           Соусы
         </Tab>
-        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+        <Tab 
+          value="main" 
+          active={current === 'main'} 
+          onClick={
+            () => {
+              setCurrent('main');
+              mainRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          }
+        >
           Начинки
         </Tab>
       </nav>
       <div className={`${styles.constructor} mt-10 custom-scroll`}>
-        <p className="text text_type_main-medium mb-6">
+        <p className="text text_type_main-medium mb-6" ref={bunRef}>
           Булки
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
             buns.map(item => (
                 <li className={styles.ingredient} key={item._id}>
-                  <button className={styles.button}>
+                  <button 
+                    className={styles.button} 
+                    onClick={() => {
+                      onOpenModal('ingredient', item)
+                    }}
+                  >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
                     <div className={`${styles.price} mt-1 mb-1}`}>
                       <p className="text text_type_digits-default">{item.price}</p>
@@ -53,14 +98,19 @@ export default function BurgerIngredients({data}) {
             )
           }
         </ul>
-        <p className="text text_type_main-medium mt-10 mb-6">
+        <p className="text text_type_main-medium mt-10 mb-6" ref={sauceRef}>
           Соусы
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
             sauces.map(item => (
                 <li className={styles.ingredient} key={item._id}>
-                  <button className={styles.button}>
+                  <button 
+                    className={styles.button}
+                    onClick={() => {
+                      onOpenModal('ingredient', item)
+                    }}
+                  >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
                     <div className={`${styles.price} mt-1 mb-1}`}>
                       <p className="text text_type_digits-default">{item.price}</p>
@@ -75,14 +125,19 @@ export default function BurgerIngredients({data}) {
             )
           } 
         </ul>
-        <p className="text text_type_main-medium mt-10 mb-6">
+        <p className="text text_type_main-medium mt-10 mb-6" ref={mainRef}>
           Начинки
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
             mains.map(item => (
                   <li className={styles.ingredient} key={item._id}>
-                    <button className={styles.button}>
+                    <button 
+                      className={styles.button}
+                      onClick={() => {
+                        onOpenModal('ingredient', item)
+                      }}
+                    >
                       <img className="ml-4 mr-4" src={item.image} alt={item.name} />
                       <div className={`${styles.price} mt-1 mb-1}`}>
                         <p className="text text_type_digits-default">{item.price}</p>
@@ -103,5 +158,6 @@ export default function BurgerIngredients({data}) {
 }
 
 BurgerIngredients.propTypes = {
-  data: ingredientPropType
+  data: ingredientsPropType,
+  onOpenModal: PropTypes.func.isRequired
 }; 

@@ -12,3 +12,7 @@
   justify-content: center;
   gap: 40px;
 }
+
+.modals_container {
+  overflow: hidden;
+}

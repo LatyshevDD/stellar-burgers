@@ -1,17 +1,18 @@
 import React from "react";
+import { useMemo } from "react";
 import styles from './burger_constructor.module.css';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
+import { ingredientsPropType } from '../../utils/prop-types';
 
-export default function BurgerConstructor({data}) {
+export default function BurgerConstructor({data, onOpenModal}) {
 
-  const ingredients = data.filter(item => item.type == "sauce" || item.type == "main");
-  const bun = data.filter(item => item.type == "bun");
-  const price = ingredients.reduce((sum, item) => {return sum + item.price}, 0) + bun.reduce((sum, item) => {return sum + item.price}, 0);
+  const ingredients = React.useMemo(() => data.filter(item => item.type == "sauce" || item.type == "main"), [data]);
+  const bun = React.useMemo(() => data.filter(item => item.type == "bun"), [data]);
+  const price = React.useMemo(() => ingredients.reduce((sum, item) => {return sum + item.price}, 0) + bun.reduce((sum, item) => {return sum + item.price}, 0), [data]);
   
   return (
     <section className={`${styles.section} mt-25`}>
@@ -60,7 +61,12 @@ export default function BurgerConstructor({data}) {
           </p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button 
+          htmlType="button" 
+          type="primary" 
+          size="large" 
+          onClick={() => {onOpenModal('order')}}
+        >
           Оформить заказ
         </Button>
       </div>
@@ -69,5 +75,6 @@ export default function BurgerConstructor({data}) {
 }
 
 BurgerConstructor.propTypes = {
-  data: ingredientPropType
+  data: ingredientsPropType,
+  onOpenModal: PropTypes.func.isRequired
 }; 
