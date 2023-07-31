@@ -20,7 +20,6 @@ export default function Modal({children, onCloseModal}) {
   }
 
   function overlayClosePopup(e) {
-    console.log(modal.current);
     if (modal.current && !modal.current.contains(e.target)) {
       onCloseModal();
     }

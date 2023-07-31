@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useMemo } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,6 +10,10 @@ import { ingredientsPropType } from '../../utils/prop-types';
 export default function BurgerIngredients({data, onOpenModal}) {
   const [current, setCurrent] = React.useState('bun');
 
+  const bunRef = useRef();
+  const sauceRef = useRef();
+  const mainRef = useRef();
+
   const buns = React.useMemo(() => data.filter((item) => item.type === 'bun'), [data]);
   const mains = React.useMemo(() => data.filter((item) => item.type === 'main'), [data]);
   const sauces = React.useMemo(() => data.filter((item) => item.type === 'sauce'), [data]);
@@ -20,18 +24,54 @@ export default function BurgerIngredients({data, onOpenModal}) {
         Соберите бургер
       </p>
       <nav className={styles.nav}>
-        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+        <Tab 
+          value="bun" 
+          active={current === 'bun'} 
+          onClick={
+            () => {
+              setCurrent('bun');
+              bunRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          }
+        >
           Булки
         </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+        <Tab 
+          value="sauce" 
+          active={current === 'sauce'} 
+          onClick={
+            () => {
+              setCurrent('sauce');
+              sauceRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          }
+        >
           Соусы
         </Tab>
-        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+        <Tab 
+          value="main" 
+          active={current === 'main'} 
+          onClick={
+            () => {
+              setCurrent('main');
+              mainRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          }
+        >
           Начинки
         </Tab>
       </nav>
       <div className={`${styles.constructor} mt-10 custom-scroll`}>
-        <p className="text text_type_main-medium mb-6">
+        <p className="text text_type_main-medium mb-6" ref={bunRef}>
           Булки
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
@@ -58,7 +98,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
             )
           }
         </ul>
-        <p className="text text_type_main-medium mt-10 mb-6">
+        <p className="text text_type_main-medium mt-10 mb-6" ref={sauceRef}>
           Соусы
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
@@ -85,7 +125,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
             )
           } 
         </ul>
-        <p className="text text_type_main-medium mt-10 mb-6">
+        <p className="text text_type_main-medium mt-10 mb-6" ref={mainRef}>
           Начинки
         </p>
         <ul className={`${styles.ingredients} ml-4`}>

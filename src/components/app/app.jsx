@@ -12,7 +12,7 @@ import { getIngredience } from '../../utils/api';
 
 function App() {
 
-  const [ingredinces, setIngredience] = useState([]);
+  const [data, setData] = useState({ingredinces: [], hasError: false, errorMessage: ''});
   const [modalActive, setModalActive] = useState({active: false, type: '', ingredient: ''});
 
   function handleOpenModal(modalType, ingredient = {}) {
@@ -44,18 +44,31 @@ function App() {
 
   useEffect(() => {
     getIngredience()
-      .then(res => setIngredience([...res.data]))
-      .catch(e => console.log(e))
+      .then(res => setData({...data, ingredinces: [...res.data]}))
+      .catch(e => setData({...data, hasError: true, errorMessage: e}))
   }, [])
 
   return (
     <>
       <AppHeader/>
       <main className={styles.main}>
-        <BurgerIngredients data={ingredinces} onOpenModal={handleOpenModal}/>
-        <BurgerConstructor data={ingredinces} onOpenModal={handleOpenModal}/> 
+        {
+          !data.hasError && (
+            <>
+              <BurgerIngredients data={data.ingredinces} onOpenModal={handleOpenModal}/>
+              <BurgerConstructor data={data.ingredinces} onOpenModal={handleOpenModal}/>
+            </>
+          )     
+        }
+        {
+          data.hasError && (
+            <p className="text text_type_main-large">
+              Произошла ошибка! - {data.errorMessage}
+            </p>
+          )
+        }
       </main>
-      <div style={{overflow: 'hidden'}}>
+      <div className={styles.modals_container}>
         {
           modalActive.active && (
           <Modal onCloseModal={handleCloseModal}>
