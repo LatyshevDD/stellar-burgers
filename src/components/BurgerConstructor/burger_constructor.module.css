@@ -1,5 +1,9 @@
 .section {
-  max-width: 600px;
+  min-width: 576px;
+}
+
+.constructor {
+  min-height: 624px;
 }
 
 .ingredients {

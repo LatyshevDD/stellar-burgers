@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import { useMemo } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,8 +6,12 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import styles from './burger_ingredients.module.css';
 import PropTypes from 'prop-types';
 import { ingredientsPropType } from '../../utils/prop-types';
+import { ConstructorDispatchContext } from '../../services/constructorContext';
 
 export default function BurgerIngredients({data, onOpenModal}) {
+
+  const dispatch = useContext(ConstructorDispatchContext);
+
   const [current, setCurrent] = React.useState('bun');
 
   const bunRef = useRef();
@@ -81,7 +85,11 @@ export default function BurgerIngredients({data, onOpenModal}) {
                   <button 
                     className={styles.button} 
                     onClick={() => {
-                      onOpenModal('ingredient', item)
+                      // onOpenModal('ingredient', item)
+                      dispatch({
+                        type:  'addBun',
+                        payload: item
+                      })
                     }}
                   >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -108,7 +116,11 @@ export default function BurgerIngredients({data, onOpenModal}) {
                   <button 
                     className={styles.button}
                     onClick={() => {
-                      onOpenModal('ingredient', item)
+                      // onOpenModal('ingredient', item)
+                      dispatch({
+                        type:  'addIngredient',
+                        payload: item
+                      })
                     }}
                   >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -135,7 +147,11 @@ export default function BurgerIngredients({data, onOpenModal}) {
                     <button 
                       className={styles.button}
                       onClick={() => {
-                        onOpenModal('ingredient', item)
+                        // onOpenModal('ingredient', item)
+                        dispatch({
+                          type:  'addIngredient',
+                          payload: item
+                        })
                       }}
                     >
                       <img className="ml-4 mr-4" src={item.image} alt={item.name} />

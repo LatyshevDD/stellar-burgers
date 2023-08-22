@@ -1,17 +1,20 @@
 import { createContext, useReducer } from 'react';
-import { data } from '../utils/data';
 
 export const ConstructorContext = createContext(null);
 export const ConstructorDispatchContext = createContext(null);
 
 export function ConstructorProvider({ children }) {
-  const [ingrediences, dispatch] = useReducer(
+  
+  const [data, dispatch] = useReducer(
     constructorReducer,
-    data
+    {
+      bun: null,
+      ingredients: []
+    }
   );
 
   return (
-    <ConstructorContext.Provider value={ingrediences}>
+    <ConstructorContext.Provider value={data}>
       <ConstructorDispatchContext.Provider value={dispatch}>
         {children}
       </ConstructorDispatchContext.Provider>
@@ -19,27 +22,42 @@ export function ConstructorProvider({ children }) {
   );
 }
 
-function constructorReducer(tasks, action) {
+function constructorReducer(data, action) {
   switch (action.type) {
-    case 'added': {
-      return [...tasks, {
-        id: action.id,
-        text: action.text,
-        done: false
-      }];
+    case 'addIngredient': {
+      return {
+        ...data,
+        ingredients: [
+          ...data.ingredients,
+          action.payload
+        ]
+      };
     }
-    case 'changed': {
-      return tasks.map(t => {
-        if (t.id === action.task.id) {
-          return action.task;
-        } else {
-          return t;
+    case 'addBun': {
+      if (!data.bun) {
+        return {
+          ...data, 
+          bun: action.payload
+        };
+      }
+      else {
+        if (data.bun._id === action.payload._id) {
+          return {
+            ...data
+          };
         }
-      });
+        else {
+          return {
+            ...data, 
+            bun: action.payload
+          };
+        }  
+      }
     }
-    case 'deleted': {
-      return tasks.filter(t => t.id !== action.id);
-    }
+  
+    // case 'deleted': {
+    //   return tasks.filter(t => t.id !== action.id);
+    // }
     default: {
       throw Error('Unknown action: ' + action.type);
     }
