@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useMemo } from "react";
 import styles from './burger_constructor.module.css';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,8 +7,11 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientsPropType } from '../../utils/prop-types';
+import { ConstructorContext } from '../../services/constructorContext';
 
-export default function BurgerConstructor({data, onOpenModal}) {
+export default function BurgerConstructor({onOpenModal}) {
+
+  const data = useContext(ConstructorContext);
 
   const ingredients = React.useMemo(() => data.filter(item => item.type == "sauce" || item.type == "main"), [data]);
   const bun = React.useMemo(() => data.filter(item => item.type == "bun"), [data]);
@@ -75,6 +78,5 @@ export default function BurgerConstructor({data, onOpenModal}) {
 }
 
 BurgerConstructor.propTypes = {
-  data: ingredientsPropType,
   onOpenModal: PropTypes.func.isRequired
 }; 

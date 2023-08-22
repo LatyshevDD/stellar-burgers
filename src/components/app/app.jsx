@@ -9,6 +9,7 @@ import Modal from "../Modal/modal";
 import OrderDetails from "../OrderDetails/order_details";
 import IngredientDetails from "../IngredientDetails/ingredient_details";
 import { getIngredience } from '../../utils/api';
+import { ConstructorProvider } from '../../services/constructorContext';
 
 function App() {
 
@@ -54,10 +55,12 @@ function App() {
       <main className={styles.main}>
         {
           !data.hasError && (
-            <>
-              <BurgerIngredients data={data.ingredinces} onOpenModal={handleOpenModal}/>
-              <BurgerConstructor data={data.ingredinces} onOpenModal={handleOpenModal}/>
-            </>
+            <ConstructorProvider>
+              <>
+                <BurgerIngredients data={data.ingredinces} onOpenModal={handleOpenModal}/>
+                <BurgerConstructor onOpenModal={handleOpenModal}/>
+              </>
+            </ConstructorProvider>
           )     
         }
         {
