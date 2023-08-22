@@ -10,7 +10,7 @@ import { ConstructorDispatchContext } from '../../services/constructorContext';
 
 export default function BurgerIngredients({data, onOpenModal}) {
 
-  const dispatch = useContext(ConstructorDispatchContext);
+  const burgerDataDispatch = useContext(ConstructorDispatchContext);
 
   const [current, setCurrent] = React.useState('bun');
 
@@ -86,7 +86,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
                     className={styles.button} 
                     onClick={() => {
                       // onOpenModal('ingredient', item)
-                      dispatch({
+                      burgerDataDispatch({
                         type:  'addBun',
                         payload: item
                       })
@@ -117,7 +117,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
                     className={styles.button}
                     onClick={() => {
                       // onOpenModal('ingredient', item)
-                      dispatch({
+                      burgerDataDispatch({
                         type:  'addIngredient',
                         payload: item
                       })
@@ -148,7 +148,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
                       className={styles.button}
                       onClick={() => {
                         // onOpenModal('ingredient', item)
-                        dispatch({
+                        burgerDataDispatch({
                           type:  'addIngredient',
                           payload: item
                         })

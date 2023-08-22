@@ -1,7 +1,13 @@
+import { useContext } from 'react';
 import styles from './order_details.module.css';
-import orderAccept from '../../images/order_accept.png'
+import orderAccept from '../../images/order_accept.png';
+import { OrderContext } from '../../services/constructorContext';
 
 export default function OrderDetails() {
+
+  const orderData = useContext(OrderContext);
+  console.log(orderData);
+
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-large mt-30">

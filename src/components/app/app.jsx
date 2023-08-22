@@ -50,17 +50,15 @@ function App() {
   }, [])
 
   return (
-    <>
+    <ConstructorProvider>
       <AppHeader/>
       <main className={styles.main}>
         {
           !data.hasError && (
-            <ConstructorProvider>
               <>
                 <BurgerIngredients data={data.ingredinces} onOpenModal={handleOpenModal}/>
                 <BurgerConstructor onOpenModal={handleOpenModal}/>
               </>
-            </ConstructorProvider>
           )     
         }
         {
@@ -87,7 +85,7 @@ function App() {
           )
         }
       </div>
-    </>
+    </ConstructorProvider>
   );
 }
 

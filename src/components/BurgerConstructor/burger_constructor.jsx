@@ -6,15 +6,17 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ConstructorContext } from '../../services/constructorContext';
+import { ConstructorDispatchContext } from '../../services/constructorContext';
 
 export default function BurgerConstructor({onOpenModal}) {
 
-  const data = useContext(ConstructorContext);
+  const burgerData = useContext(ConstructorContext);
+  const burgerDataDispatch = useContext(ConstructorDispatchContext);
 
-  const ingredients = React.useMemo(() => data.ingredients, [data]);
+  const ingredients = React.useMemo(() => burgerData.ingredients, [burgerData]);
 
-  const bun = React.useMemo(() => data.bun, [data]);
-  
+  const bun = React.useMemo(() => burgerData.bun, [burgerData]);
+
   const totalPrice = React.useMemo(() => {
     let ingrediencePrice = 0;
     let bunPrice = 0;
@@ -53,6 +55,12 @@ export default function BurgerConstructor({onOpenModal}) {
                 text={item.name}
                 price={item.price}
                 thumbnail={item.image}
+                handleClose={() => {
+                  burgerDataDispatch({
+                    type: 'deleteIngredient',
+                    id: item._id
+                  })
+                }}
               />
             </li>
           ))
