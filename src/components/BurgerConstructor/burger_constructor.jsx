@@ -29,6 +29,25 @@ export default function BurgerConstructor({onOpenModal}) {
   },
     [ingredients, bun]
   );
+
+  const handleGetOrder = () => {
+    const ingrediencesId = getIngrediencesId([bun,...ingredients]);
+    if (ingrediencesId.length > 0) {
+      getOrderDetails(ingrediencesId)
+        .then(res => {
+          orderDataDispatch({
+          type: 'addOrder',
+          payload: res
+          })
+        })
+        .then(res => {
+          onOpenModal('order')
+        })
+        .catch((err) => {
+          console.log(err);
+        })  
+    }
+  } 
   
   return (
     <section className={`${styles.section} mt-25`}>
@@ -40,7 +59,7 @@ export default function BurgerConstructor({onOpenModal}) {
                 text={bun.name + ' ' + '(верх)'}
                 price={bun.price}
                 thumbnail={bun.image}
-                isLocked='true'
+                isLocked
                 extraClass='ml-8 mr-2'
               />
           )
@@ -72,7 +91,7 @@ export default function BurgerConstructor({onOpenModal}) {
                 text={bun.name + ' ' + '(низ)'}
                 price={bun.price}
                 thumbnail={bun.image}
-                isLocked='true'
+                isLocked
                 extraClass='ml-8 mr-2'
               />
           )
@@ -89,26 +108,7 @@ export default function BurgerConstructor({onOpenModal}) {
           htmlType="button" 
           type="primary" 
           size="large" 
-          onClick={
-            () => {
-              const ingrediencesId = getIngrediencesId([bun,...ingredients]);
-              if (ingrediencesId.length > 0) {
-                  getOrderDetails(ingrediencesId)
-                  .then(res => {
-                    orderDataDispatch({
-                      type: 'addOrder',
-                      payload: res
-                    })
-                  })
-                  .then(res => {
-                    onOpenModal('order')
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  })  
-                }
-              }  
-          }
+          onClick={handleGetOrder}
         >
           Оформить заказ
         </Button>
