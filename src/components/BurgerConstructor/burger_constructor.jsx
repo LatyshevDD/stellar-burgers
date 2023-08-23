@@ -1,20 +1,19 @@
 import React, { useContext, useMemo } from "react";
 import styles from './burger_constructor.module.css';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { DragIcon, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ConstructorContext } from '../../services/constructorContext';
-import { ConstructorDispatchContext } from '../../services/constructorContext';
+import { ConstructorContext, ConstructorDispatchContext, OrderDispatchContext } from '../../services/constructorContext';
+import { getOrderDetails } from "../../utils/api";
+import { getIngrediencesId } from "../../utils/utils";
 
 export default function BurgerConstructor({onOpenModal}) {
 
   const burgerData = useContext(ConstructorContext);
   const burgerDataDispatch = useContext(ConstructorDispatchContext);
 
-  const ingredients = React.useMemo(() => burgerData.ingredients, [burgerData]);
+  const orderDataDispatch = useContext(OrderDispatchContext);
 
+  const ingredients = React.useMemo(() => burgerData.ingredients, [burgerData]);
   const bun = React.useMemo(() => burgerData.bun, [burgerData]);
 
   const totalPrice = React.useMemo(() => {
@@ -90,7 +89,26 @@ export default function BurgerConstructor({onOpenModal}) {
           htmlType="button" 
           type="primary" 
           size="large" 
-          onClick={() => {onOpenModal('order')}}
+          onClick={
+            () => {
+              const ingrediencesId = getIngrediencesId([bun,...ingredients]);
+              if (ingrediencesId.length > 0) {
+                  getOrderDetails(ingrediencesId)
+                  .then(res => {
+                    orderDataDispatch({
+                      type: 'addOrder',
+                      payload: res
+                    })
+                  })
+                  .then(res => {
+                    onOpenModal('order')
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })  
+                }
+              }  
+          }
         >
           Оформить заказ
         </Button>

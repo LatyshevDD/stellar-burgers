@@ -6,12 +6,11 @@ import { OrderContext } from '../../services/constructorContext';
 export default function OrderDetails() {
 
   const orderData = useContext(OrderContext);
-  console.log(orderData);
-
+  
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-large mt-30">
-        034536
+        {orderData.order.number}
       </p>
       <p className="text text_type_main-medium mt-8">
         идентификатор заказа

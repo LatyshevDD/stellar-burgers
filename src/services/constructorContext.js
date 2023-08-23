@@ -85,14 +85,14 @@ function burgerDataReducer(burgerData, action) {
 
 function orderDataReducer(orderData, action) {
   switch (action.type) {
-    case 'addIngredient': {
-      // return {
-      //   ...burgerData,
-      //   ingredients: [
-      //     ...burgerData.ingredients,
-      //     action.payload
-      //   ]
-      // };
+    case 'addOrder': {
+      return {
+        name: action.payload.name,
+        order: {
+          number: action.payload.order.number
+        },
+        success: action.payload.success
+      };
     }
     default: {
       throw Error('Unknown action: ' + action.type);

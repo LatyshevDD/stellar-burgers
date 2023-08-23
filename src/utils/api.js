@@ -10,8 +10,8 @@ function getResponseData(res) {
   return res.json();
 }
 
-function requestApi(url) {
-  return fetch(url)
+function requestApi(url, options) {
+  return fetch(url, options)
     .then(res => getResponseData(res))
 }
 
@@ -25,5 +25,8 @@ export function getOrderDetails(data) {
     body: JSON.stringify({
       ingredients: data
     }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   })
 }
