@@ -1,20 +1,26 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import styles from "./app.module.css";
-import AppHeader from "../AppHeader/app_header";
-import BurgerIngredients from '../BurgerIngredients/burger_ingredients';
-import BurgerConstructor from '../BurgerConstructor/burger_constructor';
-import Modal from "../Modal/modal";
-import OrderDetails from "../OrderDetails/order_details";
-import IngredientDetails from "../IngredientDetails/ingredient_details";
-import { getIngredience } from '../../utils/api';
-import { ConstructorProvider } from '../../services/constructorContext';
+import React from "react"
+import { useState } from "react"
+import { useEffect } from "react"
+import styles from "./app.module.css"
+import AppHeader from "../AppHeader/app_header"
+import BurgerIngredients from '../BurgerIngredients/burger_ingredients'
+import BurgerConstructor from '../BurgerConstructor/burger_constructor'
+import Modal from "../Modal/modal"
+import OrderDetails from "../OrderDetails/order_details"
+import IngredientDetails from "../IngredientDetails/ingredient_details"
+import { getIngredience } from '../../utils/api'
+import { ConstructorProvider } from '../../services/constructorContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { setIngrediences, setError } from "../../services/ingrediencesDataSlice"
+
 
 function App() {
+  
+  const ingrediencesData = useSelector((state) => state.ingrediencesData)
+  const dispatch = useDispatch()
 
-  const [data, setData] = useState({ingredinces: [], hasError: false, errorMessage: ''});
-  const [modalActive, setModalActive] = useState({active: false, type: '', ingredient: ''});
+  const [data, setData] = useState({ingredinces: [], hasError: false, errorMessage: ''})
+  const [modalActive, setModalActive] = useState({active: false, type: '', ingredient: ''})
 
   function handleOpenModal(modalType, ingredient = {}) {
     switch(modalType) {
@@ -45,26 +51,30 @@ function App() {
 
   useEffect(() => {
     getIngredience()
-      .then(res => setData({...data, ingredinces: [...res.data]}))
-      .catch(e => setData({...data, hasError: true, errorMessage: e}))
+      .then(res => dispatch(setIngrediences([...res.data])))
+      .catch(e => 
+        // setData({...data, hasError: true, errorMessage: e})
+        dispatch(setError({hasError: true, errorMessage: e}))
+        )
   }, [])
+
 
   return (
     <ConstructorProvider>
       <AppHeader/>
       <main className={styles.main}>
         {
-          !data.hasError && (
+          !ingrediencesData.hasError && (
               <>
-                <BurgerIngredients data={data.ingredinces} onOpenModal={handleOpenModal}/>
+                <BurgerIngredients data={ingrediencesData.ingredinces} onOpenModal={handleOpenModal}/>
                 <BurgerConstructor onOpenModal={handleOpenModal}/>
               </>
           )     
         }
         {
-          data.hasError && (
+          ingrediencesData.hasError && (
             <p className="text text_type_main-large">
-              Произошла ошибка! - {data.errorMessage}
+              Произошла ошибка! - {ingrediencesData.errorMessage}
             </p>
           )
         }
@@ -89,4 +99,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
