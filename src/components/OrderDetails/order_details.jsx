@@ -1,11 +1,16 @@
+import { useContext } from 'react';
 import styles from './order_details.module.css';
-import orderAccept from '../../images/order_accept.png'
+import orderAccept from '../../images/order_accept.png';
+import { OrderContext } from '../../services/constructorContext';
 
 export default function OrderDetails() {
+
+  const orderData = useContext(OrderContext);
+  
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-large mt-30">
-        034536
+        {orderData.order.number}
       </p>
       <p className="text text_type_main-medium mt-8">
         идентификатор заказа
