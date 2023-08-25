@@ -1,27 +1,32 @@
-import React, { useRef, useContext } from "react";
-import { useMemo } from "react";
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burger_ingredients.module.css';
-import PropTypes from 'prop-types';
-import { ingredientsPropType } from '../../utils/prop-types';
-import { ConstructorDispatchContext } from '../../services/constructorContext';
-import { BUN, MAIN, SAUCE } from "../../utils/constants";
+import React, { useRef, useContext } from "react"
+import { useMemo } from "react"
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './burger_ingredients.module.css'
+import PropTypes from 'prop-types'
+import { ConstructorDispatchContext } from '../../services/constructorContext'
+import { BUN, MAIN, SAUCE } from "../../utils/constants"
+import { useSelector, useDispatch } from "react-redux"
+import { addBurgerIngredient, addBun } from "../../services/burgerDataSlice"
 
-export default function BurgerIngredients({data, onOpenModal}) {
 
-  const burgerDataDispatch = useContext(ConstructorDispatchContext);
+export default function BurgerIngredients({onOpenModal}) {
 
-  const [current, setCurrent] = React.useState(BUN);
+  const ingrediences = useSelector((state) => state.ingrediencesData.ingrediences)
+  const dispatch = useDispatch();
 
-  const bunRef = useRef();
-  const sauceRef = useRef();
-  const mainRef = useRef();
+  const burgerDataDispatch = useContext(ConstructorDispatchContext)
 
-  const buns = React.useMemo(() => data.filter((item) => item.type === BUN), [data]);
-  const mains = React.useMemo(() => data.filter((item) => item.type === MAIN), [data]);
-  const sauces = React.useMemo(() => data.filter((item) => item.type === SAUCE), [data]);
+  const [current, setCurrent] = React.useState(BUN)
+
+  const bunRef = useRef()
+  const sauceRef = useRef()
+  const mainRef = useRef()
+
+  const buns = React.useMemo(() => ingrediences.filter((item) => item.type === BUN), [ingrediences])
+  const mains = React.useMemo(() => ingrediences.filter((item) => item.type === MAIN), [ingrediences])
+  const sauces = React.useMemo(() => ingrediences.filter((item) => item.type === SAUCE), [ingrediences])
 
   return(
     <section className={styles.section}>
@@ -87,10 +92,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
                     className={styles.button} 
                     onClick={() => {
                       // onOpenModal('ingredient', item)
-                      burgerDataDispatch({
-                        type:  'addBun',
-                        payload: item
-                      })
+                      dispatch(addBun(item))
                     }}
                   >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -118,10 +120,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
                     className={styles.button}
                     onClick={() => {
                       // onOpenModal('ingredient', item)
-                      burgerDataDispatch({
-                        type:  'addIngredient',
-                        payload: item
-                      })
+                      dispatch(addBurgerIngredient(item))
                     }}
                   >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -149,10 +148,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
                       className={styles.button}
                       onClick={() => {
                         // onOpenModal('ingredient', item)
-                        burgerDataDispatch({
-                          type:  'addIngredient',
-                          payload: item
-                        })
+                        dispatch(addBurgerIngredient(item))
                       }}
                     >
                       <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -175,6 +171,5 @@ export default function BurgerIngredients({data, onOpenModal}) {
 }
 
 BurgerIngredients.propTypes = {
-  data: ingredientsPropType,
   onOpenModal: PropTypes.func.isRequired
 }; 

@@ -1,20 +1,25 @@
-import React, { useContext, useMemo } from "react";
-import styles from './burger_constructor.module.css';
-import { DragIcon, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { ConstructorContext, ConstructorDispatchContext, OrderDispatchContext } from '../../services/constructorContext';
-import { getOrderDetails } from "../../utils/api";
-import { getIngrediencesId } from "../../utils/utils";
+import React, { useContext, useMemo } from "react"
+import styles from './burger_constructor.module.css'
+import { DragIcon, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import PropTypes from 'prop-types'
+import { OrderDispatchContext } from '../../services/constructorContext'
+import { getOrderDetails } from "../../utils/api"
+import { getIngrediencesId } from "../../utils/utils"
+import { useSelector, useDispatch } from "react-redux"
+import { deleteIngredient } from "../../services/burgerDataSlice"
 
 export default function BurgerConstructor({onOpenModal}) {
 
-  const burgerData = useContext(ConstructorContext);
-  const burgerDataDispatch = useContext(ConstructorDispatchContext);
+  const burgerData = useSelector((state) => state.burgerData)
+  const dispatch = useDispatch()
 
-  const orderDataDispatch = useContext(OrderDispatchContext);
+  // const burgerData = useContext(ConstructorContext)
+  // const burgerDataDispatch = useContext(ConstructorDispatchContext)
 
-  const ingredients = React.useMemo(() => burgerData.ingredients, [burgerData]);
-  const bun = React.useMemo(() => burgerData.bun, [burgerData]);
+  const orderDataDispatch = useContext(OrderDispatchContext)
+
+  const ingredients = React.useMemo(() => burgerData.ingredients, [burgerData])
+  const bun = React.useMemo(() => burgerData.bun, [burgerData])
 
   const totalPrice = React.useMemo(() => {
     let ingrediencePrice = 0;
@@ -74,10 +79,7 @@ export default function BurgerConstructor({onOpenModal}) {
                 price={item.price}
                 thumbnail={item.image}
                 handleClose={() => {
-                  burgerDataDispatch({
-                    type: 'deleteIngredient',
-                    id: item._id
-                  })
+                  dispatch(deleteIngredient(item))
                 }}
               />
             </li>

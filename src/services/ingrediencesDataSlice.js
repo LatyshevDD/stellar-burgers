@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  ingredinces: [], 
+  ingrediences: [], 
   hasError: false, 
   errorMessage: ''
 }
@@ -13,7 +13,7 @@ export const ingrediencesDataSlice = createSlice({
     setIngrediences: (state, action) => {
       return {
         ...state,
-        ingredinces: action.payload
+        ingrediences: action.payload
       }
     },
     setError: (state, action) => {

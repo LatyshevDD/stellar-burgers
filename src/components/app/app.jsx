@@ -52,10 +52,7 @@ function App() {
   useEffect(() => {
     getIngredience()
       .then(res => dispatch(setIngrediences([...res.data])))
-      .catch(e => 
-        // setData({...data, hasError: true, errorMessage: e})
-        dispatch(setError({hasError: true, errorMessage: e}))
-        )
+      .catch(e => dispatch(setError({hasError: true, errorMessage: e})))
   }, [])
 
 
@@ -66,7 +63,7 @@ function App() {
         {
           !ingrediencesData.hasError && (
               <>
-                <BurgerIngredients data={ingrediencesData.ingredinces} onOpenModal={handleOpenModal}/>
+                <BurgerIngredients onOpenModal={handleOpenModal}/>
                 <BurgerConstructor onOpenModal={handleOpenModal}/>
               </>
           )     
