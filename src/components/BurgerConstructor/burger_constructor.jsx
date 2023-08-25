@@ -7,14 +7,12 @@ import { getOrderDetails } from "../../utils/api"
 import { getIngrediencesId } from "../../utils/utils"
 import { useSelector, useDispatch } from "react-redux"
 import { deleteIngredient } from "../../services/burgerDataSlice"
+import { openOrderModal } from "../../services/modalDataSlice"
 
-export default function BurgerConstructor({onOpenModal}) {
+export default function BurgerConstructor() {
 
   const burgerData = useSelector((state) => state.burgerData)
   const dispatch = useDispatch()
-
-  // const burgerData = useContext(ConstructorContext)
-  // const burgerDataDispatch = useContext(ConstructorDispatchContext)
 
   const orderDataDispatch = useContext(OrderDispatchContext)
 
@@ -46,7 +44,7 @@ export default function BurgerConstructor({onOpenModal}) {
           })
         })
         .then(res => {
-          onOpenModal('order')
+          dispatch(openOrderModal())
         })
         .catch((err) => {
           console.log(err);
@@ -118,7 +116,3 @@ export default function BurgerConstructor({onOpenModal}) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  onOpenModal: PropTypes.func.isRequired
-}; 

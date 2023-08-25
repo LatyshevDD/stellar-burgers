@@ -5,18 +5,16 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger_ingredients.module.css'
 import PropTypes from 'prop-types'
-import { ConstructorDispatchContext } from '../../services/constructorContext'
 import { BUN, MAIN, SAUCE } from "../../utils/constants"
 import { useSelector, useDispatch } from "react-redux"
 import { addBurgerIngredient, addBun } from "../../services/burgerDataSlice"
+import { openIngredientModal } from "../../services/modalDataSlice"
 
 
-export default function BurgerIngredients({onOpenModal}) {
+export default function BurgerIngredients() {
 
   const ingrediences = useSelector((state) => state.ingrediencesData.ingrediences)
   const dispatch = useDispatch();
-
-  const burgerDataDispatch = useContext(ConstructorDispatchContext)
 
   const [current, setCurrent] = React.useState(BUN)
 
@@ -91,8 +89,8 @@ export default function BurgerIngredients({onOpenModal}) {
                   <button 
                     className={styles.button} 
                     onClick={() => {
-                      // onOpenModal('ingredient', item)
-                      dispatch(addBun(item))
+                      dispatch(openIngredientModal(item))
+                      // dispatch(addBun(item))
                     }}
                   >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -119,8 +117,8 @@ export default function BurgerIngredients({onOpenModal}) {
                   <button 
                     className={styles.button}
                     onClick={() => {
-                      // onOpenModal('ingredient', item)
-                      dispatch(addBurgerIngredient(item))
+                      dispatch(openIngredientModal(item))
+                      // dispatch(addBurgerIngredient(item))
                     }}
                   >
                     <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -147,8 +145,8 @@ export default function BurgerIngredients({onOpenModal}) {
                     <button 
                       className={styles.button}
                       onClick={() => {
-                        // onOpenModal('ingredient', item)
-                        dispatch(addBurgerIngredient(item))
+                        dispatch(openIngredientModal(item))
+                        // dispatch(addBurgerIngredient(item))
                       }}
                     >
                       <img className="ml-4 mr-4" src={item.image} alt={item.name} />
@@ -169,7 +167,3 @@ export default function BurgerIngredients({onOpenModal}) {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  onOpenModal: PropTypes.func.isRequired
-}; 

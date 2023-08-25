@@ -17,37 +17,8 @@ import { setIngrediences, setError } from "../../services/ingrediencesDataSlice"
 function App() {
   
   const ingrediencesData = useSelector((state) => state.ingrediencesData)
+  const modalData = useSelector((state) => state.modalData)
   const dispatch = useDispatch()
-
-  const [data, setData] = useState({ingredinces: [], hasError: false, errorMessage: ''})
-  const [modalActive, setModalActive] = useState({active: false, type: '', ingredient: ''})
-
-  function handleOpenModal(modalType, ingredient = {}) {
-    switch(modalType) {
-      case 'order':
-        setModalActive({
-          ...modalActive,
-          active: true,
-          type: 'order'
-        })
-        break
-      case 'ingredient':
-        setModalActive({
-          ...modalActive,
-          active: true,
-          type: 'ingredient',
-          ingredient: ingredient
-        })
-        break
-    }
-  }
-
-  function handleCloseModal() {
-    setModalActive({
-      ...modalActive,
-      active: false
-    });
-  }
 
   useEffect(() => {
     getIngredience()
@@ -63,8 +34,8 @@ function App() {
         {
           !ingrediencesData.hasError && (
               <>
-                <BurgerIngredients onOpenModal={handleOpenModal}/>
-                <BurgerConstructor onOpenModal={handleOpenModal}/>
+                <BurgerIngredients/>
+                <BurgerConstructor/>
               </>
           )     
         }
@@ -78,15 +49,15 @@ function App() {
       </main>
       <div className={styles.modals_container}>
         {
-          modalActive.active && (
-          <Modal onCloseModal={handleCloseModal}>
+          modalData.active && (
+          <Modal>
             {
-              modalActive.type === 'order' &&
+              modalData.type === 'order' &&
               <OrderDetails/>
             }
             {
-              modalActive.type === 'ingredient' &&
-              <IngredientDetails ingredient={modalActive.ingredient}/>
+              modalData.type === 'ingredient' &&
+              <IngredientDetails ingredient={modalData.ingredient}/>
             }          
           </Modal>
           )
