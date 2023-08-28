@@ -9,9 +9,10 @@ import Modal from "../Modal/modal"
 import OrderDetails from "../OrderDetails/order_details"
 import IngredientDetails from "../IngredientDetails/ingredient_details"
 import { getIngredience } from '../../utils/api'
-import { ConstructorProvider } from '../../services/constructorContext'
 import { useSelector, useDispatch } from 'react-redux'
 import { setIngrediences, setError } from "../../services/ingrediencesDataSlice"
+import { HTML5Backend } from "react-dnd-html5-backend"
+import { DndProvider } from "react-dnd"
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
 
 
   return (
-    <ConstructorProvider>
+    <DndProvider backend={HTML5Backend}>
       <AppHeader/>
       <main className={styles.main}>
         {
@@ -63,7 +64,7 @@ function App() {
           )
         }
       </div>
-    </ConstructorProvider>
+    </DndProvider>
   );
 }
 

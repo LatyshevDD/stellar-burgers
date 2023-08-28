@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { nanoid } from '@reduxjs/toolkit'
 
 const initialState = {
-  bun: null,
+  bun: [],
   ingredients: []
 }
 
@@ -9,34 +10,60 @@ export const burgerDataSlice = createSlice({
   name: 'burgerData',
   initialState,
   reducers: {
-    addBurgerIngredient: (state, action) => {
-      return {
-        ...state,
-        ingredients: [
-          ...state.ingredients,
-          action.payload
-        ]
-      }
-    },
-    addBun: (state, action) => {
-      if (!state.bun) {
+    addBurgerIngredient: {
+      reducer: (state, action) => {
         return {
-          ...state, 
-          bun: action.payload
-        };
-      }
-      else {
-        if (state.bun._id === action.payload._id) {
-          return {
-            ...state
-          };
+          ...state,
+          ingredients: [
+            ...state.ingredients,
+            action.payload
+          ]
         }
-        else {
+      },
+      prepare: (item) => {
+        const key = nanoid()
+        return {
+          payload: {
+            ...item,
+            key: key
+          }
+        }
+      }
+    }, 
+    addBun: {
+      reducer: (state, action) => {
+        if (!state.bun.length > 0) {
           return {
             ...state, 
-            bun: action.payload
-          };
-        }  
+            bun: [
+              action.payload
+            ]
+          }
+        }
+        else {
+          if (state.bun._id === action.payload._id) {
+            return {
+              ...state
+            };
+          }
+          else {
+            return {
+              ...state, 
+              bun: [
+                action.payload
+              ]
+            };
+          }  
+        }
+      },
+      prepare: (item) => {
+        const key = nanoid()
+        return {
+          payload: {
+            ...item,
+            key: key
+          }
+        }
       }
     },
     deleteIngredient: (state, action) => {

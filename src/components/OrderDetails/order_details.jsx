@@ -1,16 +1,16 @@
-import { useContext } from 'react';
-import styles from './order_details.module.css';
-import orderAccept from '../../images/order_accept.png';
-import { OrderContext } from '../../services/constructorContext';
+import styles from './order_details.module.css'
+import orderAccept from '../../images/order_accept.png'
+import { useSelector } from 'react-redux'
 
 export default function OrderDetails() {
 
-  const orderData = useContext(OrderContext);
+
+  const orderNumber = useSelector((state) => state.orderData.order.number)
   
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-large mt-30">
-        {orderData.order.number}
+        {orderNumber}
       </p>
       <p className="text text_type_main-medium mt-8">
         идентификатор заказа

@@ -4,14 +4,25 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger_ingredients.module.css'
-import PropTypes from 'prop-types'
 import { BUN, MAIN, SAUCE } from "../../utils/constants"
 import { useSelector, useDispatch } from "react-redux"
 import { addBurgerIngredient, addBun } from "../../services/burgerDataSlice"
 import { openIngredientModal } from "../../services/modalDataSlice"
+import { useDrag } from "react-dnd"
+import Ingredient from "../Ingredient/ingredient"
 
 
 export default function BurgerIngredients() {
+
+  // const [{key}, dragIngredient] = useDrag(() => ({
+  //   type: 'ingredient',
+  //   // item: {
+  //   //   key: '1'
+  //   // },
+  //   collect: monitor => ({
+  //     key: monitor.isDragging()
+  // })
+  // }))
 
   const ingrediences = useSelector((state) => state.ingrediencesData.ingrediences)
   const dispatch = useDispatch();
@@ -84,27 +95,7 @@ export default function BurgerIngredients() {
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
-            buns.map(item => (
-                <li className={styles.ingredient} key={item._id}>
-                  <button 
-                    className={styles.button} 
-                    onClick={() => {
-                      dispatch(openIngredientModal(item))
-                      // dispatch(addBun(item))
-                    }}
-                  >
-                    <img className="ml-4 mr-4" src={item.image} alt={item.name} />
-                    <div className={`${styles.price} mt-1 mb-1}`}>
-                      <p className="text text_type_digits-default">{item.price}</p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                    <p className="text text_type_main-default">
-                      {item.name}
-                    </p>
-                  </button>
-                </li>
-              )
-            )
+            buns.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
           }
         </ul>
         <p className="text text_type_main-medium mt-10 mb-6" ref={sauceRef}>
@@ -112,27 +103,7 @@ export default function BurgerIngredients() {
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
-            sauces.map(item => (
-                <li className={styles.ingredient} key={item._id}>
-                  <button 
-                    className={styles.button}
-                    onClick={() => {
-                      dispatch(openIngredientModal(item))
-                      // dispatch(addBurgerIngredient(item))
-                    }}
-                  >
-                    <img className="ml-4 mr-4" src={item.image} alt={item.name} />
-                    <div className={`${styles.price} mt-1 mb-1}`}>
-                      <p className="text text_type_digits-default">{item.price}</p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                    <p className="text text_type_main-default">
-                      {item.name}
-                    </p>
-                  </button>
-                </li>
-              )
-            )
+            sauces.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
           } 
         </ul>
         <p className="text text_type_main-medium mt-10 mb-6" ref={mainRef}>
@@ -140,28 +111,8 @@ export default function BurgerIngredients() {
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
-            mains.map(item => (
-                  <li className={styles.ingredient} key={item._id}>
-                    <button 
-                      className={styles.button}
-                      onClick={() => {
-                        dispatch(openIngredientModal(item))
-                        // dispatch(addBurgerIngredient(item))
-                      }}
-                    >
-                      <img className="ml-4 mr-4" src={item.image} alt={item.name} />
-                      <div className={`${styles.price} mt-1 mb-1}`}>
-                        <p className="text text_type_digits-default">{item.price}</p>
-                        <CurrencyIcon type="primary" />
-                      </div>
-                      <p className="text text_type_main-default">
-                        {item.name}
-                      </p>
-                    </button>  
-                  </li>
-                )  
-              )
-            } 
+            mains.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
+          } 
         </ul>
       </div>
     </section>

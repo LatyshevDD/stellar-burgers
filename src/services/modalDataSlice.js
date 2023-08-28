@@ -28,7 +28,8 @@ export const modalDataSlice = createSlice({
     closeModal: (state) => {
       return {
         ...state,
-        active: false
+        active: false,
+        ingredient: ''
       }
     },
   },
