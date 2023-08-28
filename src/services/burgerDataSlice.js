@@ -69,12 +69,25 @@ export const burgerDataSlice = createSlice({
     deleteIngredient: (state, action) => {
       return {
         ...state,
-        ingredients: state.ingredients.filter(item => item._id !== action.payload._id),
+        ingredients: state.ingredients.filter(item => item.key !== action.payload.key),
+      }
+    },
+    sortIngredients: (state, action) => {
+
+      const ingrediences = [...state.ingredients]
+      ingrediences.splice(
+        action.payload.dropIndex,
+        0,
+        ingrediences.splice(action.payload.dragIndex, 1)[0] 
+      )
+      return {
+        ...state,
+        ingredients: ingrediences,
       }
     },
   },
 })
 
-export const { addBurgerIngredient, addBun, deleteIngredient } = burgerDataSlice.actions
+export const { addBurgerIngredient, addBun, deleteIngredient, sortIngredients } = burgerDataSlice.actions
 
 export default burgerDataSlice.reducer

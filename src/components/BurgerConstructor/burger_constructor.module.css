@@ -19,12 +19,6 @@
   overflow-x: hidden;
 }
 
-.ingredient {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .order {
   display: flex;
   gap: 40px;

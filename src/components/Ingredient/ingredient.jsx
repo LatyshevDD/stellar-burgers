@@ -2,20 +2,26 @@ import React from "react"
 import styles from './ingredient.module.css'
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useDispatch } from "react-redux"
-import { addBurgerIngredient, addBun } from "../../services/burgerDataSlice"
+import { openIngredientModal } from "../../services/modalDataSlice"
+import { useDrag } from "react-dnd"
+import PropTypes from 'prop-types'
+import { ingredientPropType } from "../../utils/prop-types"
 
 export default function Ingredient({ingredientData}) {
 
   const dispatch = useDispatch()
 
+  const [, drag] = useDrag(() => ({
+    type: 'ingredient',
+    item: ingredientData,
+  }))
+
   return (
-    <li className={styles.ingredient}>
+    <li className={styles.ingredient} ref={drag}>
       <button 
         className={styles.button} 
         onClick={() => {
-          const reducerAction = ingredientData.type === 'bun' ? addBun : addBurgerIngredient
-          // dispatch(openIngredientModal(ingredientData))
-          dispatch(reducerAction(ingredientData))
+          dispatch(openIngredientModal(ingredientData))
         }}
       >
         <img className="ml-4 mr-4" src={ingredientData.image} alt={ingredientData.name} />
@@ -30,3 +36,7 @@ export default function Ingredient({ingredientData}) {
   </li>
   )
 }
+
+Ingredient.propTypes = {
+  ingredientData: ingredientPropType
+} 

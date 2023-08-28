@@ -2,11 +2,24 @@ import React, { useContext, useMemo } from "react"
 import styles from './burger_constructor.module.css'
 import { DragIcon, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from "react-redux"
-import { deleteIngredient } from "../../services/burgerDataSlice"
+import { deleteIngredient, addBun, addBurgerIngredient } from "../../services/burgerDataSlice"
 import { openOrderModal } from "../../services/modalDataSlice"
 import { getOrderData } from "../../services/orderDataSlice"
+import { useDrop } from "react-dnd"
+import BurgerIngredient from "../BurgerIngredient/burger_ingredient"
 
 export default function BurgerConstructor() {
+
+  const [, drop] = useDrop(() => ({
+    accept: 'ingredient',
+    drop: (item) => {
+      if (item.type === 'bun') {
+        dispatch(addBun(item))
+      } else {
+        dispatch(addBurgerIngredient(item))
+      }
+    }
+  }))
 
   const burgerData = useSelector((state) => state.burgerData)
   const dispatch = useDispatch()
@@ -38,7 +51,7 @@ export default function BurgerConstructor() {
   } 
   
   return (
-    <section className={`${styles.section} mt-25`}>
+    <section className={`${styles.section} mt-25`} ref={drop}>
       <div className={styles.constructor}>
         {
           bun.length > 0 && (
@@ -54,19 +67,7 @@ export default function BurgerConstructor() {
         }
         <ul className={`${styles.ingredients} custom-scroll`}> 
         {
-          ingredients.map((item, index) => (
-            <li className={`${styles.ingredient} mr-2`} key={item.key}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-                handleClose={() => {
-                  dispatch(deleteIngredient(item))
-                }}
-              />
-            </li>
-          ))
+          ingredients.map((item) => (<BurgerIngredient ingredientData={item} key={item.key}/>))
         }
         </ul> 
         {

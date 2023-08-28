@@ -2,27 +2,13 @@ import React, { useRef, useContext } from "react"
 import { useMemo } from "react"
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger_ingredients.module.css'
 import { BUN, MAIN, SAUCE } from "../../utils/constants"
 import { useSelector, useDispatch } from "react-redux"
-import { addBurgerIngredient, addBun } from "../../services/burgerDataSlice"
-import { openIngredientModal } from "../../services/modalDataSlice"
-import { useDrag } from "react-dnd"
 import Ingredient from "../Ingredient/ingredient"
 
 
 export default function BurgerIngredients() {
-
-  // const [{key}, dragIngredient] = useDrag(() => ({
-  //   type: 'ingredient',
-  //   // item: {
-  //   //   key: '1'
-  //   // },
-  //   collect: monitor => ({
-  //     key: monitor.isDragging()
-  // })
-  // }))
 
   const ingrediences = useSelector((state) => state.ingrediencesData.ingrediences)
   const dispatch = useDispatch();
