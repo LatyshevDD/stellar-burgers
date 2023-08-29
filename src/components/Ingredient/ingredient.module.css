@@ -22,3 +22,9 @@
 .button:hover {
   opacity: .6;
 }
+
+.counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

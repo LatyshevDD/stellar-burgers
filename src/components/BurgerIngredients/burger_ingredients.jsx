@@ -1,7 +1,6 @@
 import React, { useRef, useContext } from "react"
 import { useMemo } from "react"
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger_ingredients.module.css'
 import { BUN, MAIN, SAUCE } from "../../utils/constants"
 import { useSelector, useDispatch } from "react-redux"
@@ -30,13 +29,13 @@ export default function BurgerIngredients() {
     const sauceScroll = sauceRef.current.getBoundingClientRect().top - containerScroll
     const mainScroll = mainRef.current.getBoundingClientRect().top - containerScroll
     const maxOffset = -30
-    if (bunScroll < 0 && bunScroll > maxOffset) {
+    if (bunScroll <= 0 && bunScroll > maxOffset) {
       setCurrent(BUN)
     }
-    else if (sauceScroll < 0 && sauceScroll > maxOffset) {
+    else if (sauceScroll <= 0 && sauceScroll > maxOffset) {
       setCurrent(SAUCE)
     }
-    else if (mainScroll < 0 && mainScroll > maxOffset) {
+    else if (mainScroll <= 0 && mainScroll > maxOffset) {
       setCurrent(MAIN)
     }
   }

@@ -1,15 +1,26 @@
-import React from "react"
+import React, {useMemo} from "react"
 import styles from './ingredient.module.css'
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useDispatch } from "react-redux"
+import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
+import { useDispatch, useSelector } from "react-redux"
 import { openIngredientModal } from "../../services/modalDataSlice"
 import { useDrag } from "react-dnd"
 import PropTypes from 'prop-types'
 import { ingredientPropType } from "../../utils/prop-types"
+import { getCountOfIngredient } from "../../utils/utils"
 
 export default function Ingredient({ingredientData}) {
 
   const dispatch = useDispatch()
+
+  const burgerData = useSelector(state => state.burgerData)
+  
+  let ingredientCount
+
+  if (ingredientData.type === 'bun') {
+    ingredientCount = getCountOfIngredient(ingredientData, burgerData.bun)
+  } else {
+    ingredientCount = getCountOfIngredient(ingredientData, burgerData.ingredients)
+  }
 
   const [, drag] = useDrag(() => ({
     type: 'ingredient',
@@ -33,7 +44,12 @@ export default function Ingredient({ingredientData}) {
           {ingredientData.name}
         </p>
       </button>
-  </li>
+      {
+        ingredientCount > 0 
+        &&
+        <Counter count={ingredientCount} size="default" extraClass={styles.counter} />
+      }
+    </li>
   )
 }
 

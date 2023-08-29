@@ -9,3 +9,14 @@ export function getIngrediencesId(array) {
     
   }, [])
 }
+
+export function getCountOfIngredient(ingredient, array) {
+  const count = array.reduce((total, item) => {
+    if (item._id === ingredient._id) {
+      return total += 1
+    } 
+    return total
+  }, 0)
+  
+  return count
+}
