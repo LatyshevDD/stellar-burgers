@@ -39,7 +39,14 @@ export const orderDataSlice = createSlice({
         }
       })
       .addCase(getOrderData.rejected, (state) => {
-        state.status = 'loading'
+        return {
+          name: "",
+          order: {
+            number: null
+          },
+          success: false,
+          status: 'reject'
+        }
       })
   }
 })
