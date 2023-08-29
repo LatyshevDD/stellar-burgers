@@ -22,11 +22,16 @@ export default function BurgerIngredient({ingredientData}) {
 
   const [, drop] = useDrop(() => ({
     accept: 'burgerIngredient',
+    hover: (item) => {
+      const dragIndex = ingrediences.findIndex(ingredient => ingredient.key === item.key)
+      dispatch(sortIngredients({dragIndex: dragIndex, dropIndex:dropIndex}))
+    },
     drop: (item) => {
       const dragIndex = ingrediences.findIndex(ingredient => ingredient.key === item.key)
       dispatch(sortIngredients({dragIndex: dragIndex, dropIndex:dropIndex}))
     }
   }))
+  
   drag(drop(ref))
   return (
     <li className={`${styles.ingredient} mr-2`} ref={ref}>
