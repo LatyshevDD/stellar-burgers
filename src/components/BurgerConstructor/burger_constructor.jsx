@@ -1,8 +1,8 @@
-import React, { useContext, useMemo } from "react"
+import React, { useMemo } from "react"
 import styles from './burger_constructor.module.css'
-import { DragIcon, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from "react-redux"
-import { deleteIngredient, addBun, addBurgerIngredient } from "../../services/burgerDataSlice"
+import { addBun, addBurgerIngredient } from "../../services/burgerDataSlice"
 import { openOrderModal } from "../../services/modalDataSlice"
 import { getOrderData } from "../../services/orderDataSlice"
 import { useDrop } from "react-dnd"

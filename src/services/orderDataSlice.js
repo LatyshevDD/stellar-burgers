@@ -23,15 +23,6 @@ export const getOrderData = createAsyncThunk(
 export const orderDataSlice = createSlice({
   name: 'orderData',
   initialState,
-  reducers: {
-    openOrderModal: (state) => {
-      return {
-        ...state,
-        active: true,
-        type: 'order'
-      }
-    },
-  },
   extraReducers: builder => {
     builder
       .addCase(getOrderData.pending, (state) => {
