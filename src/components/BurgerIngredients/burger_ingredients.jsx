@@ -1,27 +1,44 @@
-import React, { useRef, useContext } from "react";
-import { useMemo } from "react";
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burger_ingredients.module.css';
-import PropTypes from 'prop-types';
-import { ingredientsPropType } from '../../utils/prop-types';
-import { ConstructorDispatchContext } from '../../services/constructorContext';
-import { BUN, MAIN, SAUCE } from "../../utils/constants";
+import React, { useRef, useContext } from "react"
+import { useMemo } from "react"
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './burger_ingredients.module.css'
+import { BUN, MAIN, SAUCE } from "../../utils/constants"
+import { useSelector, useDispatch } from "react-redux"
+import Ingredient from "../Ingredient/ingredient"
 
-export default function BurgerIngredients({data, onOpenModal}) {
 
-  const burgerDataDispatch = useContext(ConstructorDispatchContext);
+export default function BurgerIngredients() {
 
-  const [current, setCurrent] = React.useState(BUN);
+  const ingrediences = useSelector((state) => state.ingrediencesData.ingrediences)
+  const dispatch = useDispatch()
 
-  const bunRef = useRef();
-  const sauceRef = useRef();
-  const mainRef = useRef();
+  const [current, setCurrent] = React.useState(BUN)
 
-  const buns = React.useMemo(() => data.filter((item) => item.type === BUN), [data]);
-  const mains = React.useMemo(() => data.filter((item) => item.type === MAIN), [data]);
-  const sauces = React.useMemo(() => data.filter((item) => item.type === SAUCE), [data]);
+  const ingredientsContainer = useRef()
+  const bunRef = useRef()
+  const sauceRef = useRef()
+  const mainRef = useRef()
+
+  const buns = React.useMemo(() => ingrediences.filter((item) => item.type === BUN), [ingrediences])
+  const mains = React.useMemo(() => ingrediences.filter((item) => item.type === MAIN), [ingrediences])
+  const sauces = React.useMemo(() => ingrediences.filter((item) => item.type === SAUCE), [ingrediences])
+
+  const handleScroll = () => {
+    const containerScroll = ingredientsContainer.current.getBoundingClientRect().top
+    const bunScroll = bunRef.current.getBoundingClientRect().top - containerScroll
+    const sauceScroll = sauceRef.current.getBoundingClientRect().top - containerScroll
+    const mainScroll = mainRef.current.getBoundingClientRect().top - containerScroll
+    const maxOffset = -30
+    if (bunScroll <= 0 && bunScroll > maxOffset) {
+      setCurrent(BUN)
+    }
+    else if (sauceScroll <= 0 && sauceScroll > maxOffset) {
+      setCurrent(SAUCE)
+    }
+    else if (mainScroll <= 0 && mainScroll > maxOffset) {
+      setCurrent(MAIN)
+    }
+  }
 
   return(
     <section className={styles.section}>
@@ -75,36 +92,13 @@ export default function BurgerIngredients({data, onOpenModal}) {
           Начинки
         </Tab>
       </nav>
-      <div className={`${styles.constructor} mt-10 custom-scroll`}>
+      <div className={`${styles.constructor} mt-10 custom-scroll`} onScroll={handleScroll} ref={ingredientsContainer}>
         <p className="text text_type_main-medium mb-6" ref={bunRef}>
           Булки
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
-            buns.map(item => (
-                <li className={styles.ingredient} key={item._id}>
-                  <button 
-                    className={styles.button} 
-                    onClick={() => {
-                      // onOpenModal('ingredient', item)
-                      burgerDataDispatch({
-                        type:  'addBun',
-                        payload: item
-                      })
-                    }}
-                  >
-                    <img className="ml-4 mr-4" src={item.image} alt={item.name} />
-                    <div className={`${styles.price} mt-1 mb-1}`}>
-                      <p className="text text_type_digits-default">{item.price}</p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                    <p className="text text_type_main-default">
-                      {item.name}
-                    </p>
-                  </button>
-                </li>
-              )
-            )
+            buns.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
           }
         </ul>
         <p className="text text_type_main-medium mt-10 mb-6" ref={sauceRef}>
@@ -112,30 +106,7 @@ export default function BurgerIngredients({data, onOpenModal}) {
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
-            sauces.map(item => (
-                <li className={styles.ingredient} key={item._id}>
-                  <button 
-                    className={styles.button}
-                    onClick={() => {
-                      // onOpenModal('ingredient', item)
-                      burgerDataDispatch({
-                        type:  'addIngredient',
-                        payload: item
-                      })
-                    }}
-                  >
-                    <img className="ml-4 mr-4" src={item.image} alt={item.name} />
-                    <div className={`${styles.price} mt-1 mb-1}`}>
-                      <p className="text text_type_digits-default">{item.price}</p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                    <p className="text text_type_main-default">
-                      {item.name}
-                    </p>
-                  </button>
-                </li>
-              )
-            )
+            sauces.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
           } 
         </ul>
         <p className="text text_type_main-medium mt-10 mb-6" ref={mainRef}>
@@ -143,38 +114,10 @@ export default function BurgerIngredients({data, onOpenModal}) {
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
-            mains.map(item => (
-                  <li className={styles.ingredient} key={item._id}>
-                    <button 
-                      className={styles.button}
-                      onClick={() => {
-                        // onOpenModal('ingredient', item)
-                        burgerDataDispatch({
-                          type:  'addIngredient',
-                          payload: item
-                        })
-                      }}
-                    >
-                      <img className="ml-4 mr-4" src={item.image} alt={item.name} />
-                      <div className={`${styles.price} mt-1 mb-1}`}>
-                        <p className="text text_type_digits-default">{item.price}</p>
-                        <CurrencyIcon type="primary" />
-                      </div>
-                      <p className="text text_type_main-default">
-                        {item.name}
-                      </p>
-                    </button>  
-                  </li>
-                )  
-              )
-            } 
+            mains.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
+          } 
         </ul>
       </div>
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  data: ingredientsPropType,
-  onOpenModal: PropTypes.func.isRequired
-}; 
