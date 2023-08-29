@@ -11,10 +11,11 @@ import Ingredient from "../Ingredient/ingredient"
 export default function BurgerIngredients() {
 
   const ingrediences = useSelector((state) => state.ingrediencesData.ingrediences)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const [current, setCurrent] = React.useState(BUN)
 
+  const ingredientsContainer = useRef()
   const bunRef = useRef()
   const sauceRef = useRef()
   const mainRef = useRef()
@@ -22,6 +23,23 @@ export default function BurgerIngredients() {
   const buns = React.useMemo(() => ingrediences.filter((item) => item.type === BUN), [ingrediences])
   const mains = React.useMemo(() => ingrediences.filter((item) => item.type === MAIN), [ingrediences])
   const sauces = React.useMemo(() => ingrediences.filter((item) => item.type === SAUCE), [ingrediences])
+
+  const handleScroll = () => {
+    const containerScroll = ingredientsContainer.current.getBoundingClientRect().top
+    const bunScroll = bunRef.current.getBoundingClientRect().top - containerScroll
+    const sauceScroll = sauceRef.current.getBoundingClientRect().top - containerScroll
+    const mainScroll = mainRef.current.getBoundingClientRect().top - containerScroll
+    const maxOffset = -30
+    if (bunScroll < 0 && bunScroll > maxOffset) {
+      setCurrent(BUN)
+    }
+    else if (sauceScroll < 0 && sauceScroll > maxOffset) {
+      setCurrent(SAUCE)
+    }
+    else if (mainScroll < 0 && mainScroll > maxOffset) {
+      setCurrent(MAIN)
+    }
+  }
 
   return(
     <section className={styles.section}>
@@ -75,7 +93,7 @@ export default function BurgerIngredients() {
           Начинки
         </Tab>
       </nav>
-      <div className={`${styles.constructor} mt-10 custom-scroll`}>
+      <div className={`${styles.constructor} mt-10 custom-scroll`} onScroll={handleScroll} ref={ingredientsContainer}>
         <p className="text text_type_main-medium mb-6" ref={bunRef}>
           Булки
         </p>
