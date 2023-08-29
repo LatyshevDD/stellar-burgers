@@ -15,7 +15,7 @@ export default function BurgerIngredient({ingredientData}) {
   const dispatch = useDispatch()
   const dropIndex = ingrediences.findIndex(item => item.key === ingredientData.key)
   
-  const [, drag] = useDrag(() => ({
+  const [, drag, preview] = useDrag(() => ({
     type: 'burgerIngredient',
     item: ingredientData,
   }))
@@ -32,19 +32,23 @@ export default function BurgerIngredient({ingredientData}) {
     }
   }))
   
-  drag(drop(ref))
   return (
-    <li className={`${styles.ingredient} mr-2`} ref={ref}>
-      <DragIcon type="primary" />
-      <ConstructorElement
-        text={ingredientData.name}
-        price={ingredientData.price}
-        thumbnail={ingredientData.image}
-        handleClose={() => {
-          dispatch(deleteIngredient(ingredientData))
-        }}
-      />
-    </li>
+    <div ref={preview}>
+      <li className={`${styles.ingredient} mr-2`} ref={drop}>
+        <div ref={drag}>
+          <DragIcon type="primary"/>
+        </div>
+        <ConstructorElement
+          text={ingredientData.name}
+          price={ingredientData.price}
+          thumbnail={ingredientData.image}
+          handleClose={() => {
+            dispatch(deleteIngredient(ingredientData))
+          }}
+        />
+      </li>
+    </div>
+    
   )
 }
 
