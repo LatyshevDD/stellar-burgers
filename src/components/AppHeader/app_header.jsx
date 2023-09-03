@@ -1,8 +1,9 @@
-import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './app_header.module.css';
+import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './app_header.module.css'
+import { Link } from "react-router-dom"
 
 export default function AppHeader() {
   return (
@@ -21,12 +22,14 @@ export default function AppHeader() {
         </p>
       </a>
       <Logo/>
-      <a className={`${styles.link_lk} mr-5`}>
-        <ProfileIcon type="secondary" />
-        <p className="text text_type_main-default text_color_inactive ml-2">
-          Личный кабинет
-        </p>
-      </a>
+      <Link to="/login" style={{textDecoration: "none"}}>
+        <div className={`${styles.link_lk} mr-5`}>
+          <ProfileIcon type="secondary" />
+          <p className="text text_type_main-default text_color_inactive ml-2">
+            Личный кабинет
+          </p>
+        </div>
+      </Link>
     </nav> 
   </header>
   );

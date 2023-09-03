@@ -2,12 +2,12 @@ import React from "react"
 import { useState } from "react"
 import { useEffect } from "react"
 import styles from "./app.module.css"
-import AppHeader from "../AppHeader/app_header"
-import BurgerIngredients from '../BurgerIngredients/burger_ingredients'
-import BurgerConstructor from '../BurgerConstructor/burger_constructor'
-import Modal from "../Modal/modal"
-import OrderDetails from "../OrderDetails/order_details"
-import IngredientDetails from "../IngredientDetails/ingredient_details"
+import AppHeader from "../../components/AppHeader/app_header"
+import BurgerIngredients from '../../components/BurgerIngredients/burger_ingredients'
+import BurgerConstructor from '../../components/BurgerConstructor/burger_constructor'
+import Modal from "../../components/Modal/modal"
+import OrderDetails from "../../components/OrderDetails/order_details"
+import IngredientDetails from "../../components/IngredientDetails/ingredient_details"
 import { getIngredience } from '../../utils/api'
 import { useSelector, useDispatch } from 'react-redux'
 import { setIngrediences, setError } from "../../services/ingrediencesDataSlice"
