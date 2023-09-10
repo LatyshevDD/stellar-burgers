@@ -210,12 +210,45 @@ export default function Feed() {
               </li>  
             </ul>
           </div>
-          <div className={styles.orders}>
-
+          <div className={styles.orders_container}>
+            <div className={styles.orders}>
+              <div className={styles.orders_ready}>
+                <p className={`${styles.orders_ready_title} text text_type_main-medium`}>
+                  Готовы:
+                </p>
+                <div className={styles.orders_ready_numbers}>
+                  <p className="text text_type_digits-default text_color_inactive">034533</p>
+                  <p className="text text_type_digits-default text_color_inactive">034532</p>
+                  <p className="text text_type_digits-default text_color_inactive">034530</p>
+                  <p className="text text_type_digits-default text_color_inactive">034527</p>
+                  <p className="text text_type_digits-default text_color_inactive">034525</p>
+                </div>
+              </div>
+              <div className={styles.orders_todo}>
+                <p className={`${styles.orders_todo_title} text text_type_main-medium`}>
+                  В работе:
+                </p>
+                <div className={styles.orders_todo_numbers}>
+                  <p className="text text_type_digits-default">034538</p>
+                  <p className="text text_type_digits-default">034541</p>
+                  <p className="text text_type_digits-default">034542</p>
+                </div>
+              </div>
+            </div>
+            <div className={styles.done_alltime}>
+              <p className='text text_type_main-medium'>
+                  Выполнено за все время:
+              </p>
+              <p className={`${styles.digits_shadow} text text_type_digits-large`}>28 752</p>
+            </div>
+            <div className={styles.done_today}>
+              <p className='text text_type_main-medium'>
+                  Выполнено за сегодня:
+              </p>
+              <p className={`${styles.digits_shadow} text text_type_digits-large`}>138</p>
+            </div>
           </div>
-
         </div>
-        
       </section>
     </main>
   )
