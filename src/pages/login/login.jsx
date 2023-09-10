@@ -1,14 +1,12 @@
 import React from "react"
 import { ReactDOM } from "react"
 import styles from "./login.module.css"
-import AppHeader from "../../components/AppHeader/app_header"
 import { Form, Link } from "react-router-dom"
 import { Input, Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components"
 
 export default function Login() {
   return (
     <>
-      <AppHeader />
       <main className={styles.main}>
         <Form style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
           <p className="text text_type_main-medium">
@@ -47,7 +45,7 @@ export default function Login() {
             <p className="text text_type_main-default text_color_inactive mt-4">
               Забыли пароль?
             </p>
-            <Link style={{textDecoration: 'none', color: '#4C4CFF'}}>
+            <Link to="/forgot-password" style={{textDecoration: 'none', color: '#4C4CFF'}}>
               <p className='text text_type_main-default mt-4'>
                 Восстановить пароль
               </p>

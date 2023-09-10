@@ -2,7 +2,7 @@ import React from "react"
 import { useState } from "react"
 import { useEffect } from "react"
 import styles from "./app.module.css"
-import AppHeader from "../../components/AppHeader/app_header"
+import AppHeader from "../AppHeader/app_header"
 import BurgerIngredients from '../../components/BurgerIngredients/burger_ingredients'
 import BurgerConstructor from '../../components/BurgerConstructor/burger_constructor'
 import Modal from "../../components/Modal/modal"
@@ -30,7 +30,6 @@ function App() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <AppHeader/>
       <main className={styles.main}>
         {
           !ingrediencesData.hasError && (
