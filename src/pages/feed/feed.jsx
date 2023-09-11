@@ -3,8 +3,12 @@ import { ReactDOM } from "react"
 import styles from "./feed.module.css"
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import { Outlet } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 export default function Feed() {
+
+  const location = useLocation()
 
   const date = () => {
     const dateFromServer = '2023-09-08T17:33:32.877Z'
@@ -13,6 +17,8 @@ export default function Feed() {
 
   return (
     <main className={styles.main}>
+    {
+      location.pathname === '/feed' &&
       <section className={styles.section}>
         <p className="text text_type_main-large">
           Лента заказов
@@ -249,9 +255,9 @@ export default function Feed() {
             </div>
           </div>
         </div>
-      </section>
+      </section> 
+    }  
+      <Outlet/>
     </main>
   )
 }
-
-// transform: "translate(-30%)"

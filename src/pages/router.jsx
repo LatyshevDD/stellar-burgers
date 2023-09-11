@@ -15,6 +15,7 @@ import AppHeader from './AppHeader/app_header'
 import Profile from './profile/profile'
 import ProfileForm from './profile_form/profile_form'
 import Feed from './feed/feed'
+import FeedId from './feed/feed_id/feed_id'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,7 +29,9 @@ export const router = createBrowserRouter(
         <Route path="/profile" element={<Profile />}>
           <Route index element={<ProfileForm/>}/>
         </Route>
-        <Route path="/feed" element={<Feed />}/>
+        <Route path="/feed" element={<Feed />}>
+          <Route path=":id" element={<FeedId />}/>
+        </Route>
       </Route>    
     </>    
   )
