@@ -4,9 +4,10 @@
 }
 
 .section {
-  width: 1270px;
+  width: 1244px;
   display: flex;
   gap: 60px;
+  justify-content: center;
 }
 
 .sidebar {

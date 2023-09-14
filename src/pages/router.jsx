@@ -16,6 +16,8 @@ import Profile from './profile/profile'
 import ProfileForm from './profile_form/profile_form'
 import Feed from './feed/feed'
 import FeedId from './feed/feed_id/feed_id'
+import Orders from './profile/orders/orders'
+import OrdersId from './profile/orders/orders_id/orders_id'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +30,9 @@ export const router = createBrowserRouter(
         <Route path="/reset-password" element={<ResetPassword />}/>
         <Route path="/profile" element={<Profile />}>
           <Route index element={<ProfileForm/>}/>
+          <Route path="orders" element={<Orders />}>
+            <Route path=":id" element={<OrdersId/>}/>
+          </Route>
         </Route>
         <Route path="/feed" element={<Feed />}>
           <Route path=":id" element={<FeedId />}/>

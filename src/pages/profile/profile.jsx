@@ -14,43 +14,47 @@ export default function Profile() {
   return (
     <main className={styles.main}>
       <section className={styles.section}>
-        <div className={styles.sidebar}>
-          <nav className={styles.nav}>
-            <NavLink className={({ isActive, isPending }) =>
-                        isActive
-                          ? styles.active
-                          : isPending
-                          ? styles.pending
-                          : ""
-                      }
-            >
-              Профиль
-            </NavLink>
-            <NavLink className={({ isActive, isPending }) =>
-                        isActive
-                          ? styles.active
-                          : isPending
-                          ? styles.pending
-                          : ""
-                      }
-            >
-              История заказов
-            </NavLink>
-            <NavLink className={({ isActive, isPending }) =>
-                        isActive
-                          ? styles.active
-                          : isPending
-                          ? styles.pending
-                          : ""
-                      }
-            >
-              Выход
-            </NavLink>
-          </nav>
-          <p className="text text_type_main-default text_color_inactive">
-            {location === '/profile' && 'В этом разделе вы можете изменить свои персональные данные'}
-          </p>
-        </div>
+        {(location === '/profile' || location === '/profile/orders')
+          &&
+          <div className={styles.sidebar}>
+            <nav className={styles.nav}>
+              <NavLink 
+                to='/profile' 
+                className={({ isActive}) =>
+                  isActive ? styles.active : styles.pending
+                }
+                end
+              >
+                Профиль
+              </NavLink>
+              <NavLink 
+                to='orders' 
+                className={({ isActive}) =>
+                  isActive ? styles.active : styles.pending
+                }
+                end
+              >
+                История заказов
+              </NavLink>
+              <NavLink 
+                to='.' 
+                className={({ isActive }) =>
+                  isActive ? styles.active : styles.pending
+                }
+                end
+              >
+                Выход
+              </NavLink>
+            </nav>
+            <p className="text text_type_main-default text_color_inactive">
+            {location === '/profile' ? 
+              'В этом разделе вы можете изменить свои персональные данные' :
+              location === '/profile/orders' ?
+              'В этом разделе вы можете просмотреть свою историю заказов' :
+              ''}
+            </p>
+          </div>
+        }
         <Outlet/>
       </section>  
     </main>
