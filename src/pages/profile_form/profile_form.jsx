@@ -1,11 +1,10 @@
 import React from "react"
 import { ReactDOM } from "react"
-import { Form } from "react-router-dom"
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components"
 
 export default function ProfileForm() {
   return (
-    <Form style={{display: "flex", gap: '24px', flexDirection: "column", alignItems: "center", marginTop: '120px'}}>
+    <form style={{display: "flex", gap: '24px', flexDirection: "column", alignItems: "center", marginTop: '120px'}}>
           <Input 
             type={'text'} 
             placeholder={'Имя'}  
@@ -33,6 +32,6 @@ export default function ProfileForm() {
             name={"password"}
             disabled={true}
           />
-        </Form>
+        </form>
   )
 }

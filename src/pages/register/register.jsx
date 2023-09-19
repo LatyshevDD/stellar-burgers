@@ -1,15 +1,15 @@
 import React from "react"
 import { ReactDOM } from "react"
 import styles from "./register.module.css"
-import AppHeader from "../AppHeader/app_header"
-import { Form, Link } from "react-router-dom"
+import AppHeader from "../../components/AppHeader/app_header"
+import { Link } from "react-router-dom"
 import { Input, Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components"
 
 export default function Register() {
   return (
     <>
       <main className={styles.main}>
-        <Form style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <form style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
           <p className="text text_type_main-medium">
             Регистрация
           </p>
@@ -50,7 +50,7 @@ export default function Register() {
               </p>
             </Link>
           </div>
-        </Form>
+        </form>
       </main>
     </>
   )

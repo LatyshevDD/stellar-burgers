@@ -1,14 +1,14 @@
 import React from "react"
 import { ReactDOM } from "react"
 import styles from "./login.module.css"
-import { Form, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Input, Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components"
 
 export default function Login() {
   return (
     <>
       <main className={styles.main}>
-        <Form style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <form style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
           <p className="text text_type_main-medium">
             Вход
           </p>
@@ -51,7 +51,7 @@ export default function Login() {
               </p>
             </Link>
           </div>
-        </Form>
+        </form>
       </main>
     </>
   )

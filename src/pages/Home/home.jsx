@@ -1,8 +1,8 @@
 import React from "react"
 import { useState } from "react"
 import { useEffect } from "react"
-import styles from "./app.module.css"
-import AppHeader from "../AppHeader/app_header"
+import styles from "./home.module.css"
+import AppHeader from "../../components/AppHeader/app_header"
 import BurgerIngredients from '../../components/BurgerIngredients/burger_ingredients'
 import BurgerConstructor from '../../components/BurgerConstructor/burger_constructor'
 import Modal from "../../components/Modal/modal"
@@ -15,7 +15,7 @@ import { HTML5Backend } from "react-dnd-html5-backend"
 import { DndProvider } from "react-dnd"
 
 
-function App() {
+function Home() {
   
   const ingrediencesData = useSelector((state) => state.ingrediencesData)
   const modalData = useSelector((state) => state.modalData)
@@ -67,4 +67,4 @@ function App() {
   );
 }
 
-export default App
+export default Home
