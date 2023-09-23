@@ -1,10 +1,19 @@
 import React from "react"
+import { useState } from "react"
 import { ReactDOM } from "react"
 import styles from "./login.module.css"
 import { Link } from "react-router-dom"
-import { Input, Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components"
+import { Input, Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
+import { useDispatch } from "react-redux"
+import { login } from "../../services/userDataSlice"
 
 export default function Login() {
+
+  const dispatch = useDispatch()
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
   return (
     <>
       <main className={styles.main}>
@@ -15,20 +24,28 @@ export default function Login() {
           <EmailInput 
             placeholder={'E-mail'} 
             extraClass="mt-6" 
-            value={""}
-            onChange={e => console.log(e)}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             name = {'email'}
           />
-          <Input 
-            type={'password'} 
+          <PasswordInput 
             placeholder={'Пароль'} 
             extraClass="mt-6 mb-6" 
-            value={""}
-            onChange={e => console.log(e)}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             icon={"ShowIcon"}
             name={"password"}
           />
-          <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
+          <Button 
+            htmlType="submit" 
+            type="primary" 
+            size="medium" 
+            extraClass="mb-20"
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(login({email: email, password: password}))
+            }}
+          >
             Войти
           </Button>
           <div className={styles.link_container}>

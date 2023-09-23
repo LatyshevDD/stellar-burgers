@@ -30,3 +30,30 @@ export function getOrderDetails(data) {
     }
   })
 }
+
+export function registerRequest(data) {
+  return requestApi('https://norma.nomoreparties.space/api/auth/register', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+      name: data.name
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
+export function loginRequest(data) {
+  return requestApi('https://norma.nomoreparties.space/api/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
