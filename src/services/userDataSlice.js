@@ -1,12 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { loginRequest } from "../utils/api"
+import { loginRequest, logoutRequest, getUserWithRefreshRequest, refreshTokenRequest } from "../utils/api"
 
 
 const initialState = {
     user: null,
     isAuthChecked: false,
 }
+
+export const getUser = () => {
+  return (dispatch) => {
+      return getUserWithRefreshRequest().then((res) => {
+          dispatch(setUser(res.user));
+      });
+  };
+};
 
 export const login = createAsyncThunk(
   "user/login",
@@ -15,6 +23,32 @@ export const login = createAsyncThunk(
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
       return res.user;
+  }
+)
+
+export const checkUserAuth = () => {
+  return (dispatch) => {
+      if (localStorage.getItem("accessToken")) {
+          dispatch(getUser())
+              .catch(() => {
+                  localStorage.removeItem("accessToken");
+                  localStorage.removeItem("refreshToken");
+                  dispatch(setUser(null));
+              })
+              .finally(() => dispatch(setAuthChecked(true)));
+      } else {
+          dispatch(setAuthChecked(true));
+      }
+  };
+}
+
+
+export const logout = createAsyncThunk(
+  "user/logout",
+  async () => {
+      await logoutRequest();
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
   }
 )
 
@@ -31,7 +65,7 @@ export const userDataSlice = createSlice({
     setUser: (state, action) => {
       return {
         ...state,
-        user: action.payload.user
+        user: action.payload
       }
     },
   },
@@ -44,9 +78,13 @@ export const userDataSlice = createSlice({
             isAuthChecked: true
           }
         })
-        // .addCase(logout.fulfilled, (state) => {
-        //   state.user = null;
-        // })
+        .addCase(logout.fulfilled, (state) => {
+          return {
+            ...state,
+            isAuthChecked: false,
+            user: null
+          }
+        })
   }
 })
 

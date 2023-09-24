@@ -57,3 +57,60 @@ export function loginRequest(data) {
     }
   })
 }
+
+export function logoutRequest() {
+  return requestApi('https://norma.nomoreparties.space/api/auth/logout', {
+    method: 'POST',
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken')
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
+export function getUserRequest() {
+  return requestApi('https://norma.nomoreparties.space/api/auth/user', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      authorization: localStorage.getItem('accessToken')
+    }
+  })
+}
+
+export function getUserWithRefreshRequest() {
+  return getUserRequest()
+          .catch((err) => {
+            if (err === 'jwt expired') {
+              refreshTokenRequest()
+                .then((res) => {
+                  localStorage.setItem("refreshToken", res.refreshToken);
+                  localStorage.setItem("accessToken", res.accessToken);
+                })
+                .then(() => {
+                  return getUserRequest()
+                    .catch((err) =>{
+                      return Promise.reject(err)
+                    })
+                })
+                .catch((err) =>{
+                  return Promise.reject(err)
+                })
+            }
+          })
+}
+
+export function refreshTokenRequest() {
+  return requestApi('https://norma.nomoreparties.space/api/auth/token', {
+    method: 'POST',
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken')
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
+

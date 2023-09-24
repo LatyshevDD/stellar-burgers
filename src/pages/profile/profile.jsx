@@ -5,9 +5,12 @@ import { NavLink } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components"
 import { Outlet } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { logout } from "../../services/userDataSlice"
 
 export default function Profile() {
 
+  const dispatch = useDispatch()
   const location = useLocation().pathname
 
   return (
@@ -40,6 +43,7 @@ export default function Profile() {
                 className={({ isActive }) =>
                   isActive ? styles.active : styles.pending
                 }
+                onClick={() => dispatch(logout())}
                 end
               >
                 Выход

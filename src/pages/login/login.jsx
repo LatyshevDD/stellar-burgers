@@ -6,13 +6,22 @@ import { Link } from "react-router-dom"
 import { Input, Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useDispatch } from "react-redux"
 import { login } from "../../services/userDataSlice"
+import { useNavigate, useLocation } from "react-router-dom"
 
 export default function Login() {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  async function onSubmit(e) {
+    e.preventDefault()
+    await dispatch(login({email: email, password: password}))
+    navigate(location.state.from || '/profile')
+  }
 
   return (
     <>
@@ -41,10 +50,8 @@ export default function Login() {
             type="primary" 
             size="medium" 
             extraClass="mb-20"
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(login({email: email, password: password}))
-            }}
+            onClick={onSubmit
+            }
           >
             Войти
           </Button>

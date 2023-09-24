@@ -11,10 +11,20 @@ import Feed from "../../pages/feed/feed"
 import FeedId from "../../pages/feed/feed_id/feed_id"
 import Orders from "../../pages/profile/orders/orders"
 import OrdersId from "../../pages/profile/orders/orders_id/orders_id"
+import { useDispatch } from "react-redux"
+import { useEffect } from "react"
+import { checkUserAuth } from "../../services/userDataSlice"
+import { OnlyAuth } from "../ProtectedRouteElement/ProtectedRouteElement"
+import { OnlyUnAuth } from "../ProtectedRouteElement/ProtectedRouteElement"
 
 
 
 export default function App() {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => dispatch(checkUserAuth()), [])
+
   return (
     <>
       <AppHeader/>
@@ -24,7 +34,7 @@ export default function App() {
         <Route path="/register" element={<Register />}/>
         <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="/reset-password" element={<ResetPassword />}/>
-        <Route path="/profile" element={<Profile />}>
+        <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
           <Route index element={<ProfileForm/>}/>
           <Route path="orders" element={<Orders />}>
             <Route path=":id" element={<OrdersId/>}/>
