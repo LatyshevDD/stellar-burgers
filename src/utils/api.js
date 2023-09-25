@@ -114,3 +114,28 @@ export function refreshTokenRequest() {
   })
 }
 
+export function forgotPasswordRequest(data) {
+  return requestApi('https://norma.nomoreparties.space/api/password-reset', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: data
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
+export function resetPasswordRequest(data) {
+  return requestApi('https://norma.nomoreparties.space/api/password-reset/reset', {
+    method: 'POST',
+    body: JSON.stringify({
+      password: data.password,
+      token: data.token
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
