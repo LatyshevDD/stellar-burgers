@@ -1,10 +1,10 @@
-import React from "react"
+import React, {useState} from "react"
 import { ReactDOM } from "react"
 import styles from "./profile.module.css"
 import { NavLink } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { logout } from "../../services/userDataSlice"
 
@@ -12,7 +12,16 @@ export default function Profile() {
 
   const dispatch = useDispatch()
   const location = useLocation().pathname
+  const navigate = useNavigate()
+  const [active, setActive] = useState(false)
 
+  async function onLogout(e) {
+    setActive(true)
+    e.preventDefault()
+    await dispatch(logout())
+    navigate('login')
+  }
+  
   return (
     <main className={styles.main}>
       <section className={styles.section}>
@@ -39,14 +48,12 @@ export default function Profile() {
                 История заказов
               </NavLink>
               <NavLink 
-                to='.' 
-                className={({ isActive }) =>
-                  isActive ? styles.active : styles.pending
-                }
-                onClick={() => dispatch(logout())}
+                to='/login'
+                className={active ? styles.active : styles.pending }
+                onClick={onLogout}
                 end
               >
-                Выход
+                  Выход
               </NavLink>
             </nav>
             <p className="text text_type_main-default text_color_inactive">
