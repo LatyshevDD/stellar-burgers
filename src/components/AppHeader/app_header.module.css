@@ -47,3 +47,13 @@
 .link_lk:hover {
   opacity: .6;
 }
+
+.active {
+  text-decoration: none;
+  color: rgba(133,133,173,1);
+}
+
+.pending {
+  text-decoration: none;
+  color: rgba(242,242,243,1);
+}
