@@ -11,7 +11,7 @@ export default function ForgotPassword() {
   const [error, setError] = useState({hasError: false, errorMessage: ''})
   const navigate = useNavigate()
 
-  async function onSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     try {
       await forgotPasswordRequest(email)
@@ -39,11 +39,20 @@ export default function ForgotPassword() {
             htmlType="submit" 
             type="primary" 
             size="medium" 
-            extraClass="mb-20"
-            onClick={onSubmit}
+            onClick={handleSubmit}
           >
             Восстановить
           </Button>
+          { 
+            error.hasError
+            &&
+            (
+              <p className="text text_type_main-default text_color_inactive mt-4">
+                {error.errorMessage}
+              </p>
+            ) 
+
+          }
           <div className={styles.link_container}>
             <p className="text text_type_main-default text_color_inactive">
               Вспомнили пароль?

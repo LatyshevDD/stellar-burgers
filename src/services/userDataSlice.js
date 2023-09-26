@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { loginRequest, logoutRequest, getUserWithRefreshRequest, refreshTokenRequest } from "../utils/api"
+import { loginRequest, logoutRequest, getUserWithRefreshRequest } from "../utils/api"
 
 
 const initialState = {

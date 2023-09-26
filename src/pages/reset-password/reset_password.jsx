@@ -11,13 +11,14 @@ export default function ResetPassword() {
   const [token, setToken] = useState('')
 
   const [error, setError] = useState({hasError: false, errorMessage: ''})
+  const [success, setSuccess] = useState({hasSuccess: false, successMessage: ''})
 
-  async function onSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     try {
-      let res = await resetPasswordRequest({password: password, token: token})
-      console.log(res)
-    } catch (e) {
+      const res = await resetPasswordRequest({password: password, token: token})
+      setSuccess({hasSuccess: res.success, successMessage: res.message})
+    } catch(e) {
       setError({hasError: true, errorMessage: e})
     }
   }
@@ -25,7 +26,7 @@ export default function ResetPassword() {
   return (
     <>
       <main className={styles.main}>
-        <form style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <form className={styles.form}>
           <p className="text text_type_main-medium">
             Восстановление пароля
           </p>
@@ -50,11 +51,28 @@ export default function ResetPassword() {
             htmlType="submit" 
             type="primary" 
             size="medium" 
-            extraClass="mb-20"
-            onClick={() => onSubmit}
+            onClick={handleSubmit}
           >
             Сохранить
           </Button>
+          { 
+            success.hasSuccess
+            &&
+            (
+              <p className="text text_type_main-default text_color_inactive mt-4">
+                {success.successMessage}
+              </p>
+            ) 
+          }
+          { 
+            error.hasError
+            &&
+            (
+              <p className="text text_type_main-default text_color_inactive mt-4">
+                {error.errorMessage}
+              </p>
+            ) 
+          }
           <div className={styles.link_container}>
             <p className="text text_type_main-default text_color_inactive">
               Вспомнили пароль?
