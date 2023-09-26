@@ -11,6 +11,7 @@ import Feed from "../../pages/feed/feed"
 import FeedId from "../../pages/feed/feed_id/feed_id"
 import Orders from "../../pages/profile/orders/orders"
 import OrdersId from "../../pages/profile/orders/orders_id/orders_id"
+import IngredientsId from "../../pages/ingredients/:id/ingredients_id"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { checkUserAuth } from "../../services/userDataSlice"
@@ -30,6 +31,7 @@ export default function App() {
       <AppHeader/>
       <Routes>
         <Route path="/" element={<Home />}/>
+        <Route path="/ingredients/:id" element={<IngredientsId />}/>
         <Route path="/login" element={<OnlyUnAuth component = {<Login />} />}/>
         <Route path="/register" element={<OnlyUnAuth component = {<Register />} />}/>
         <Route path="/forgot-password" element={<OnlyUnAuth component = {<ForgotPassword />} />}/>
