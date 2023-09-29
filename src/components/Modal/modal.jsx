@@ -1,17 +1,17 @@
 import React from "react"
 import PropTypes from 'prop-types'
-import { useEffect } from "react"
+// import { useEffect } from "react"
 import { useRef } from "react"
-import { createPortal } from "react-dom"
+// import { createPortal } from "react-dom"
 import ModalOverlay from "../ModalOverlay/modal_overlay"
 import styles from './modal.module.css'
 import close_image from '../../images/modal_close.png'
 import { useDispatch } from "react-redux"
 import { closeModal } from "../../services/modalDataSlice"
 
-const modalRoot = document.getElementById("react-modals")
+// const modalRoot = document.getElementById("react-modals")
 
-export default function Modal({children}) {
+export default function Modal({children, onClose}) {
 
   const dispatch = useDispatch()
 
@@ -19,13 +19,13 @@ export default function Modal({children}) {
 
   function handleEscClose(e) {
     if (e.key === "Escape") {
-      dispatch(closeModal())
+      onClose()
     }
   }
 
   function overlayClosePopup(e) {
     if (modal.current && !modal.current.contains(e.target)) {
-      dispatch(closeModal())
+      onClose()
     }
     return;
   }
@@ -39,25 +39,23 @@ export default function Modal({children}) {
     }
   })
 
-  return createPortal(
-    (
-        <div className={styles.modal_container}>
-          <ModalOverlay/>
-          <div className={styles.modal} ref={modal}>
-            {children}
-            <button 
-              className={styles.button_close} 
-              onClick={ 
-                () => {
-                  dispatch(closeModal())
-                }  
-              }
-            >
-              <img src={close_image} alt="Закрыть модальное окно"/>
-            </button>
-          </div>
-        </div>  
-    ),
-    modalRoot  
-  );
+  return (
+    <div className={styles.modal_container}>
+      <ModalOverlay/>
+      <div className={styles.modal} ref={modal}>
+        {children}
+        <button 
+        className={styles.button_close} 
+        onClick={ 
+          () => {
+            // dispatch(closeModal())
+            onClose()
+          }  
+        }
+        >
+        <img src={close_image} alt="Закрыть модальное окно"/>
+      </button>
+    </div>
+  </div> 
+  )
 }

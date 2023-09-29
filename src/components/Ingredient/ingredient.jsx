@@ -7,10 +7,12 @@ import { useDrag } from "react-dnd"
 import PropTypes from 'prop-types'
 import { ingredientPropType } from "../../utils/prop-types"
 import { getCountOfIngredient } from "../../utils/utils"
+import { NavLink, useLocation } from "react-router-dom"
 
 export default function Ingredient({ingredientData}) {
 
   const dispatch = useDispatch()
+  const location = useLocation()
 
   const burgerData = useSelector(state => state.burgerData)
   
@@ -29,11 +31,13 @@ export default function Ingredient({ingredientData}) {
 
   return (
     <li className={styles.ingredient} ref={drag}>
-      <button 
-        className={styles.button} 
-        onClick={() => {
-          dispatch(openIngredientModal(ingredientData))
-        }}
+      <NavLink 
+        className={styles.link}
+        to={`/ingredients/${ingredientData._id}`}
+        state={{ background: location }} 
+        // onClick={() => {
+        //   dispatch(openIngredientModal(ingredientData))
+        // }}
       >
         <img className="ml-4 mr-4" src={ingredientData.image} alt={ingredientData.name} />
         <div className={`${styles.price} mt-1 mb-1}`}>
@@ -43,7 +47,7 @@ export default function Ingredient({ingredientData}) {
         <p className="text text_type_main-default">
           {ingredientData.name}
         </p>
-      </button>
+      </NavLink>
       {
         ingredientCount > 0 
         &&

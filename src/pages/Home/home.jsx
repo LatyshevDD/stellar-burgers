@@ -18,16 +18,10 @@ import { DndProvider } from "react-dnd"
 function Home() {
   
   const ingrediencesData = useSelector((state) => state.ingrediencesData)
-  const modalData = useSelector((state) => state.modalData)
+  // const modalData = useSelector((state) => state.modalData)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    getIngredience()
-      .then(res => dispatch(setIngrediences([...res.data])))
-      .catch(e => dispatch(setError({hasError: true, errorMessage: e})))
-  }, [])
-
-
+  
   return (
     <DndProvider backend={HTML5Backend}>
       <main className={styles.main}>
@@ -47,7 +41,7 @@ function Home() {
           )
         }
       </main>
-      <div className={styles.modals_container}>
+      {/* <div className={styles.modals_container}>
         {
           modalData.active && (
           <Modal>
@@ -62,7 +56,7 @@ function Home() {
           </Modal>
           )
         }
-      </div>
+      </div> */}
     </DndProvider>
   );
 }

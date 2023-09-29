@@ -1,5 +1,5 @@
 import AppHeader from "../AppHeader/app_header"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
 import Home from "../../pages/Home/home"
 import Login from "../../pages/login/login"
 import Register from "../../pages/register/register"
@@ -11,27 +11,44 @@ import Feed from "../../pages/feed/feed"
 import FeedId from "../../pages/feed/feed_id/feed_id"
 import Orders from "../../pages/profile/orders/orders"
 import OrdersId from "../../pages/profile/orders/orders_id/orders_id"
-import IngredientsId from "../../pages/ingredients/:id/ingredients_id"
+import Modal from "../Modal/modal"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { checkUserAuth } from "../../services/userDataSlice"
 import { OnlyAuth } from "../ProtectedRouteElement/ProtectedRouteElement"
 import { OnlyUnAuth } from "../ProtectedRouteElement/ProtectedRouteElement"
+import IngredientDetails from "../IngredientDetails/ingredient_details"
+import { setIngrediences, setError } from "../../services/ingrediencesDataSlice"
+import { getIngredience } from "../../utils/api"
 
 
 
 export default function App() {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const background = location.state && location.state.background
+
+  useEffect(() => {
+    getIngredience()
+      .then(res => dispatch(setIngrediences([...res.data])))
+      .catch(e => dispatch(setError({hasError: true, errorMessage: e})))
+  }, [])
 
   useEffect(() => dispatch(checkUserAuth()), [])
+
+  const handleModalClose = () => {
+    navigate(-1);
+  };
 
   return (
     <>
       <AppHeader/>
-      <Routes>
+      <Routes location={background || location}>
         <Route path="/" element={<Home />}/>
-        <Route path="/ingredients/:id" element={<IngredientsId />}/>
+        <Route path='/ingredients/:ingredientId' element={<IngredientDetails fullScrin={true} />} />
         <Route path="/login" element={<OnlyUnAuth component = {<Login />} />}/>
         <Route path="/register" element={<OnlyUnAuth component = {<Register />} />}/>
         <Route path="/forgot-password" element={<OnlyUnAuth component = {<ForgotPassword />} />}/>
@@ -46,6 +63,18 @@ export default function App() {
           <Route path=":id" element={<FeedId />}/>
         </Route>  
       </Routes>
+      {background && (
+        <Routes>
+	        <Route
+	          path='/ingredients/:ingredientId'
+	          element={
+	            <Modal onClose={handleModalClose}>
+	              <IngredientDetails fullScrin={false}/>
+	            </Modal>
+	          }
+	        />
+        </Routes>
+      )}
     </>
   )
 }
