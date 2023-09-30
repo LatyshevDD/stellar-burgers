@@ -38,7 +38,6 @@ export default function AppHeader() {
         <NavLink 
           to="/profile"
           className={({ isActive}) => isActive ? styles.active : styles.pending}
-          end
         >
           <div className={`${styles.link_lk} mr-5`}>
             <ProfileIcon type="primary" />
