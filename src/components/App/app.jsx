@@ -77,10 +77,14 @@ export default function App() {
           <Route
 	          path='/order'
 	          element={
-	            <Modal onClose={handleModalClose}>
-	              <OrderDetails />
-	            </Modal>
-	          }
+              <OnlyAuth 
+              component={
+                <Modal onClose={handleModalClose}>
+	                <OrderDetails />
+	              </Modal>
+                } 
+              />
+            }
 	        />
         </Routes>
       )}
