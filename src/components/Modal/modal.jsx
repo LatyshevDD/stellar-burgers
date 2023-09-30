@@ -1,19 +1,11 @@
 import React from "react"
 import PropTypes from 'prop-types'
-// import { useEffect } from "react"
 import { useRef } from "react"
-// import { createPortal } from "react-dom"
 import ModalOverlay from "../ModalOverlay/modal_overlay"
 import styles from './modal.module.css'
 import close_image from '../../images/modal_close.png'
-import { useDispatch } from "react-redux"
-import { closeModal } from "../../services/modalDataSlice"
-
-// const modalRoot = document.getElementById("react-modals")
 
 export default function Modal({children, onClose}) {
-
-  const dispatch = useDispatch()
 
   const modal = useRef()
 
@@ -48,7 +40,6 @@ export default function Modal({children, onClose}) {
         className={styles.button_close} 
         onClick={ 
           () => {
-            // dispatch(closeModal())
             onClose()
           }  
         }
@@ -59,3 +50,7 @@ export default function Modal({children, onClose}) {
   </div> 
   )
 }
+
+Modal.propTypes = {
+  onClose: PropTypes.func
+}; 

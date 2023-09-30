@@ -1,0 +1,11 @@
+.form {
+  display: flex; 
+  gap: 24px; 
+  flex-direction: column; 
+  margin-top: 120px
+}
+
+.handlers {
+  display: flex;
+  justify-content: flex-end;
+}

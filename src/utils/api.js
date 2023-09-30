@@ -139,3 +139,18 @@ export function resetPasswordRequest(data) {
   })
 }
 
+export function changeUserRequest(data) {
+  return requestApi('https://norma.nomoreparties.space/api/auth/user', {
+    method: 'PATCH',
+    body: JSON.stringify({
+      name: data.name ,
+      email: data.login,
+      password: data.password
+    }),
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      authorization: localStorage.getItem('accessToken')
+    }
+  })
+}
+

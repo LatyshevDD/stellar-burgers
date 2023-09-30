@@ -1,5 +1,5 @@
 import styles from './ingredient_details.module.css';
-import { ingredientPropType } from '../../utils/prop-types';
+import PropTypes from 'prop-types';
 import { getIngredientById } from '../../utils/utils';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -16,7 +16,7 @@ export default function IngredientDetails({fullScrin}) {
   }
 
   return (
-    <main className={fullScrin && styles.main}>
+    <main className={fullScrin ? styles.main : ''}>
       <div className={styles.container}>
       {
         ingredient
@@ -70,6 +70,6 @@ export default function IngredientDetails({fullScrin}) {
   )
 }
 
-// IngredientDetails.propTypes = {
-//   ingredient: ingredientPropType,
-// }; 
+IngredientDetails.propTypes = {
+  fullScrin: PropTypes.bool
+}; 

@@ -18,6 +18,7 @@ import { checkUserAuth } from "../../services/userDataSlice"
 import { OnlyAuth } from "../ProtectedRouteElement/ProtectedRouteElement"
 import { OnlyUnAuth } from "../ProtectedRouteElement/ProtectedRouteElement"
 import IngredientDetails from "../IngredientDetails/ingredient_details"
+import OrderDetails from "../OrderDetails/order_details"
 import { setIngrediences, setError } from "../../services/ingrediencesDataSlice"
 import { getIngredience } from "../../utils/api"
 
@@ -70,6 +71,14 @@ export default function App() {
 	          element={
 	            <Modal onClose={handleModalClose}>
 	              <IngredientDetails fullScrin={false}/>
+	            </Modal>
+	          }
+	        />
+          <Route
+	          path='/order'
+	          element={
+	            <Modal onClose={handleModalClose}>
+	              <OrderDetails />
 	            </Modal>
 	          }
 	        />

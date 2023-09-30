@@ -2,7 +2,6 @@ import React, {useMemo} from "react"
 import styles from './ingredient.module.css'
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useDispatch, useSelector } from "react-redux"
-import { openIngredientModal } from "../../services/modalDataSlice"
 import { useDrag } from "react-dnd"
 import PropTypes from 'prop-types'
 import { ingredientPropType } from "../../utils/prop-types"
@@ -35,9 +34,6 @@ export default function Ingredient({ingredientData}) {
         className={styles.link}
         to={`/ingredients/${ingredientData._id}`}
         state={{ background: location }} 
-        // onClick={() => {
-        //   dispatch(openIngredientModal(ingredientData))
-        // }}
       >
         <img className="ml-4 mr-4" src={ingredientData.image} alt={ingredientData.name} />
         <div className={`${styles.price} mt-1 mb-1}`}>

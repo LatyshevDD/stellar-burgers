@@ -15,7 +15,6 @@ ReactDOM.render(
       <BrowserRouter>
         <App/>
       </BrowserRouter>
-      {/* <RouterProvider router={router} /> */}
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
