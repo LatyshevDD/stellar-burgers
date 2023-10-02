@@ -12,7 +12,8 @@ import FeedId from "../../pages/feed/feed_id/feed_id"
 import Orders from "../../pages/profile/orders/orders"
 import OrdersId from "../../pages/profile/orders/orders_id/orders_id"
 import Modal from "../Modal/modal"
-import { useDispatch } from "react-redux"
+import Spinner from "../spinner/spinner"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { checkUserAuth } from "../../services/userDataSlice"
 import { OnlyAuth } from "../ProtectedRouteElement/ProtectedRouteElement"
@@ -25,6 +26,8 @@ import { getIngredience } from "../../utils/api"
 
 
 export default function App() {
+
+  const spinnerActive = useSelector((store) => store.userData.spinnerActive)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -47,7 +50,15 @@ export default function App() {
   return (
     <>
       <AppHeader/>
-      <Routes location={background || location}>
+      {
+        spinnerActive
+        &&
+        <Spinner/>
+      }
+      {
+        !spinnerActive
+        &&
+        <Routes location={background || location}>
         <Route path="/" element={<Home />}/>
         <Route path='/ingredients/:ingredientId' element={<IngredientDetails fullScrin={true} />} />
         <Route path="/login" element={<OnlyUnAuth component = {<Login />} />}/>
@@ -64,7 +75,10 @@ export default function App() {
           <Route path=":id" element={<FeedId />}/>
         </Route>  
       </Routes>
-      {background && (
+      }
+      
+      {(!spinnerActive && background) 
+      && (
         <Routes>
 	        <Route
 	          path='/ingredients/:ingredientId'

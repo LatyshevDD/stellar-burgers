@@ -15,11 +15,10 @@ export default function Profile() {
   const navigate = useNavigate()
   const [active, setActive] = useState(false)
 
-  async function onLogout(e) {
+   function onLogout(e) {
     setActive(true)
     e.preventDefault()
-    await dispatch(logout())
-    navigate('login')
+    dispatch(logout())
   }
   
   return (

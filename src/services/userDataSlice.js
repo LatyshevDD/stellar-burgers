@@ -6,12 +6,18 @@ import { loginRequest, logoutRequest, getUserWithRefreshRequest, changeUserReque
 const initialState = {
     user: null,
     isAuthChecked: false,
-    isError: false
+    isError: false,
+    spinnerActive: false
 }
 
 export const getUser = () => {
   return (dispatch) => {
-      return getUserWithRefreshRequest().then((res) => {
+      return getUserWithRefreshRequest()
+      .then ((res) => {
+        dispatch(setSpinnerActive(true))
+        return res
+      })
+      .then((res) => {
           dispatch(setUser(res.user));
       });
   };
@@ -45,7 +51,10 @@ export const checkUserAuth = () => {
                   localStorage.removeItem("refreshToken");
                   dispatch(setUser(null));
               })
-              .finally(() => dispatch(setAuthChecked(true)));
+              .finally(() => {
+                dispatch(setSpinnerActive(false))
+                dispatch(setAuthChecked(true))
+              });
       } else {
           dispatch(setAuthChecked(true));
       }
@@ -78,6 +87,12 @@ export const userDataSlice = createSlice({
         user: action.payload
       }
     },
+    setSpinnerActive: (state, action) => {
+      return {
+        ...state,
+        spinnerActive: action.payload
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,7 +100,14 @@ export const userDataSlice = createSlice({
           return {
             ...state,
             user: action.payload,
-            isAuthChecked: true
+            isAuthChecked: true,
+            spinnerActive: false
+          }
+        })
+        .addCase(login.pending, (state) => {
+          return {
+            ...state,
+            spinnerActive: true
           }
         })
         .addCase(login.rejected, (state) => {
@@ -98,7 +120,14 @@ export const userDataSlice = createSlice({
           return {
             ...state,
             isAuthChecked: false,
-            user: null
+            user: null,
+            spinnerActive: false
+          }
+        })
+        .addCase(logout.pending, (state) => {
+          return {
+            ...state,
+            spinnerActive: true
           }
         })
         .addCase(logout.rejected, (state) => {
@@ -110,7 +139,14 @@ export const userDataSlice = createSlice({
         .addCase(changeUser.fulfilled, (state, action) => {
           return {
             ...state,
-            user: action.payload
+            user: action.payload,
+            spinnerActive: false
+          }
+        })
+        .addCase(changeUser.pending, (state, action) => {
+          return {
+            ...state,
+            spinnerActive: true
           }
         })
         .addCase(changeUser.rejected, (state) => {
@@ -122,6 +158,6 @@ export const userDataSlice = createSlice({
   }
 })
 
-export const { setAuthChecked, setUser } = userDataSlice.actions
+export const { setAuthChecked, setUser, setSpinnerActive } = userDataSlice.actions
 
 export default userDataSlice.reducer

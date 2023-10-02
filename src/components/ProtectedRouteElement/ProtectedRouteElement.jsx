@@ -3,10 +3,8 @@ import { Navigate, useLocation } from "react-router-dom";
 
 const Protected = ({ onlyUnAuth = false, component }) => {
 
-  // const isAuthChecked = useSelector((store) => store.userData.isAuthChecked);
   const user = useSelector((store) => store.userData.user);
   const location = useLocation();
-
 
   if (onlyUnAuth && user) {
     const { from } = location.state || { from: { pathname: "/" } };
@@ -14,7 +12,7 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   }
 
   if (!onlyUnAuth && !user) {
-    const { from } = location.pathname === '/order' ? '/' : location.pathname
+    const { from } = (location.pathname === '/order') ? '/' : location.pathname
     return <Navigate to="/login" state={{ from: from }} />;
   }
 
