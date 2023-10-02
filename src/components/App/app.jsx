@@ -13,6 +13,7 @@ import Orders from "../../pages/profile/orders/orders"
 import OrdersId from "../../pages/profile/orders/orders_id/orders_id"
 import Modal from "../Modal/modal"
 import Spinner from "../spinner/spinner"
+import Page404 from "../../pages/page 404/page_404"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { checkUserAuth } from "../../services/userDataSlice"
@@ -73,7 +74,8 @@ export default function App() {
         </Route>
         <Route path="/feed" element={<Feed />}>
           <Route path=":id" element={<FeedId />}/>
-        </Route>  
+        </Route> 
+        <Route path="*" element={<Page404 />}/> 
       </Routes>
       }
       

@@ -14,10 +14,12 @@ export default function BurgerIngredient({ingredientData}) {
   const ingrediences = useSelector(state => state.burgerData.ingredients)
   const dispatch = useDispatch()
   const dropIndex = ingrediences.findIndex(item => item.key === ingredientData.key)
-  const test = 2
-  const [, drag, preview] = useDrag(() => ({
+  const [{isDragging}, drag, preview] = useDrag(() => ({
     type: 'burgerIngredient',
     item: ingredientData,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   }))
 
   const [, drop] = useDrop(() => ({
@@ -31,10 +33,12 @@ export default function BurgerIngredient({ingredientData}) {
       dispatch(sortIngredients({dragIndex: dragIndex, dropIndex:dropIndex}))
     }
   }), [ingrediences])
+
+  const opacity = isDragging ? 0 : 1
   
   return (
     <div ref={preview}>
-      <li className={`${styles.ingredient} mr-2`} ref={drop}>
+      <li className={`${styles.ingredient} mr-2`} style={{opacity}} ref={drop}>
         <div ref={drag}>
           <DragIcon type="primary"/>
         </div>
