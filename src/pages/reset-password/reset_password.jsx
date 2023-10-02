@@ -1,11 +1,13 @@
 import React, {useState} from "react"
 import { ReactDOM } from "react"
 import styles from "./reset_password.module.css"
-import { Link } from "react-router-dom"
+import { Link, useLocation, Navigate } from "react-router-dom"
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { resetPasswordRequest } from "../../utils/api"
 
 export default function ResetPassword() {
+
+  const location = useLocation()
 
   const [password, setPassword] = useState('')
   const [token, setToken] = useState('')
@@ -24,8 +26,13 @@ export default function ResetPassword() {
   }
 
   return (
-    <>
-      <main className={styles.main}>
+      <>
+      {
+        location.state?.from?.pathname !== '/forgot-password'
+        &&
+        <Navigate to='/forgot-password' /> 
+      }
+        <main className={styles.main}>
         <form className={styles.form}>
           <p className="text text_type_main-medium">
             Восстановление пароля
@@ -84,7 +91,7 @@ export default function ResetPassword() {
             </Link>
           </div>
         </form>
-      </main>
+        </main>
     </>
   )
 }

@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import { ReactDOM } from "react"
 import styles from "./forgot_password.module.css"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { Input, Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components"
 import { forgotPasswordRequest } from "../../utils/api"
 
@@ -10,12 +10,13 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState({hasError: false, errorMessage: ''})
   const navigate = useNavigate()
+  const location = useLocation()
 
   async function handleSubmit(e) {
     e.preventDefault()
     try {
       await forgotPasswordRequest(email)
-      navigate('/reset-password')
+      navigate('/reset-password', {state:{from: location}})
     } catch (e) {
       setError({hasError: true, errorMessage: e})
     }
