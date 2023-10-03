@@ -113,7 +113,8 @@ export const userDataSlice = createSlice({
         .addCase(login.rejected, (state) => {
           return {
             ...state,
-            isError: true
+            isError: true,
+            spinnerActive: false
           }
         })
         .addCase(logout.fulfilled, (state) => {
@@ -133,7 +134,8 @@ export const userDataSlice = createSlice({
         .addCase(logout.rejected, (state) => {
           return {
             ...state,
-            isError: true
+            isError: true,
+            spinnerActive: false
           }
         })
         .addCase(changeUser.fulfilled, (state, action) => {

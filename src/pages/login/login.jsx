@@ -4,7 +4,7 @@ import { ReactDOM } from "react"
 import styles from "./login.module.css"
 import { Link } from "react-router-dom"
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { login } from "../../services/userDataSlice"
 import { useNavigate, useLocation } from "react-router-dom"
 
@@ -13,6 +13,7 @@ export default function Login() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
+  const error = useSelector((store) => store.userData.isError)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -49,13 +50,21 @@ export default function Login() {
             htmlType="submit" 
             type="primary" 
             size="medium" 
-            extraClass="mb-20"
             onClick={onSubmit
             }
           >
             Войти
           </Button>
-          <div className={styles.link_container}>
+          { 
+            error
+            &&
+            (
+              <p className="text text_type_main-default text_color_inactive mt-4">
+                Неверный e-mail или пароль
+              </p>
+            ) 
+          }
+          <div className={`${styles.link_container} mt-20`}>
             <p className="text text_type_main-default text_color_inactive">
               Вы - новый пользователь?
             </p>
