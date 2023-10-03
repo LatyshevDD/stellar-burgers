@@ -15,6 +15,9 @@ export default function ProfileForm() {
   const [login, setLogin] = useState({active: true, value:''})
   const [password, setPassword] = useState({active: true, value:''})
 
+  const summaryData = name.value + login.value + password.value
+  const isSummatyData = summaryData.length > 0
+
   const nameRef = useRef(null)
   const loginRef = useRef(null)
   const passwordRef = useRef(null)
@@ -86,7 +89,10 @@ export default function ProfileForm() {
             onIconClick={handlePasswordIconClick}
             onChange={(e) => setPassword({...password, value: e.target.value})}
           />
-          <div className={styles.handlers}>
+          {
+            isSummatyData
+            &&
+            <div className={styles.handlers}>
             <Button 
               htmlType="button" 
               type="secondary" 
@@ -104,6 +110,7 @@ export default function ProfileForm() {
               Сохранить
             </Button>
           </div>
+          }
         </form>
   )
 }
