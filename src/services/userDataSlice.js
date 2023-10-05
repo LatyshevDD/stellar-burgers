@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { loginRequest, logoutRequest, getUserWithRefreshRequest, changeUserRequest } from "../utils/api"
+import { loginRequest, logoutRequest, getUserWithRefreshRequest, ChangeUserWithRefreshRequest } from "../utils/api"
 
 
 const initialState = {
@@ -26,7 +26,7 @@ export const getUser = () => {
 export const changeUser = createAsyncThunk(
   "user/change",
   async (data) => {
-      const res = await changeUserRequest(data)
+      const res = await ChangeUserWithRefreshRequest(data)
       return res.user
   }
 )
@@ -47,9 +47,9 @@ export const checkUserAuth = () => {
       if (localStorage.getItem("accessToken")) {
           dispatch(getUser())
               .catch(() => {
-                  localStorage.removeItem("accessToken");
-                  localStorage.removeItem("refreshToken");
-                  dispatch(setUser(null));
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
+                dispatch(setUser(null));
               })
               .finally(() => {
                 dispatch(setSpinnerActive(false))
@@ -154,7 +154,8 @@ export const userDataSlice = createSlice({
         .addCase(changeUser.rejected, (state) => {
           return {
             ...state,
-            isError: true
+            isError: true,
+            spinnerActive: false
           }
         })
   }

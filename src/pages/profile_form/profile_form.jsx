@@ -1,22 +1,30 @@
 import React from "react"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { ReactDOM } from "react"
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './profile_form.module.css'
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { changeUser } from "../../services/userDataSlice"
 
 export default function ProfileForm() {
+
+  const userData = useSelector(store => store.userData.user)
 
   const dispatch = useDispatch()
 
   const [name, setName] = useState({active: true, value: ''})
   const [login, setLogin] = useState({active: true, value:''})
   const [password, setPassword] = useState({active: true, value:''})
+  const [buttonsState, setButtonsState] = useState(false)
 
-  const summaryData = name.value + login.value + password.value
-  const isSummatyData = summaryData.length > 0
+  useEffect(
+    () => {
+      setName({active: true, value: userData.name})
+      setLogin({active: true, value: userData.email})
+    },
+    []
+  )
 
   const nameRef = useRef(null)
   const loginRef = useRef(null)
@@ -47,15 +55,17 @@ export default function ProfileForm() {
     setName({...name, value: ''})
     setLogin({...login, value: ''})
     setPassword({...password, value: ''})
+    setButtonsState(false)
   }
 
-  function handleSaveClick() {
+  function handleSubmit(e) {
+    e.preventDefault()
     dispatch(changeUser({name: name.value, login: login.value, password: password.value }))
   }
 
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
           <Input
             ref={nameRef} 
             type={'text'} 
@@ -65,7 +75,11 @@ export default function ProfileForm() {
             name={"name"}
             disabled={name.active}
             onIconClick={handleNameIconClick}
-            onChange={(e) => setName({...name, value: e.target.value})}
+            onChange={(e) => {
+                setButtonsState(true)
+                setName({...name, value: e.target.value})
+              }   
+            }
           />
           <Input
             ref={loginRef} 
@@ -76,7 +90,11 @@ export default function ProfileForm() {
             name={"login"}
             disabled={login.active}
             onIconClick={handleLoginIconClick}
-            onChange={(e) => setLogin({...login, value: e.target.value})}
+            onChange={(e) => {
+                setButtonsState(true)
+                setLogin({...login, value: e.target.value})
+              }
+            }
           />
           <Input
             ref={passwordRef} 
@@ -87,10 +105,14 @@ export default function ProfileForm() {
             name={"password"}
             disabled={password.active}
             onIconClick={handlePasswordIconClick}
-            onChange={(e) => setPassword({...password, value: e.target.value})}
+            onChange={(e) => {
+                setButtonsState(true)
+                setPassword({...password, value: e.target.value})
+              }
+            }
           />
           {
-            isSummatyData
+            buttonsState
             &&
             <div className={styles.handlers}>
             <Button 
@@ -102,10 +124,9 @@ export default function ProfileForm() {
               Отмена
             </Button>
             <Button 
-              htmlType="button" 
+              htmlType="submit" 
               type="primary" 
               size="medium"
-              onClick={handleSaveClick}
             >
               Сохранить
             </Button>

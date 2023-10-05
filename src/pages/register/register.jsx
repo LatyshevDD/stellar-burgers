@@ -13,10 +13,15 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    registerRequest({email: email, password: password, name: name});
+  }
+
   return (
     <>
       <main className={styles.main}>
-        <form style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <form onSubmit={handleSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
           <p className="text text_type_main-medium">
             Регистрация
           </p>
@@ -48,12 +53,6 @@ export default function Register() {
             type="primary" 
             size="medium" 
             extraClass="mb-20"
-            onClick={(e) => 
-              {
-                e.preventDefault();
-                registerRequest({email: email, password: password, name: name});
-              }  
-            }
           >
             Зарегистрироваться
           </Button>

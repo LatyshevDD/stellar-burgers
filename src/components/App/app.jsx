@@ -29,6 +29,12 @@ import { getIngredience } from "../../utils/api"
 export default function App() {
 
   const spinnerActive = useSelector((store) => store.userData.spinnerActive)
+  const orderStatus = useSelector((store) => store.orderData.status)
+
+  let spinner = false
+  if (spinnerActive || orderStatus === 'loading') {
+    spinner = true
+  }
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -52,12 +58,12 @@ export default function App() {
     <>
       <AppHeader/>
       {
-        spinnerActive
+        spinner
         &&
         <Spinner/>
       }
       {
-        !spinnerActive
+        !spinner
         &&
         <Routes location={background || location}>
         <Route path="/" element={<Home />}/>
@@ -78,32 +84,32 @@ export default function App() {
         <Route path="*" element={<Page404 />}/> 
       </Routes>
       }
-      
-      {(!spinnerActive && background) 
-      && (
-        <Routes>
-	        <Route
-	          path='/ingredients/:ingredientId'
-	          element={
-	            <Modal onClose={handleModalClose}>
-	              <IngredientDetails fullScrin={false}/>
-	            </Modal>
-	          }
-	        />
-          <Route
-	          path='/order'
-	          element={
-              <OnlyAuth 
-              component={
+      {
+        !spinner
+        && (
+          <Routes>
+            <Route
+              path='/ingredients/:ingredientId'
+              element={
                 <Modal onClose={handleModalClose}>
-	                <OrderDetails />
-	              </Modal>
-                } 
-              />
-            }
-	        />
-        </Routes>
-      )}
+                  <IngredientDetails fullScrin={false}/>
+                </Modal>
+              }
+            />
+            <Route
+              path='/order'
+              element={
+                <OnlyAuth 
+                component={
+                  <Modal onClose={handleModalClose}>
+                    <OrderDetails />
+                  </Modal>
+                  } 
+                />
+              }
+            />
+          </Routes>
+        )}
     </>
   )
 }

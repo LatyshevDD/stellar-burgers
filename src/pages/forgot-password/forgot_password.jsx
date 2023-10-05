@@ -25,7 +25,7 @@ export default function ForgotPassword() {
   return (
     <>
       <main className={styles.main}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <p className="text text_type_main-medium">
             Восстановление пароля
           </p>
@@ -40,7 +40,6 @@ export default function ForgotPassword() {
             htmlType="submit" 
             type="primary" 
             size="medium" 
-            onClick={handleSubmit}
           >
             Восстановить
           </Button>

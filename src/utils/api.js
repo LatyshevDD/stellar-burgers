@@ -26,9 +26,32 @@ export function getOrderDetails(data) {
       ingredients: data
     }),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      authorization: localStorage.getItem('accessToken')
     }
   })
+}
+
+export function getOrderWithRefreshRequest(data) {
+  return getOrderDetails(data)
+          .catch((err) => {
+            if (err === 'jwt expired') {
+              refreshTokenRequest()
+                .then((res) => {
+                  localStorage.setItem("refreshToken", res.refreshToken);
+                  localStorage.setItem("accessToken", res.accessToken);
+                })
+                .then(() => {
+                  return getOrderDetails(data)
+                    .catch((err) =>{
+                      return Promise.reject(err)
+                    })
+                })
+                .catch((err) => {
+                  return Promise.reject(err)
+                })
+            }
+          })
 }
 
 export function registerRequest(data) {
@@ -143,7 +166,7 @@ export function changeUserRequest(data) {
   return requestApi('https://norma.nomoreparties.space/api/auth/user', {
     method: 'PATCH',
     body: JSON.stringify({
-      name: data.name ,
+      name: data.name,
       email: data.login,
       password: data.password
     }),
@@ -152,5 +175,27 @@ export function changeUserRequest(data) {
       authorization: localStorage.getItem('accessToken')
     }
   })
+}
+
+export function ChangeUserWithRefreshRequest(data) {
+  return changeUserRequest(data)
+          .catch((err) => {
+            if (err === 'jwt expired') {
+              refreshTokenRequest()
+                .then((res) => {
+                  localStorage.setItem("refreshToken", res.refreshToken);
+                  localStorage.setItem("accessToken", res.accessToken);
+                })
+                .then(() => {
+                  return changeUserRequest(data)
+                    .catch((err) =>{
+                      return Promise.reject(err)
+                    })
+                })
+                .catch((err) => {
+                  return Promise.reject(err)
+                })
+            }
+          })
 }
 

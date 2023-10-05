@@ -18,7 +18,7 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  async function onSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     await dispatch(login({email: email, password: password}))
     navigate(location.state.from || '/profile')
@@ -27,7 +27,10 @@ export default function Login() {
   return (
     <>
       <main className={styles.main}>
-        <form style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <form 
+          className={styles.form}
+          onSubmit={handleSubmit}
+        >
           <p className="text text_type_main-medium">
             Вход
           </p>
@@ -50,8 +53,6 @@ export default function Login() {
             htmlType="submit" 
             type="primary" 
             size="medium" 
-            onClick={onSubmit
-            }
           >
             Войти
           </Button>
