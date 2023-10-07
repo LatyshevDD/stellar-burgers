@@ -2,13 +2,18 @@
 .header {
   display: flex;
   justify-content: center;
+  max-width: 1920px;
+  background-color: #1C1C21;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
 }
 
 .nav {
-  /* max-width: 1240px; */
   display: flex;
   align-items: center;
   min-height: 56px;
+  /* margin-top: 20px; */
 }
 
 .link {
@@ -41,4 +46,14 @@
 
 .link_lk:hover {
   opacity: .6;
+}
+
+.active {
+  text-decoration: none;
+  color: rgba(133,133,173,1);
+}
+
+.pending {
+  text-decoration: none;
+  color: rgba(242,242,243,1);
 }

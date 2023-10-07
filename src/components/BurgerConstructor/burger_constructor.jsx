@@ -3,12 +3,15 @@ import styles from './burger_constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from "react-redux"
 import { addBun, addBurgerIngredient } from "../../services/burgerDataSlice"
-import { openOrderModal } from "../../services/modalDataSlice"
 import { getOrderData } from "../../services/orderDataSlice"
 import { useDrop } from "react-dnd"
 import BurgerIngredient from "../BurgerIngredient/burger_ingredient"
+import { useLocation, useNavigate } from "react-router-dom"
 
 export default function BurgerConstructor() {
+
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const [, drop] = useDrop(() => ({
     accept: 'ingredient',
@@ -41,12 +44,12 @@ export default function BurgerConstructor() {
     [ingredients, bun]
   );
 
-  const handleGetOrder = () => {
+  const handleGetOrder = async() => {
     const totalIngrediences = [...bun,...ingredients]
 
     if (totalIngrediences.length >= 1) {
-      dispatch(getOrderData(totalIngrediences))
-      dispatch(openOrderModal())
+      await dispatch(getOrderData(totalIngrediences))
+      navigate('/order',{state: { background: location } })
     }
   } 
   

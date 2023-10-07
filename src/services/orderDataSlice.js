@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getOrderDetails } from '../utils/api'
+import { getOrderWithRefreshRequest } from '../utils/api'
 import { getIngrediencesId } from '../utils/utils'
 
 const initialState = {
@@ -8,14 +8,15 @@ const initialState = {
     number: null
   },
   success: false,
-  status: ""
+  status: "",
+  spinnerActive: false
 }
 
 export const getOrderData = createAsyncThunk(
   'getOrderData',
   async (ingrediences) => {
     const ingrediencesId = getIngrediencesId(ingrediences)
-    const orderData = await getOrderDetails(ingrediencesId)
+    const orderData = await getOrderWithRefreshRequest(ingrediencesId)
     return orderData
   }
 )

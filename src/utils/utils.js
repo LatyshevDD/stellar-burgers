@@ -20,3 +20,7 @@ export function getCountOfIngredient(ingredient, array) {
   
   return count
 }
+
+export function getIngredientById(array, id) {
+  return array.find(item => item._id === id)
+}

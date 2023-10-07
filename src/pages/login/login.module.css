@@ -1,0 +1,17 @@
+.main {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin-top: 180px;
+}
+
+.link_container {
+  display: flex;
+  gap: 8px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
