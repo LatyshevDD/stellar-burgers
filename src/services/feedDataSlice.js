@@ -4,7 +4,8 @@ const initialState = {
   success: false,
   orders: [],
   total: null,
-  totalToday: null
+  totalToday: null,
+  socketConnectionStatus: null
 }
 
 export const feedDataSlice = createSlice({
@@ -20,9 +21,15 @@ export const feedDataSlice = createSlice({
         totalToday: action.payload.totalToday
       }
     },
+    setFeedSocketConnectionStatus: (state, action) => {
+      return {
+        ...state,
+        socketConnectionStatus: action.payload
+      }
+    },
   },
 })
 
-export const { setFeed } = feedDataSlice.actions
+export const { setFeed, setFeedSocketConnectionStatus } = feedDataSlice.actions
 
 export default feedDataSlice.reducer

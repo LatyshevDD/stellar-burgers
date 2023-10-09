@@ -28,6 +28,10 @@ import { getIngredience } from "../../utils/api"
 
 export default function App() {
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+
   const spinnerActive = useSelector((store) => store.userData.spinnerActive)
   const orderStatus = useSelector((store) => store.orderData.status)
 
@@ -36,9 +40,9 @@ export default function App() {
     spinner = true
   }
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const location = useLocation()
+  if(location.pathname !== '/feed') {
+    dispatch({type: 'WS_CONNECTION_STOP'})
+  }
 
   const background = location.state && location.state.background
 
@@ -108,6 +112,7 @@ export default function App() {
                 />
               }
             />
+            <Route path='*' element={<></>}/>
           </Routes>
         )}
     </>

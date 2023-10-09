@@ -6,6 +6,9 @@ import userDataSlice from './userDataSlice'
 import feedDataSlice from './feedDataSlice'
 import { socketMiddleware } from './socketMiddleware'
 
+import { setFeedSocketConnectionStatus, setFeed } from './feedDataSlice'
+
+
 
 
 
@@ -17,5 +20,12 @@ export const store = configureStore({
     userData: userDataSlice,
     feedData: feedDataSlice
   },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketMiddleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+      .concat(socketMiddleware({
+        onOpen: setFeedSocketConnectionStatus,
+        onMessage: setFeed,
+        onClose: setFeedSocketConnectionStatus,
+        onError: setFeedSocketConnectionStatus,
+      }))
+
 })
