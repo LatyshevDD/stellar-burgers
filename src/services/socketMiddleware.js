@@ -1,3 +1,5 @@
+import { checkOrdersIngredients } from "../utils/utils"
+
 export const socketMiddleware = wsConfig => store => {
   let socket = null
   const { onOpen, onMessage, onClose, onError } = wsConfig
@@ -33,7 +35,11 @@ export const socketMiddleware = wsConfig => store => {
     
       socket.onmessage = event => {
         let data = JSON.parse(event.data)
-        dispatch(onMessage(data))
+        let chekedData = {
+          ...data,
+          orders: checkOrdersIngredients(data.orders)
+        }
+        dispatch(onMessage(chekedData))
       }
     }
 

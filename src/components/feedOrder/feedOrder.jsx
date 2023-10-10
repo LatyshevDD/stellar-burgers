@@ -10,9 +10,10 @@ import { Link } from "react-router-dom"
 export default function FeedOrder({order}) {
   
   const { ingrediences } = useSelector(state => state.ingrediencesData)
+
   const selectedIngrediences = order.ingredients.map(item => getIngredientById(ingrediences, item))
   const orderPrice = selectedIngrediences.reduce((sum, item) => {
-    // return sum + item.price
+    return sum + item.price
   }, 0)
 
   const date = () => {

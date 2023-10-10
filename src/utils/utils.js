@@ -37,3 +37,19 @@ export function getCountOfIngredientWithIndexes(ingredient, array) {
 export function getIngredientById(array, id) {
   return array.find(item => item._id === id)
 }
+
+export function checkArrayProperties(array) {
+  let result = true
+  array.forEach(element => {
+    if(!element) {
+      result = false
+    }
+  })
+  return result
+}
+
+export function checkOrdersIngredients(array) {
+  return array.filter(item => {
+    return checkArrayProperties(item.ingredients)
+  })
+}
