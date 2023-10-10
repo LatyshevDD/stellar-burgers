@@ -50,11 +50,13 @@ export default function Feed() {
                   Готовы:
                 </p>
                 <div className={styles.orders_ready_numbers}>
-                  <p className="text text_type_digits-default text_color_inactive">034533</p>
-                  <p className="text text_type_digits-default text_color_inactive">034532</p>
-                  <p className="text text_type_digits-default text_color_inactive">034530</p>
-                  <p className="text text_type_digits-default text_color_inactive">034527</p>
-                  <p className="text text_type_digits-default text_color_inactive">034525</p>
+                  {
+                    orders.map(order => {
+                      if(order.status === 'done') {
+                        return <p className="text text_type_digits-default text_color_inactive" key={order._id}>{order.number}</p>
+                      }
+                    })
+                  }
                 </div>
               </div>
               <div className={styles.orders_todo}>
@@ -62,9 +64,13 @@ export default function Feed() {
                   В работе:
                 </p>
                 <div className={styles.orders_todo_numbers}>
-                  <p className="text text_type_digits-default">034538</p>
-                  <p className="text text_type_digits-default">034541</p>
-                  <p className="text text_type_digits-default">034542</p>
+                  {
+                    orders.map(order => {
+                      if(order.status !== 'done') {
+                      return <p className="text text_type_digits-default" key={order._id}>{order.number}</p>
+                      }
+                    })  
+                  }
                 </div>
               </div>
             </div>
@@ -72,13 +78,13 @@ export default function Feed() {
               <p className='text text_type_main-medium'>
                   Выполнено за все время:
               </p>
-              <p className={`${styles.digits_shadow} text text_type_digits-large`}>28 752</p>
+              <p className={`${styles.digits_shadow} text text_type_digits-large`}>{total}</p>
             </div>
             <div className={styles.done_today}>
               <p className='text text_type_main-medium'>
                   Выполнено за сегодня:
               </p>
-              <p className={`${styles.digits_shadow} text text_type_digits-large`}>138</p>
+              <p className={`${styles.digits_shadow} text text_type_digits-large`}>{totalToday}</p>
             </div>
           </div>
         </div>

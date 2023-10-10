@@ -21,6 +21,19 @@ export function getCountOfIngredient(ingredient, array) {
   return count
 }
 
+export function getCountOfIngredientWithIndexes(ingredient, array) {
+  const count = array.reduce((total, item, index) => {
+    if (item._id === ingredient._id) {
+      total.count += 1
+      total.indexes.push(index)
+      return total
+    } 
+    return total
+  }, {count: 0, indexes: []})
+  
+  return count
+}
+
 export function getIngredientById(array, id) {
   return array.find(item => item._id === id)
 }
