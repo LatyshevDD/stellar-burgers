@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+export const feedWebSocketStart = 'FEED_WS_CONNECTION_START'
+export const feedWebSocketStop = 'FEED_WS_CONNECTION_STOP'
+
 const initialState = {
   success: false,
   orders: [],

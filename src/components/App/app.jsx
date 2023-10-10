@@ -41,7 +41,7 @@ export default function App() {
   }
 
   if(location.pathname !== '/feed') {
-    dispatch({type: 'WS_CONNECTION_STOP'})
+    dispatch({type: 'FEED_WS_CONNECTION_STOP'})
   }
 
   const background = location.state && location.state.background

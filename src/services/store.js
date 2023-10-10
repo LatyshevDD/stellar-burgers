@@ -7,7 +7,8 @@ import feedDataSlice from './feedDataSlice'
 import profileOrdersDataSlice from './profileOrdersDataSlice'
 import { socketMiddleware } from './socketMiddleware'
 
-import { setFeedSocketConnectionStatus, setFeed } from './feedDataSlice'
+import { setFeedSocketConnectionStatus, setFeed, feedWebSocketStart, feedWebSocketStop } from './feedDataSlice'
+import { setProfileOrdersSocketConnectionStatus, setProfileOrders, profileOrdersWebSocketStart } from './profileOrdersDataSlice'
 
 
 
@@ -24,6 +25,8 @@ export const store = configureStore({
   },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
       .concat(socketMiddleware({
+        onStart: feedWebSocketStart,
+        onStop: feedWebSocketStop,
         onOpen: setFeedSocketConnectionStatus,
         onMessage: setFeed,
         onClose: setFeedSocketConnectionStatus,

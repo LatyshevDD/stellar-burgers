@@ -1,14 +1,25 @@
 import React from "react"
-import { ReactDOM } from "react"
+import { ReactDOM, useEffect } from "react"
 import styles from "./orders.module.css"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useLocation } from "react-router-dom"
 import { Outlet } from "react-router-dom"
+import { useDispatch } from "react-redux"
 
 export default function Orders() {
 
+  const dispatch = useDispatch()
   const location = useLocation().pathname
+
+  useEffect(
+    () => { 
+      dispatch({
+        type: 'PROFILE_ORDERS_WS_CONNECTION_START', 
+        payload: `wss://norma.nomoreparties.space/orders?token=${localStorage.getItem('accessToken').split('Bearer ')[1]}`})
+    },
+    []
+  )
 
   const date = () => {
     const dateFromServer = '2023-09-08T17:33:32.877Z'

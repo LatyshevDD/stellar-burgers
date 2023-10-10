@@ -22,7 +22,7 @@ export default function Feed() {
 
   useEffect(
     () => { 
-      dispatch({type: 'WS_CONNECTION_START', payload: 'wss://norma.nomoreparties.space/orders/all'})
+      dispatch({type: 'FEED_WS_CONNECTION_START', payload: 'wss://norma.nomoreparties.space/orders/all'})
     },
     []
   )

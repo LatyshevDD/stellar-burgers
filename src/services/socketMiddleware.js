@@ -2,18 +2,18 @@ import { checkOrdersIngredients } from "../utils/utils"
 
 export const socketMiddleware = wsConfig => store => {
   let socket = null
-  const { onOpen, onMessage, onClose, onError } = wsConfig
+  const { onStart, onStop, onOpen, onMessage, onClose, onError } = wsConfig
 
   return next => action => {
     const { type, payload } = action
     const { dispatch } = store
     
-    if (type === 'WS_CONNECTION_START') {
+    if (type === onStart) {
       socket = new WebSocket(payload)
     }
     
     if(socket) {
-      if (type === 'WS_CONNECTION_STOP') {
+      if (type === onStop) {
         socket.close(1000, 'Пользователь покинул страницу')
       }
 
