@@ -8,11 +8,13 @@ import { getIngredientById } from "../../utils/utils"
 import { Link } from "react-router-dom"
 
 export default function FeedOrder({order}) {
-
+  
   const { ingrediences } = useSelector(state => state.ingrediencesData)
   const selectedIngrediences = order.ingredients.map(item => getIngredientById(ingrediences, item))
-  const orderPrice = selectedIngrediences.reduce((sum, item) => {return sum + item.price}, 0)
-  
+  const orderPrice = selectedIngrediences.reduce((sum, item) => {
+    // return sum + item.price
+  }, 0)
+
   const date = () => {
     const dateFromServer = order.createdAt
     return <FormattedDate date={new Date(dateFromServer)} className='text text_type_main-default text_color_inactive'/>
@@ -42,7 +44,7 @@ export default function FeedOrder({order}) {
                     const zIndex = 6 - index
                     return <li className={styles.ingredient} key={index} style={{zIndex: zIndex, backgroundImage: `url(${item.image_mobile})`}}></li>
                   }
-                  return 
+                  return  null
                 })
               }
               {

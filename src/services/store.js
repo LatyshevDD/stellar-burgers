@@ -4,6 +4,7 @@ import burgerDataSlice from './burgerDataSlice'
 import orderDataSlice from './orderDataSlice'
 import userDataSlice from './userDataSlice'
 import feedDataSlice from './feedDataSlice'
+import profileOrdersDataSlice from './profileOrdersDataSlice'
 import { socketMiddleware } from './socketMiddleware'
 
 import { setFeedSocketConnectionStatus, setFeed } from './feedDataSlice'
@@ -18,7 +19,8 @@ export const store = configureStore({
     burgerData: burgerDataSlice,
     orderData: orderDataSlice,
     userData: userDataSlice,
-    feedData: feedDataSlice
+    feedData: feedDataSlice,
+    profileOrdersData: profileOrdersDataSlice,
   },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
       .concat(socketMiddleware({
