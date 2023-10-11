@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const profileOrdersWebSocketStart = 'PROFILE_ORDERS_WS_CONNECTION_START'
+export const profileOrdersWebSocketStop = 'PROFILE_ORDERS_WS_CONNECTION_STOP'
 
 const initialState = {
   success: false,

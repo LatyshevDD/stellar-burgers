@@ -8,7 +8,7 @@ import profileOrdersDataSlice from './profileOrdersDataSlice'
 import { socketMiddleware } from './socketMiddleware'
 
 import { setFeedSocketConnectionStatus, setFeed, feedWebSocketStart, feedWebSocketStop } from './feedDataSlice'
-import { setProfileOrdersSocketConnectionStatus, setProfileOrders, profileOrdersWebSocketStart } from './profileOrdersDataSlice'
+import { setProfileOrdersSocketConnectionStatus, setProfileOrders, profileOrdersWebSocketStart, profileOrdersWebSocketStop } from './profileOrdersDataSlice'
 
 
 
@@ -24,13 +24,23 @@ export const store = configureStore({
     profileOrdersData: profileOrdersDataSlice,
   },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-      .concat(socketMiddleware({
-        onStart: feedWebSocketStart,
-        onStop: feedWebSocketStop,
-        onOpen: setFeedSocketConnectionStatus,
-        onMessage: setFeed,
-        onClose: setFeedSocketConnectionStatus,
-        onError: setFeedSocketConnectionStatus,
-      }))
+      .concat(
+        socketMiddleware({
+          onStart: feedWebSocketStart,
+          onStop: feedWebSocketStop,
+          onOpen: setFeedSocketConnectionStatus,
+          onMessage: setFeed,
+          onClose: setFeedSocketConnectionStatus,
+          onError: setFeedSocketConnectionStatus,
+        }), 
+        socketMiddleware({
+          onStart: profileOrdersWebSocketStart,
+          onStop: profileOrdersWebSocketStop,
+          onOpen: setProfileOrdersSocketConnectionStatus,
+          onMessage: setProfileOrders,
+          onClose: setProfileOrdersSocketConnectionStatus,
+          onError: setProfileOrdersSocketConnectionStatus,
+        })
+      )
 
 })
