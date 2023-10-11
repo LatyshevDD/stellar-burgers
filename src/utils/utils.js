@@ -53,3 +53,7 @@ export function checkOrdersIngredients(array) {
     return checkArrayProperties(item.ingredients)
   })
 }
+
+export function isEmptyObj(obj) {
+  return Object.keys(obj).length === 0;
+}

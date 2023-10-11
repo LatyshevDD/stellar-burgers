@@ -1,37 +1,61 @@
 import React from "react"
-import { ReactDOM } from "react"
+import { ReactDOM, useEffect, useState } from "react"
 import styles from "./order_id.module.css"
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { getCountOfIngredientWithIndexes } from "../../utils/utils"
-import { useLocation } from "react-router-dom"
+import { getIngredientById, getCountOfIngredientWithIndexes, isEmptyObj } from "../../utils/utils"
+import { useSelector } from "react-redux"
+import { getOrder } from "../../utils/api"
+import { useParams } from "react-router-dom"
 
 export default function OrderId() {
 
-  const { order, selectedIngrediences, orderPrice } = useLocation().state
+  const { number } = useParams()
+  const { ingrediences } = useSelector(state => state.ingrediencesData)
+
+  const [order, setOrder] = useState(
+    {
+      data: {}, 
+      error: false, 
+    }
+  )
+
+  useEffect(() => {
+    getOrder(number)
+      .then(res => {
+        setOrder({...order, data: res.orders[0]})})
+  }, [])
+
+  let selectedIngrediences, orderPrice
+  if(!isEmptyObj(order.data)) {
+        selectedIngrediences = order.data.ingredients.map(item => getIngredientById(ingrediences, item))
+        orderPrice = selectedIngrediences.reduce((sum, item) => {
+          return sum + item.price
+        }, 0)
+  }
 
   const date = () => {
-    const dateFromServer = order.createdAt
+    const dateFromServer = order.data.createdAt
     return <FormattedDate date={new Date(dateFromServer)} className='text text_type_main-default text_color_inactive'/>
   }
   
   return (
     <section className={styles.section}>
       <p className={`${styles.order_number} text text_type_digits-default`}>
-        {`#${order.number}`}
+        {`#${order.data.number}`}
       </p>
       <p className={`${styles.order_title} text text_type_main-medium`}>
-        {order.name}
+        {order.data.name}
       </p>
       <p className={`${styles.order_status} text text_type_main-default text_color_inactive`}>
-        {order.status === 'done' ? 'Выполнен' : 'Готовится'}
+        {order.data.status === 'done' ? 'Выполнен' : 'Готовится'}
       </p>
       <p className={`${styles.order_structure} text text_type_main-medium`}>
         Состав:
       </p>
       <ul className={`${styles.ingrediences} custom-scroll`}>
         {
-          selectedIngrediences.length > 0
+          selectedIngrediences
           &&
           selectedIngrediences.map((item, index, array) => {
             const { count, indexes } = getCountOfIngredientWithIndexes(item, array)

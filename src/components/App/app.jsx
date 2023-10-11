@@ -82,11 +82,11 @@ export default function App() {
         <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
           <Route index element={<ProfileForm/>}/>
           <Route path="orders" element={<Orders />}>
-            <Route path=":id" element={<OrderId/>}/>
+            <Route path=":number" element={<OrderId/>}/>
           </Route>
         </Route>
         <Route path="/feed" element={<Feed />}>
-          <Route path=":id" element={<OrderId />}/>
+          <Route path=":number" element={<OrderId />}/>
         </Route> 
         <Route path="*" element={<Page404 />}/> 
       </Routes>
