@@ -1,21 +1,20 @@
 import React from "react"
 import { ReactDOM } from "react"
-import styles from "./orders_id.module.css"
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import styles from "./order_id.module.css"
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import { getCountOfIngredientWithIndexes } from "../../utils/utils"
 import { useLocation } from "react-router-dom"
-import { getCountOfIngredientWithIndexes } from "../../../../utils/utils"
 
-
-export default function OrdersId() {
+export default function OrderId() {
 
   const { order, selectedIngrediences, orderPrice } = useLocation().state
 
   const date = () => {
-    const dateFromServer = '2023-09-08T17:33:32.877Z'
+    const dateFromServer = order.createdAt
     return <FormattedDate date={new Date(dateFromServer)} className='text text_type_main-default text_color_inactive'/>
   }
-
+  
   return (
     <section className={styles.section}>
       <p className={`${styles.order_number} text text_type_digits-default`}>

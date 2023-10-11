@@ -24,10 +24,10 @@ export default function Order({order}) {
 
   let url
     if(location.pathname === '/feed') {
-      url = `/feed/${order._id}`
+      url = `/feed/${order.number}`
     }
     if(location.pathname === '/profile/orders') {
-      url = `/profile/orders/${order._id}`
+      url = `/profile/orders/${order.number}`
     }
 
   return (

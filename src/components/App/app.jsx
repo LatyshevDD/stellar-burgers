@@ -8,9 +8,8 @@ import ResetPassword from "../../pages/reset-password/reset_password"
 import Profile from "../../pages/profile/profile"
 import ProfileForm from "../../pages/profile_form/profile_form"
 import Feed from "../../pages/feed/feed"
-import FeedId from "../../pages/feed/feed_id/feed_id"
+import OrderId from "../Order_id/order_id"
 import Orders from "../../pages/profile/orders/orders"
-import OrdersId from "../../pages/profile/orders/orders_id/orders_id"
 import Modal from "../Modal/modal"
 import Spinner from "../spinner/spinner"
 import Page404 from "../../pages/page 404/page_404"
@@ -83,11 +82,11 @@ export default function App() {
         <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
           <Route index element={<ProfileForm/>}/>
           <Route path="orders" element={<Orders />}>
-            <Route path=":id" element={<OrdersId/>}/>
+            <Route path=":id" element={<OrderId/>}/>
           </Route>
         </Route>
         <Route path="/feed" element={<Feed />}>
-          <Route path=":id" element={<FeedId />}/>
+          <Route path=":id" element={<OrderId />}/>
         </Route> 
         <Route path="*" element={<Page404 />}/> 
       </Routes>
