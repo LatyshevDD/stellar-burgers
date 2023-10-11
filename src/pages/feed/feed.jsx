@@ -6,7 +6,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Outlet } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import FeedOrder from "../../components/feedOrder/feedOrder"
+import Order from "../../components/Order/order"
 
 export default function Feed() {
 
@@ -14,11 +14,6 @@ export default function Feed() {
 
   const dispatch = useDispatch()
   const location = useLocation()
-
-  const date = () => {
-    const dateFromServer = '2023-09-08T17:33:32.877Z'
-    return <FormattedDate date={new Date(dateFromServer)} className='text text_type_main-default text_color_inactive'/>
-  }
 
   useEffect(
     () => { 
@@ -40,7 +35,7 @@ export default function Feed() {
             {
               orders.length > 0
               &&
-              orders.map(order => <FeedOrder key={order._id} order={order}/>)
+              orders.map(order => <Order key={order._id} order={order}/>)
             }
           </div>
           <div className={styles.orders_container}>

@@ -7,29 +7,30 @@
 }
 
 .order {
-  width: 584px;
   border-radius: 40px;
   background-color: #1c1c21;
   display: flex;
   flex-direction: column;
   gap: 24px;
   align-items: center;
+  box-sizing: border-box;
+  padding: 24px;
 }
 
 .details {
-  width: 536px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
 }
 
 .order_title {
-  width: 536px;
+  width: 100%;
   text-align: left;
 }
 
 .order_summary {
-  width: 536px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
@@ -91,4 +92,11 @@
 
 a {
   all: unset;
+}
+
+.status {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

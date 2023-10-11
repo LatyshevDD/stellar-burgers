@@ -3,6 +3,8 @@
   flex-direction: column;
   margin-top: 122px;
   width: 640px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .order_number {

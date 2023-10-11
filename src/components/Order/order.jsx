@@ -1,14 +1,15 @@
 import React from "react"
 import { ReactDOM } from "react"
-import styles from "./feedOrder.module.css"
+import styles from "./order.module.css"
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useSelector } from "react-redux"
 import { getIngredientById } from "../../utils/utils"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
-export default function FeedOrder({order}) {
-  
+export default function Order({order}) {
+
+  const location = useLocation()
   const { ingrediences } = useSelector(state => state.ingrediencesData)
 
   const selectedIngrediences = order.ingredients.map(item => getIngredientById(ingrediences, item))
@@ -21,8 +22,16 @@ export default function FeedOrder({order}) {
     return <FormattedDate date={new Date(dateFromServer)} className='text text_type_main-default text_color_inactive'/>
   }
 
+  let url
+    if(location.pathname === '/feed') {
+      url = `/feed/${order._id}`
+    }
+    if(location.pathname === '/profile/orders') {
+      url = `/profile/orders/${order._id}`
+    }
+
   return (
-    <Link to={`/feed/${order._id}`} state={{order: order, selectedIngrediences: selectedIngrediences, orderPrice: orderPrice}}>
+    <Link to={url} state={{order: order, selectedIngrediences: selectedIngrediences, orderPrice: orderPrice}}>
       <ul className={styles.feed}>
         <li className={styles.order}>
           <div className={styles.details}>
@@ -33,12 +42,27 @@ export default function FeedOrder({order}) {
               date()
             }
           </div>
-          <p className={`${styles.order_title} text text_type_main-medium`}>
-            {order.name}
-          </p>
+          {
+            location.pathname === '/feed'
+            &&
+            <p className={`${styles.order_title} text text_type_main-medium`}>
+              {order.name}
+            </p>
+          }
+          {
+            location.pathname === '/profile/orders'
+            &&
+            <div className={styles.status}>
+              <p className={`${styles.order_title} text text_type_main-medium`}>
+                Death Star Starship Main бургер
+              </p>
+              <p className="text text_type_main-default">
+                {order.status === 'done' ? 'Создан' : 'Готовится'}
+              </p>
+            </div>
+          }
           <div className={styles.order_summary}>
             <ul className={styles.ingrediences}>
-
               {
                 selectedIngrediences.map((item, index, array) => {
                   if(index <= 4) {
