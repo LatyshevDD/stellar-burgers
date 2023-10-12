@@ -54,7 +54,7 @@ export default function Order({order}) {
             &&
             <div className={styles.status}>
               <p className={`${styles.order_title} text text_type_main-medium`}>
-                Death Star Starship Main бургер
+                {order.name}
               </p>
               <p className="text text_type_main-default">
                 {order.status === 'done' ? 'Создан' : 'Готовится'}
