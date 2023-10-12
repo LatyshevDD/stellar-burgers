@@ -41,7 +41,7 @@
   display: flex;
   gap: 36px;
   height: 206px;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .orders_ready {
@@ -56,8 +56,12 @@
 }
 
 .orders_ready_numbers {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-flow: column;
+  height: 152px;
+  grid-template-columns: repeat(auto-fill,auto);
+  grid-template-rows: repeat(10, auto);
+  overflow: auto;
   gap: 8px;
 }
 
@@ -73,8 +77,12 @@
 }
 
 .orders_todo_numbers {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-flow: column;
+  height: 152px;
+  grid-template-columns: repeat(auto-fill,auto);
+  grid-template-rows: repeat(10, auto);
+  overflow: auto;
   gap: 8px;
 }
 
