@@ -31,7 +31,7 @@ export default function Order({order}) {
     }
 
   return (
-    <Link to={url} state={{order: order, selectedIngrediences: selectedIngrediences, orderPrice: orderPrice}}>
+    <Link to={url} state={{ background: location }}>
       <ul className={styles.feed}>
         <li className={styles.order}>
           <div className={styles.details}>

@@ -92,7 +92,7 @@ export default function App() {
       </Routes>
       }
       {
-        !spinner
+        (!spinner && background)
         && (
           <Routes>
             <Route
@@ -113,6 +113,22 @@ export default function App() {
                   </Modal>
                   } 
                 />
+              }
+            />
+            <Route
+              path='feed/:number'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <OrderId />
+                </Modal>
+              }
+            />
+            <Route
+              path='profile/orders/:number'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <OrderId />
+                </Modal>
               }
             />
             <Route path='*' element={<></>}/>
