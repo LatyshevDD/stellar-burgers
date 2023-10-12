@@ -8,6 +8,7 @@ import { useDrop } from "react-dnd"
 import BurgerIngredient from "../BurgerIngredient/burger_ingredient"
 import { useLocation, useNavigate } from "react-router-dom"
 
+
 export default function BurgerConstructor() {
 
   const location = useLocation()
