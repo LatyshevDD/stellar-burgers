@@ -4,18 +4,27 @@ import { useRef } from "react"
 import ModalOverlay from "../ModalOverlay/modal_overlay"
 import styles from './modal.module.css'
 import close_image from '../../images/modal_close.png'
+import { useSelector } from "react-redux"
 
 export default function Modal({children, onClose}) {
+
+  const orderDataSpinnerActive = useSelector((store) => store.orderData.spinnerActive)
 
   const modal = useRef()
 
   function handleEscClose(e) {
+    if(orderDataSpinnerActive) {
+      return
+    }
     if (e.key === "Escape") {
       onClose()
     }
   }
 
   function overlayClosePopup(e) {
+    if(orderDataSpinnerActive) {
+      return
+    }
     if (modal.current && !modal.current.contains(e.target)) {
       onClose()
     }
@@ -40,6 +49,9 @@ export default function Modal({children, onClose}) {
         className={styles.button_close} 
         onClick={ 
           () => {
+            if(orderDataSpinnerActive) {
+              return
+            }
             onClose()
           }  
         }
