@@ -1,4 +1,5 @@
 import { checkOrdersIngredients } from "../utils/utils"
+import { refreshTokenRequest } from "../utils/api"
 
 export const socketMiddleware = wsConfig => store => {
   let socket = null
@@ -47,6 +48,21 @@ export const socketMiddleware = wsConfig => store => {
     
       socket.onmessage = event => {
         let data = JSON.parse(event.data)
+        if(data.message === 'Invalid or missing token') {
+          refreshTokenRequest()
+                .then((res) => {
+                  localStorage.setItem("refreshToken", res.refreshToken);
+                  localStorage.setItem("accessToken", res.accessToken);
+                })
+                .then((res) => {
+                  dispatch({
+                  type: 'PROFILE_ORDERS_WS_CONNECTION_START', 
+                  payload: `wss://norma.nomoreparties.space/orders?token=${localStorage.getItem('accessToken').split('Bearer ')[1]}`})
+                })
+                .catch((err) => {
+                  return Promise.reject(err)
+                })
+        }
         let chekedData = {
           ...data,
           orders: checkOrdersIngredients(data.orders)
