@@ -27,7 +27,10 @@ export const orderDataSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getOrderData.pending, (state) => {
-        state.status = 'loading'
+        return {
+          ...state,
+          spinnerActive: true
+        }
       })
       .addCase(getOrderData.fulfilled, (state, action) => {
         return {
@@ -36,7 +39,8 @@ export const orderDataSlice = createSlice({
             number: action.payload.order.number
           },
           success: action.payload.success,
-          status: 'fulfilled'
+          status: 'fulfilled',
+          spinnerActive: false
         }
       })
       .addCase(getOrderData.rejected, (state) => {
@@ -46,7 +50,8 @@ export const orderDataSlice = createSlice({
             number: null
           },
           success: false,
-          status: 'reject'
+          status: 'reject',
+          spinnerActive: false
         }
       })
   }

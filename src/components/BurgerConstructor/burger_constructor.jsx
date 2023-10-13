@@ -45,12 +45,12 @@ export default function BurgerConstructor() {
     [ingredients, bun]
   );
 
-  const handleGetOrder = async() => {
+  const handleGetOrder = () => {
     const totalIngrediences = [...bun,...ingredients]
 
     if (totalIngrediences.length >= 1) {
-      await dispatch(getOrderData(totalIngrediences))
       navigate('/order',{state: { background: location } })
+      dispatch(getOrderData(totalIngrediences))
     }
   } 
   

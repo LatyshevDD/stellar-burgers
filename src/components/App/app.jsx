@@ -31,13 +31,9 @@ export default function App() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const spinnerActive = useSelector((store) => store.userData.spinnerActive)
-  const orderStatus = useSelector((store) => store.orderData.status)
+  const userDataSpinnerActive = useSelector((store) => store.userData.spinnerActive)
+  const orderDataSpinnerActive = useSelector((store) => store.orderData.spinnerActive)
 
-  let spinner = false
-  if (spinnerActive || orderStatus === 'loading') {
-    spinner = true
-  }
 
   if(location.pathname !== '/feed') {
     dispatch({type: 'FEED_WS_CONNECTION_STOP'})
@@ -65,12 +61,12 @@ export default function App() {
     <>
       <AppHeader/>
       {
-        spinner
+        userDataSpinnerActive
         &&
-        <Spinner/>
+        <Spinner typeModal={false} />
       }
       {
-        !spinner
+        !userDataSpinnerActive
         &&
         <Routes location={background || location}>
         <Route path="/" element={<Home />}/>
@@ -92,7 +88,7 @@ export default function App() {
       </Routes>
       }
       {
-        (!spinner && background)
+        background
         && (
           <Routes>
             <Route
@@ -109,7 +105,16 @@ export default function App() {
                 <OnlyAuth 
                 component={
                   <Modal onClose={handleModalClose}>
-                    <OrderDetails />
+                    {
+                      orderDataSpinnerActive
+                      &&
+                      <Spinner typeModal={true} />
+                    }
+                    {
+                      !orderDataSpinnerActive  
+                      &&
+                      <OrderDetails />
+                    }
                   </Modal>
                   } 
                 />
