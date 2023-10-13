@@ -5,24 +5,18 @@ import reportWebVitals from "./reportWebVitals"
 import { store } from "./services/store"
 import { Provider } from 'react-redux'
 import App from "./components/App/app"
-import { BrowserRouter } from 'react-router-dom'
-import { render } from "react-dom"
-import { createRoot } from 'react-dom/client'
-import { StrictMode } from "react"
+import { BrowserRouter } from "react-router-dom"
 
-
-const container = document.getElementById("root")
-const root = createRoot(container)
-
-root.render(
-  <StrictMode>
+ReactDOM.render(
+  <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <App/>
       </BrowserRouter>
     </Provider>
-  </StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 
-// reportWebVitals();
+reportWebVitals();
