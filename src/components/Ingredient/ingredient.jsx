@@ -27,7 +27,7 @@ export default function Ingredient({ingredientData}) {
     type: 'ingredient',
     item: ingredientData,
   }))
-
+  console.log(ingredientData)
   return (
     <li className={styles.ingredient} ref={drag}>
       <NavLink 

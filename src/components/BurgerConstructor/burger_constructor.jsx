@@ -8,6 +8,7 @@ import { useDrop } from "react-dnd"
 import BurgerIngredient from "../BurgerIngredient/burger_ingredient"
 import { useLocation, useNavigate } from "react-router-dom"
 
+
 export default function BurgerConstructor() {
 
   const location = useLocation()
@@ -44,12 +45,12 @@ export default function BurgerConstructor() {
     [ingredients, bun]
   );
 
-  const handleGetOrder = async() => {
+  const handleGetOrder = () => {
     const totalIngrediences = [...bun,...ingredients]
 
     if (totalIngrediences.length >= 1) {
-      await dispatch(getOrderData(totalIngrediences))
       navigate('/order',{state: { background: location } })
+      dispatch(getOrderData(totalIngrediences))
     }
   } 
   

@@ -8,9 +8,8 @@ import ResetPassword from "../../pages/reset-password/reset_password"
 import Profile from "../../pages/profile/profile"
 import ProfileForm from "../../pages/profile_form/profile_form"
 import Feed from "../../pages/feed/feed"
-import FeedId from "../../pages/feed/feed_id/feed_id"
+import OrderId from "../Order_id/order_id"
 import Orders from "../../pages/profile/orders/orders"
-import OrdersId from "../../pages/profile/orders/orders_id/orders_id"
 import Modal from "../Modal/modal"
 import Spinner from "../spinner/spinner"
 import Page404 from "../../pages/page 404/page_404"
@@ -28,17 +27,21 @@ import { getIngredience } from "../../utils/api"
 
 export default function App() {
 
-  const spinnerActive = useSelector((store) => store.userData.spinnerActive)
-  const orderStatus = useSelector((store) => store.orderData.status)
-
-  let spinner = false
-  if (spinnerActive || orderStatus === 'loading') {
-    spinner = true
-  }
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
+
+  const userDataSpinnerActive = useSelector((store) => store.userData.spinnerActive)
+  const orderDataSpinnerActive = useSelector((store) => store.orderData.spinnerActive)
+
+
+  if(location.pathname !== '/feed') {
+    dispatch({type: 'FEED_WS_CONNECTION_STOP'})
+  }
+
+  if(location.pathname !== '/profile/orders') {
+    dispatch({type: 'PROFILE_ORDERS_WS_CONNECTION_STOP'})
+  }
 
   const background = location.state && location.state.background
 
@@ -58,12 +61,12 @@ export default function App() {
     <>
       <AppHeader/>
       {
-        spinner
+        userDataSpinnerActive
         &&
-        <Spinner/>
+        <Spinner typeModal={false} />
       }
       {
-        !spinner
+        !userDataSpinnerActive
         &&
         <Routes location={background || location}>
         <Route path="/" element={<Home />}/>
@@ -75,17 +78,17 @@ export default function App() {
         <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
           <Route index element={<ProfileForm/>}/>
           <Route path="orders" element={<Orders />}>
-            <Route path=":id" element={<OrdersId/>}/>
+            <Route path=":number" element={<OrderId/>}/>
           </Route>
         </Route>
         <Route path="/feed" element={<Feed />}>
-          <Route path=":id" element={<FeedId />}/>
+          <Route path=":number" element={<OrderId />}/>
         </Route> 
         <Route path="*" element={<Page404 />}/> 
       </Routes>
       }
       {
-        !spinner
+        background
         && (
           <Routes>
             <Route
@@ -102,12 +105,38 @@ export default function App() {
                 <OnlyAuth 
                 component={
                   <Modal onClose={handleModalClose}>
-                    <OrderDetails />
+                    {
+                      orderDataSpinnerActive
+                      &&
+                      <Spinner typeModal={true} />
+                    }
+                    {
+                      !orderDataSpinnerActive  
+                      &&
+                      <OrderDetails />
+                    }
                   </Modal>
                   } 
                 />
               }
             />
+            <Route
+              path='feed/:number'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <OrderId />
+                </Modal>
+              }
+            />
+            <Route
+              path='profile/orders/:number'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <OrderId />
+                </Modal>
+              }
+            />
+            <Route path='*' element={<></>}/>
           </Routes>
         )}
     </>

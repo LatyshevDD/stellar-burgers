@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const feedWebSocketStart = 'FEED_WS_CONNECTION_START'
-export const feedWebSocketStop = 'FEED_WS_CONNECTION_STOP'
+export const profileOrdersWebSocketStart = 'PROFILE_ORDERS_WS_CONNECTION_START'
+export const profileOrdersWebSocketStop = 'PROFILE_ORDERS_WS_CONNECTION_STOP'
 
 const initialState = {
   success: false,
@@ -11,11 +11,11 @@ const initialState = {
   socketConnectionStatus: null
 }
 
-export const feedDataSlice = createSlice({
-  name: 'feedData',
+export const profileOrdersDataSlice = createSlice({
+  name: 'profileOrdersData',
   initialState,
   reducers: {
-    setFeed: (state, action) => {
+    setProfileOrders: (state, action) => {
       return {
         ...state,
         success: action.payload.success,
@@ -24,7 +24,7 @@ export const feedDataSlice = createSlice({
         totalToday: action.payload.totalToday
       }
     },
-    setFeedSocketConnectionStatus: (state, action) => {
+    setProfileOrdersSocketConnectionStatus: (state, action) => {
       return {
         ...state,
         socketConnectionStatus: action.payload
@@ -33,6 +33,6 @@ export const feedDataSlice = createSlice({
   },
 })
 
-export const { setFeed, setFeedSocketConnectionStatus } = feedDataSlice.actions
+export const { setProfileOrders, setProfileOrdersSocketConnectionStatus } = profileOrdersDataSlice.actions
 
-export default feedDataSlice.reducer
+export default profileOrdersDataSlice.reducer

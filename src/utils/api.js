@@ -199,3 +199,8 @@ export function ChangeUserWithRefreshRequest(data) {
           })
 }
 
+
+export function getOrder(number) {
+  return requestApi(`${config.orderUrl}/${number}`, {method: 'GET',})
+}
+
