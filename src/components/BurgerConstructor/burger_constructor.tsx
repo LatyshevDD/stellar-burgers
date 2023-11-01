@@ -57,7 +57,7 @@ export default function BurgerConstructor() {
   
   return (
     <section className={`${styles.section} mt-25`} ref={drop}>
-      <div className={styles.constructor}>
+      <div className={styles.burger_constructor}>
         {
           bun.length > 0 && (
               <ConstructorElement
