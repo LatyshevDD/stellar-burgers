@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getOrderWithRefreshRequest } from '../utils/api'
 import { getIngrediencesId } from '../utils/utils'
+import { IngredientType, OrderType, OrderDataType, ThunkApiConfig } from '../types/types'
 
-const initialState = {
+const initialState: OrderDataType = {
   name: "",
   order: {
     number: null
@@ -12,7 +13,7 @@ const initialState = {
   spinnerActive: false
 }
 
-export const getOrderData = createAsyncThunk(
+export const getOrderData = createAsyncThunk<OrderType, IngredientType[], ThunkApiConfig>(
   'getOrderData',
   async (ingrediences) => {
     const ingrediencesId = getIngrediencesId(ingrediences)
@@ -24,6 +25,7 @@ export const getOrderData = createAsyncThunk(
 export const orderDataSlice = createSlice({
   name: 'orderData',
   initialState,
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(getOrderData.pending, (state) => {

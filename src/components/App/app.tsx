@@ -13,7 +13,6 @@ import Orders from "../../pages/profile/orders/orders"
 import Modal from "../Modal/modal"
 import Spinner from "../spinner/spinner"
 import Page404 from "../../pages/page 404/page_404"
-import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { checkUserAuth } from "../../services/userDataSlice"
 import { OnlyAuth } from "../ProtectedRouteElement/ProtectedRouteElement"
@@ -22,17 +21,18 @@ import IngredientDetails from "../IngredientDetails/ingredient_details"
 import OrderDetails from "../OrderDetails/order_details"
 import { setIngrediences, setError } from "../../services/ingrediencesDataSlice"
 import { getIngredience } from "../../utils/api"
+import { useAppDispatch, useAppSelector } from "../../services/hooks"
 
 
 
 export default function App() {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const userDataSpinnerActive = useSelector((store) => store.userData.spinnerActive)
-  const orderDataSpinnerActive = useSelector((store) => store.orderData.spinnerActive)
+  const userDataSpinnerActive = useAppSelector((store) => store.userData.spinnerActive)
+  const orderDataSpinnerActive = useAppSelector((store) => store.orderData.spinnerActive)
 
 
   if(location.pathname !== '/feed') {

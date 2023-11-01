@@ -1,12 +1,13 @@
 import React, { useMemo } from "react"
 import styles from './burger_constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from "react-redux"
 import { addBun, addBurgerIngredient } from "../../services/burgerDataSlice"
 import { getOrderData } from "../../services/orderDataSlice"
 import { useDrop } from "react-dnd"
 import BurgerIngredient from "../BurgerIngredient/burger_ingredient"
 import { useLocation, useNavigate } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../services/hooks"
+import { IngredientType } from "../../types/types"
 
 
 export default function BurgerConstructor() {
@@ -16,7 +17,7 @@ export default function BurgerConstructor() {
 
   const [, drop] = useDrop(() => ({
     accept: 'ingredient',
-    drop: (item) => {
+    drop: (item: IngredientType) => {
       if (item.type === 'bun') {
         dispatch(addBun(item))
       } else {
@@ -25,11 +26,11 @@ export default function BurgerConstructor() {
     }
   }))
 
-  const burgerData = useSelector((state) => state.burgerData)
-  const dispatch = useDispatch()
+  const burgerData = useAppSelector((state) => state.burgerData)
+  const dispatch = useAppDispatch()
 
-  const ingredients = React.useMemo(() => burgerData.ingredients, [burgerData])
-  const bun = React.useMemo(() => burgerData.bun, [burgerData])
+  const ingredients: IngredientType[] = React.useMemo(() => burgerData.ingredients, [burgerData])
+  const bun: IngredientType[] = React.useMemo(() => burgerData.bun, [burgerData])
 
   const totalPrice = React.useMemo(() => {
     let ingrediencePrice = 0;
@@ -46,7 +47,7 @@ export default function BurgerConstructor() {
   );
 
   const handleGetOrder = () => {
-    const totalIngrediences = [...bun,...ingredients]
+    const totalIngrediences: IngredientType[] = [...bun,...ingredients]
 
     if (totalIngrediences.length >= 1) {
       navigate('/order',{state: { background: location } })
