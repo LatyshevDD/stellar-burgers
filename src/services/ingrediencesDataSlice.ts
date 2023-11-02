@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { IngrediencesDataType, IngredientType, IngrediencesSetErrorPayload } from '../types/types'
 
-const initialState = {
+const initialState: IngrediencesDataType = {
   ingrediences: [], 
   hasError: false, 
   errorMessage: ''
@@ -10,13 +11,13 @@ export const ingrediencesDataSlice = createSlice({
   name: 'ingrediencesData',
   initialState,
   reducers: {
-    setIngrediences: (state, action) => {
+    setIngrediences: (state, action: PayloadAction<IngredientType[]>) => {
       return {
         ...state,
         ingrediences: action.payload
       }
     },
-    setError: (state, action) => {
+    setError: (state, action: PayloadAction<IngrediencesSetErrorPayload>) => {
       return {
         ...state,
         hasError: action.payload.hasError, 

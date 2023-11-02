@@ -106,4 +106,15 @@ export type SetFeedPayloadType = {
   totalToday: number,
 }
 
+export type IngrediencesDataType = {
+  ingrediences: IngredientType[] | [], 
+  hasError: boolean, 
+  errorMessage: string
+}
+
+export type IngrediencesSetErrorPayload = {
+  hasError: boolean, 
+  errorMessage: string
+}
+
   
