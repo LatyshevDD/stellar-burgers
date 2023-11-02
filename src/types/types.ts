@@ -81,4 +81,29 @@ export type sortIngredientsPayloadType = {
   dropIndex: number
 }
 
+export type FeedOrder = {
+  _id: string,
+  ingredients: string[],
+  status: string,
+  name: string,
+  createdAt: string,
+  updatedAt: string,
+  number: number
+}
+
+export type FeedDataType = {
+  success: boolean,
+  orders: FeedOrder[],
+  total: number | null,
+  totalToday: number | null,
+  socketConnectionStatus: string | null
+}
+
+export type SetFeedPayloadType = {
+  success: boolean,
+  orders: FeedOrder[],
+  total: number,
+  totalToday: number,
+}
+
   

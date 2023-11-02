@@ -1,9 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { FeedDataType, SetFeedPayloadType } from '../types/types'
 
 export const feedWebSocketStart = 'FEED_WS_CONNECTION_START'
 export const feedWebSocketStop = 'FEED_WS_CONNECTION_STOP'
 
-const initialState = {
+const initialState: FeedDataType = {
   success: false,
   orders: [],
   total: null,
@@ -15,7 +16,7 @@ export const feedDataSlice = createSlice({
   name: 'feedData',
   initialState,
   reducers: {
-    setFeed: (state, action) => {
+    setFeed: (state, action: PayloadAction<SetFeedPayloadType>) => {
       return {
         ...state,
         success: action.payload.success,
@@ -24,7 +25,7 @@ export const feedDataSlice = createSlice({
         totalToday: action.payload.totalToday
       }
     },
-    setFeedSocketConnectionStatus: (state, action) => {
+    setFeedSocketConnectionStatus: (state, action: PayloadAction<string>) => {
       return {
         ...state,
         socketConnectionStatus: action.payload
