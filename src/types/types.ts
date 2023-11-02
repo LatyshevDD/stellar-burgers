@@ -81,7 +81,7 @@ export type sortIngredientsPayloadType = {
   dropIndex: number
 }
 
-export type FeedOrder = {
+export type WebSocketOrderType = {
   _id: string,
   ingredients: string[],
   status: string,
@@ -91,17 +91,17 @@ export type FeedOrder = {
   number: number
 }
 
-export type FeedDataType = {
+export type WebSocketDataType = {
   success: boolean,
-  orders: FeedOrder[],
+  orders: WebSocketOrderType[],
   total: number | null,
   totalToday: number | null,
   socketConnectionStatus: string | null
 }
 
-export type SetFeedPayloadType = {
+export type SetWebSocketPayloadType = {
   success: boolean,
-  orders: FeedOrder[],
+  orders: WebSocketOrderType[],
   total: number,
   totalToday: number,
 }

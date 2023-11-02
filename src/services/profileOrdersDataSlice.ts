@@ -1,9 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { WebSocketDataType, SetWebSocketPayloadType } from '../types/types'
 
 export const profileOrdersWebSocketStart = 'PROFILE_ORDERS_WS_CONNECTION_START'
 export const profileOrdersWebSocketStop = 'PROFILE_ORDERS_WS_CONNECTION_STOP'
 
-const initialState = {
+const initialState: WebSocketDataType = {
   success: false,
   orders: [],
   total: null,
@@ -15,7 +16,7 @@ export const profileOrdersDataSlice = createSlice({
   name: 'profileOrdersData',
   initialState,
   reducers: {
-    setProfileOrders: (state, action) => {
+    setProfileOrders: (state, action: PayloadAction<SetWebSocketPayloadType>) => {
       return {
         ...state,
         success: action.payload.success,
@@ -24,7 +25,7 @@ export const profileOrdersDataSlice = createSlice({
         totalToday: action.payload.totalToday
       }
     },
-    setProfileOrdersSocketConnectionStatus: (state, action) => {
+    setProfileOrdersSocketConnectionStatus: (state, action: PayloadAction<string>) => {
       return {
         ...state,
         socketConnectionStatus: action.payload
