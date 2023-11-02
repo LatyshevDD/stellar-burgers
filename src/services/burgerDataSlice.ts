@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { nanoid } from '@reduxjs/toolkit'
+import { BurgerDataType, IngredientType, sortIngredientsPayloadType } from '../types/types'
 
-const initialState = {
+const initialState: BurgerDataType = {
   bun: [],
   ingredients: []
 }
@@ -11,7 +12,7 @@ export const burgerDataSlice = createSlice({
   initialState,
   reducers: {
     addBurgerIngredient: {
-      reducer: (state, action) => {
+      reducer: (state, action: PayloadAction<IngredientType>) => {
         return {
           ...state,
           ingredients: [
@@ -20,7 +21,7 @@ export const burgerDataSlice = createSlice({
           ]
         }
       },
-      prepare: (item) => {
+      prepare: (item: IngredientType) => {
         const key = nanoid()
         return {
           payload: {
@@ -31,8 +32,8 @@ export const burgerDataSlice = createSlice({
       }
     }, 
     addBun: {
-      reducer: (state, action) => {
-        if (!state.bun.length > 0) {
+      reducer: (state, action: PayloadAction<IngredientType>) => {
+        if (!(state.bun.length > 0)) {
           return {
             ...state, 
             bun: [
@@ -41,7 +42,7 @@ export const burgerDataSlice = createSlice({
           }
         }
         else {
-          if (state.bun._id === action.payload._id) {
+          if ('_id' in state.bun && state.bun._id === action.payload._id) {
             return {
               ...state
             };
@@ -56,7 +57,7 @@ export const burgerDataSlice = createSlice({
           }  
         }
       },
-      prepare: (item) => {
+      prepare: (item: IngredientType) => {
         const key = nanoid()
         return {
           payload: {
@@ -66,13 +67,13 @@ export const burgerDataSlice = createSlice({
         }
       }
     },
-    deleteIngredient: (state, action) => {
+    deleteIngredient: (state, action: PayloadAction<IngredientType>) => {
       return {
         ...state,
         ingredients: state.ingredients.filter(item => item.key !== action.payload.key),
       }
     },
-    sortIngredients: (state, action) => {
+    sortIngredients: (state, action: PayloadAction<sortIngredientsPayloadType>) => {
 
       const ingrediences = [...state.ingredients]
       ingrediences.splice(

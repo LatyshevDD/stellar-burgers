@@ -1,18 +1,16 @@
 import React, {useRef} from "react"
 import styles from './burger_ingredient.module.css'
-import { useDispatch } from "react-redux"
 import { useDrag, useDrop } from "react-dnd"
-import PropTypes from 'prop-types'
-import { ingredientPropType } from "../../utils/prop-types"
 import { deleteIngredient, sortIngredients } from "../../services/burgerDataSlice"
 import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useSelector } from "react-redux"
+import { BurgerIngredientProps, IngredientType } from "../../types/types"
+import { useAppDispatch, useAppSelector } from "../../services/hooks"
 
-export default function BurgerIngredient({ingredientData}) {
+export default function BurgerIngredient({ingredientData}: BurgerIngredientProps) {
 
   const ref = useRef(null)
-  const ingrediences = useSelector(state => state.burgerData.ingredients)
-  const dispatch = useDispatch()
+  const ingrediences: IngredientType[] = useAppSelector(state => state.burgerData.ingredients)
+  const dispatch = useAppDispatch()
   const dropIndex = ingrediences.findIndex(item => item.key === ingredientData.key)
   const [{isDragging}, drag, preview] = useDrag(() => ({
     type: 'burgerIngredient',
@@ -24,11 +22,11 @@ export default function BurgerIngredient({ingredientData}) {
 
   const [, drop] = useDrop(() => ({
     accept: 'burgerIngredient',
-    hover: (item) => {
+    hover: (item: IngredientType) => {
       const dragIndex = ingrediences.findIndex(ingredient => ingredient.key === item.key)
       dispatch(sortIngredients({dragIndex: dragIndex, dropIndex:dropIndex}))
     },
-    drop: (item) => {
+    drop: (item: IngredientType) => {
       const dragIndex = ingrediences.findIndex(ingredient => ingredient.key === item.key)
       dispatch(sortIngredients({dragIndex: dragIndex, dropIndex:dropIndex}))
     }
@@ -55,7 +53,3 @@ export default function BurgerIngredient({ingredientData}) {
     
   )
 }
-
-BurgerIngredient.propTypes = {
-  ingredientData: ingredientPropType
-} 
