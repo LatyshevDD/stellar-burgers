@@ -117,4 +117,39 @@ export type IngrediencesSetErrorPayload = {
   errorMessage: string
 }
 
+export type UserType = {
+    login?: string,
+    email: string,
+    name: string
+}
+
+export type UserDataType = {
+    user: UserType | null,
+    isAuthChecked: boolean,
+    isError: boolean,
+    spinnerActive: boolean
+}
+
+export type LoginRequestData = {
+  email: string,
+  password: string
+}
+
+// Api
+
+export type RequestOptionsType = {
+  method: string,
+  body: string,
+  headers: {
+      'Content-Type': string,
+      authorization?: string | null
+  }
+}
+
+export type RefreshTokenResponseType = {
+  success: boolean,
+  accessToken: string,
+  refreshToken:string
+}
+
   

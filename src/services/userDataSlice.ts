@@ -1,16 +1,19 @@
 import {createSlice} from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { loginRequest, logoutRequest, getUserWithRefreshRequest, ChangeUserWithRefreshRequest } from "../utils/api"
+import { RootState } from "./store"
+import { ThunkAction } from "@reduxjs/toolkit"
+import { Action } from "@reduxjs/toolkit"
+import { UserDataType, UserType, ThunkApiConfig, LoginRequestData } from "../types/types"
 
-
-const initialState = {
+const initialState: UserDataType = {
     user: null,
     isAuthChecked: false,
     isError: false,
     spinnerActive: false
 }
 
-export const getUser = () => {
+export const getUser = (): ThunkAction<void, RootState, unknown, Action> => {
   return (dispatch) => {
       return getUserWithRefreshRequest()
       .then ((res) => {
@@ -23,7 +26,7 @@ export const getUser = () => {
   };
 };
 
-export const changeUser = createAsyncThunk(
+export const changeUser = createAsyncThunk<UserType, UserType, ThunkApiConfig>(
   "user/change",
   async (data) => {
       const res = await ChangeUserWithRefreshRequest(data)
@@ -32,17 +35,18 @@ export const changeUser = createAsyncThunk(
 )
 
 
-export const login = createAsyncThunk(
+export const login = createAsyncThunk<UserType, LoginRequestData, ThunkApiConfig>(
   "user/login",
   async (data) => {
       const res = await loginRequest(data);
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
-      return res.user;
+      console.log(res)
+      return res.user
   }
 )
 
-export const checkUserAuth = () => {
+export const checkUserAuth = (): ThunkAction<void, RootState, unknown, Action> => {
   return (dispatch) => {
       if (localStorage.getItem("accessToken")) {
           dispatch(getUser())
@@ -145,7 +149,7 @@ export const userDataSlice = createSlice({
             spinnerActive: false
           }
         })
-        .addCase(changeUser.pending, (state, action) => {
+        .addCase(changeUser.pending, (state) => {
           return {
             ...state,
             spinnerActive: true

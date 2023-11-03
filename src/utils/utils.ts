@@ -1,5 +1,7 @@
-export function getIngrediencesId(array) {
-  return array.reduce((total,item) => {
+import { IngredientType, WebSocketOrderType } from "../types/types"
+
+export function getIngrediencesId(array: IngredientType[]): String[] {
+  return array.reduce((total: String[], item) => {
     if (item) {
       return [...total, item._id]
     }
@@ -10,7 +12,7 @@ export function getIngrediencesId(array) {
   }, [])
 }
 
-export function getCountOfIngredient(ingredient, array) {
+export function getCountOfIngredient(ingredient: IngredientType, array: IngredientType[]) {
   const count = array.reduce((total, item) => {
     if (item._id === ingredient._id) {
       return total += 1
@@ -21,8 +23,8 @@ export function getCountOfIngredient(ingredient, array) {
   return count
 }
 
-export function getCountOfIngredientWithIndexes(ingredient, array) {
-  const count = array.reduce((total, item, index) => {
+export function getCountOfIngredientWithIndexes(ingredient: IngredientType, array: IngredientType[]) {
+  const count = array.reduce((total:  {count: number, indexes: number[]}, item, index: number) => {
     if (item._id === ingredient._id) {
       total.count += 1
       total.indexes.push(index)
@@ -34,11 +36,11 @@ export function getCountOfIngredientWithIndexes(ingredient, array) {
   return count
 }
 
-export function getIngredientById(array, id) {
+export function getIngredientById(array: IngredientType[], id: string) {
   return array.find(item => item._id === id)
 }
 
-export function checkArrayProperties(array) {
+export function checkArrayProperties(array: String[]) {
   let result = true
   array.forEach(element => {
     if(!element) {
@@ -48,12 +50,12 @@ export function checkArrayProperties(array) {
   return result
 }
 
-export function checkOrdersIngredients(array) {
+export function checkOrdersIngredients(array: WebSocketOrderType[]) {
   return array.filter(item => {
     return checkArrayProperties(item.ingredients)
   })
 }
 
-export function isEmptyObj(obj) {
+export function isEmptyObj(obj: Object) {
   return Object.keys(obj).length === 0;
 }

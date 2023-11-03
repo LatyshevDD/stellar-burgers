@@ -1,26 +1,34 @@
+import { RequestOptionsType, OrderType, RefreshTokenResponseType } from "../types/types";
+
 const config = {
   ingredienceUrl: 'https://norma.nomoreparties.space/api/ingredients',
   orderUrl: 'https://norma.nomoreparties.space/api/orders'
 };
 
-function getResponseData(res) {
-  if (!res.ok) {
-    return Promise.reject(`Ошибка: ${res.message}`);
-  }
-  return res.json();
-}
+// function getResponseData<T>(res) {
+//   if (!res.ok) {
+//     return Promise.reject(`Ошибка: ${res.message}`);
+//   }
+//   return res.json() as Promise<T>
+// }
 
-function requestApi(url, options) {
+function requestApi<T>(url: string, options: RequestOptionsType): Promise<T> {
   return fetch(url, options)
-    .then(res => getResponseData(res))
+    .then(res => {
+        if (!res.ok) {
+          return Promise.reject(`Ошибка`);
+        }
+        return res.json() as Promise<T>
+      }
+    )
 }
 
 export function getIngredience() {
   return requestApi(config.ingredienceUrl)
 }
 
-export function getOrderDetails(data) {
-  return requestApi(config.orderUrl, {
+export function getOrderDetails(data: String[]) {
+  return requestApi<OrderType>(config.orderUrl, {
     method: 'POST',
     body: JSON.stringify({
       ingredients: data
@@ -32,9 +40,9 @@ export function getOrderDetails(data) {
   })
 }
 
-export function getOrderWithRefreshRequest(data) {
+export function getOrderWithRefreshRequest(data: String[]) {
   return getOrderDetails(data)
-          .catch((err) => {
+          .catch((err: string) => {
             if (err === 'jwt expired') {
               refreshTokenRequest()
                 .then((res) => {
@@ -51,6 +59,7 @@ export function getOrderWithRefreshRequest(data) {
                   return Promise.reject(err)
                 })
             }
+            return Promise.reject("Неизвестная ошибка")
           })
 }
 
@@ -126,7 +135,7 @@ export function getUserWithRefreshRequest() {
 }
 
 export function refreshTokenRequest() {
-  return requestApi('https://norma.nomoreparties.space/api/auth/token', {
+  return requestApi<RefreshTokenResponseType>('https://norma.nomoreparties.space/api/auth/token', {
     method: 'POST',
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken')
