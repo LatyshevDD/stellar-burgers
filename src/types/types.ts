@@ -20,6 +20,10 @@ export type IngredientProps = {
   ingredientData: IngredientType
 }
 
+export type IngredientDetailsProps = {
+  fullScrin: boolean
+}
+
 export type OrderType = {
   name: string,
   success: boolean,
