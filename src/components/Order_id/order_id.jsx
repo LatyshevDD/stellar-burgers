@@ -19,7 +19,7 @@ export default function OrderId() {
       error: false, 
     }
   )
-
+  
   useEffect(() => {
     getOrder(number)
       .then(res => {

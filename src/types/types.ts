@@ -137,19 +137,31 @@ export type LoginRequestData = {
 
 // Api
 
-export type RequestOptionsType = {
-  method: string,
-  body: string,
-  headers: {
-      'Content-Type': string,
-      authorization?: string | null
-  }
-}
-
-export type RefreshTokenResponseType = {
+export type RefreshTokenRequestType = {
   success: boolean,
   accessToken: string,
   refreshToken:string
 }
 
+export type GetIngredienceRequestType = {
+  success: boolean,
+  data: IngredientType[]
+}
+
+export type RequestWithUserType = {
+    success: boolean,
+    user: UserType,
+    accessToken: string,
+    refreshToken: string
+}
+
+export type RefreshUserInfoRequestType = {
+  success: boolean,
+  message: string
+}
+
+export type GetUserRequestType = {
+  success: true,
+  user: UserType
+}
   
