@@ -2,9 +2,9 @@ import {createSlice} from "@reduxjs/toolkit"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { loginRequest, logoutRequest, getUserWithRefreshRequest, ChangeUserWithRefreshRequest } from "../utils/api"
 import { RootState } from "./store"
-import { ThunkAction } from "@reduxjs/toolkit"
+import { ThunkAction, PayloadAction } from "@reduxjs/toolkit"
 import { Action } from "@reduxjs/toolkit"
-import { UserDataType, UserType, ThunkApiConfig, LoginRequestData } from "../types/types"
+import { UserDataType, UserType, ThunkApiConfig, LoginRequestData, ChangeUserDataType } from "../types/types"
 
 const initialState: UserDataType = {
     user: null,
@@ -22,11 +22,20 @@ export const getUser = (): ThunkAction<void, RootState, unknown, Action> => {
       })
       .then((res) => {
           dispatch(setUser(res.user));
-      });
+      })
+      .catch(() => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch(setUser(null));
+      })
+      .finally(() => {
+        dispatch(setSpinnerActive(false))
+        dispatch(setAuthChecked(true))
+      })
   };
 };
 
-export const changeUser = createAsyncThunk<UserType, UserType, ThunkApiConfig>(
+export const changeUser = createAsyncThunk<UserType, ChangeUserDataType, ThunkApiConfig>(
   "user/change",
   async (data) => {
       const res = await ChangeUserWithRefreshRequest(data)
@@ -41,7 +50,6 @@ export const login = createAsyncThunk<UserType, LoginRequestData, ThunkApiConfig
       const res = await loginRequest(data);
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
-      console.log(res)
       return res.user
   }
 )
@@ -49,16 +57,7 @@ export const login = createAsyncThunk<UserType, LoginRequestData, ThunkApiConfig
 export const checkUserAuth = (): ThunkAction<void, RootState, unknown, Action> => {
   return (dispatch) => {
       if (localStorage.getItem("accessToken")) {
-          dispatch(getUser())
-              .catch(() => {
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refreshToken");
-                dispatch(setUser(null));
-              })
-              .finally(() => {
-                dispatch(setSpinnerActive(false))
-                dispatch(setAuthChecked(true))
-              });
+          dispatch(getUser())        
       } else {
           dispatch(setAuthChecked(true));
       }
@@ -79,19 +78,19 @@ export const userDataSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setAuthChecked: (state, action) => {
+    setAuthChecked: (state, action: PayloadAction<boolean>) => {
       return {
         ...state,
         isAuthChecked: action.payload
       }
     },
-    setUser: (state, action) => {
+    setUser: (state, action: PayloadAction<UserType | null>) => {
       return {
         ...state,
         user: action.payload
       }
     },
-    setSpinnerActive: (state, action) => {
+    setSpinnerActive: (state, action: PayloadAction<boolean>) => {
       return {
         ...state,
         spinnerActive: action.payload
