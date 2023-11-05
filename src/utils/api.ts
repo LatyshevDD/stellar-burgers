@@ -1,4 +1,4 @@
-import {OrderType, RefreshTokenRequestType, GetIngredienceRequestType, RequestWithUserType, RefreshUserInfoRequestType, GetUserRequestType } from "../types/types";
+import {OrderType, RefreshTokenRequestType, GetIngredienceRequestType, RequestWithUserType, RefreshUserInfoRequestType, GetUserRequestType, ChangeUserDataType } from "../types/types";
 
 const config = {
   ingredienceUrl: 'https://norma.nomoreparties.space/api/ingredients',
@@ -166,8 +166,8 @@ export function resetPasswordRequest(data:{password: string, token: string}) {
   })
 }
 
-export function changeUserRequest(data:{name: string, login: string, password: string}) {
-  return requestApi<RefreshUserInfoRequestType>('https://norma.nomoreparties.space/api/auth/user', {
+export function changeUserRequest(data: ChangeUserDataType) {
+  return requestApi<RequestWithUserType>('https://norma.nomoreparties.space/api/auth/user', {
     method: 'PATCH',
     body: JSON.stringify({
       name: data.name,

@@ -130,6 +130,12 @@ export type UserDataType = {
     spinnerActive: boolean
 }
 
+export type ChangeUserDataType = {
+  name: string, 
+  login: string, 
+  password: string
+}
+
 export type LoginRequestData = {
   email: string,
   password: string
