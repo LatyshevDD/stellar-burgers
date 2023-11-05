@@ -16,22 +16,8 @@ export type IngredientType = {
   key?: string,
 }
 
-export type BurgerIngredientProps = {
-  ingredientData: {
-    _id: string,
-    name: string,
-    type: string,
-    proteins: number,
-    fat: number,
-    carbohydrates: number,
-    calories: number,
-    price: number,
-    image: string,
-    image_mobile: string,
-    image_large: string,
-    _v: number,
-    key?: string,
-  }
+export type IngredientProps = {
+  ingredientData: IngredientType
 }
 
 export type OrderType = {

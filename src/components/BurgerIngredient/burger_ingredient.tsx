@@ -1,14 +1,13 @@
-import React, {useRef} from "react"
+import React from "react"
 import styles from './burger_ingredient.module.css'
 import { useDrag, useDrop } from "react-dnd"
 import { deleteIngredient, sortIngredients } from "../../services/burgerDataSlice"
 import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components"
-import { BurgerIngredientProps, IngredientType } from "../../types/types"
+import { IngredientProps, IngredientType } from "../../types/types"
 import { useAppDispatch, useAppSelector } from "../../services/hooks"
 
-export default function BurgerIngredient({ingredientData}: BurgerIngredientProps) {
+export default function BurgerIngredient({ingredientData}: IngredientProps) {
 
-  const ref = useRef(null)
   const ingrediences: IngredientType[] = useAppSelector(state => state.burgerData.ingredients)
   const dispatch = useAppDispatch()
   const dropIndex = ingrediences.findIndex(item => item.key === ingredientData.key)

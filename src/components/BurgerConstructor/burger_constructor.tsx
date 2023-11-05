@@ -29,8 +29,8 @@ export default function BurgerConstructor() {
   const burgerData = useAppSelector((state) => state.burgerData)
   const dispatch = useAppDispatch()
 
-  const ingredients: IngredientType[] = React.useMemo(() => burgerData.ingredients, [burgerData])
-  const bun: IngredientType[] = React.useMemo(() => burgerData.bun, [burgerData])
+  const ingredients = React.useMemo(() => burgerData.ingredients, [burgerData])
+  const bun = React.useMemo(() => burgerData.bun, [burgerData])
 
   const totalPrice = React.useMemo(() => {
     let ingrediencePrice = 0;

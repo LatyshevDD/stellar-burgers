@@ -1,33 +1,33 @@
-import React, { useRef, useContext } from "react"
+import React, { useRef } from "react"
 import { useMemo } from "react"
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger_ingredients.module.css'
 import { BUN, MAIN, SAUCE } from "../../utils/constants"
-import { useSelector, useDispatch } from "react-redux"
+import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import Ingredient from "../Ingredient/ingredient"
 
 
 export default function BurgerIngredients() {
 
-  const ingrediences = useSelector((state) => state.ingrediencesData.ingrediences)
-  const dispatch = useDispatch()
+  const ingrediences = useAppSelector((state) => state.ingrediencesData.ingrediences)
+  const dispatch = useAppDispatch()
 
   const [current, setCurrent] = React.useState(BUN)
 
-  const ingredientsContainer = useRef()
-  const bunRef = useRef()
-  const sauceRef = useRef()
-  const mainRef = useRef()
+  const ingredientsContainer = useRef<HTMLDivElement>(null)
+  const bunRef = useRef<HTMLParagraphElement>(null)
+  const sauceRef = useRef<HTMLParagraphElement>(null)
+  const mainRef = useRef<HTMLParagraphElement>(null)
 
   const buns = React.useMemo(() => ingrediences.filter((item) => item.type === BUN), [ingrediences])
   const mains = React.useMemo(() => ingrediences.filter((item) => item.type === MAIN), [ingrediences])
   const sauces = React.useMemo(() => ingrediences.filter((item) => item.type === SAUCE), [ingrediences])
 
   const handleScroll = () => {
-    const containerScroll = ingredientsContainer.current.getBoundingClientRect().top
-    const bunScroll = bunRef.current.getBoundingClientRect().top - containerScroll
-    const sauceScroll = sauceRef.current.getBoundingClientRect().top - containerScroll
-    const mainScroll = mainRef.current.getBoundingClientRect().top - containerScroll
+    const containerScroll = ingredientsContainer.current != null ? ingredientsContainer.current.getBoundingClientRect().top : 0
+    const bunScroll = bunRef.current != null ?  bunRef.current.getBoundingClientRect().top - containerScroll : 0
+    const sauceScroll = sauceRef.current != null ?  sauceRef.current.getBoundingClientRect().top - containerScroll : 0
+    const mainScroll = mainRef.current != null ? mainRef.current.getBoundingClientRect().top - containerScroll : 0
     const maxOffset = -30
     if (bunScroll <= 0 && bunScroll > maxOffset) {
       setCurrent(BUN)
@@ -52,7 +52,7 @@ export default function BurgerIngredients() {
           onClick={
             () => {
               setCurrent(BUN);
-              bunRef.current.scrollIntoView({
+              bunRef.current !=null && bunRef.current.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
               });
@@ -67,7 +67,7 @@ export default function BurgerIngredients() {
           onClick={
             () => {
               setCurrent(SAUCE);
-              sauceRef.current.scrollIntoView({
+              sauceRef.current != null && sauceRef.current.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
               });
@@ -82,7 +82,7 @@ export default function BurgerIngredients() {
           onClick={
             () => {
               setCurrent(MAIN);
-              mainRef.current.scrollIntoView({
+              mainRef.current != null && mainRef.current.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
               });

@@ -1,21 +1,19 @@
-import React, {useMemo} from "react"
 import styles from './ingredient.module.css'
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useDispatch, useSelector } from "react-redux"
+import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import { useDrag } from "react-dnd"
-import PropTypes from 'prop-types'
-import { ingredientPropType } from "../../utils/prop-types"
 import { getCountOfIngredient } from "../../utils/utils"
 import { NavLink, useLocation } from "react-router-dom"
+import { IngredientProps } from "../../types/types"
 
-export default function Ingredient({ingredientData}) {
+export default function Ingredient({ingredientData}: IngredientProps) {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation()
 
-  const burgerData = useSelector(state => state.burgerData)
+  const burgerData = useAppSelector(state => state.burgerData)
   
-  let ingredientCount
+  let ingredientCount: number
 
   if (ingredientData.type === 'bun') {
     ingredientCount = getCountOfIngredient(ingredientData, burgerData.bun)
@@ -52,7 +50,3 @@ export default function Ingredient({ingredientData}) {
     </li>
   )
 }
-
-Ingredient.propTypes = {
-  ingredientData: ingredientPropType
-} 
