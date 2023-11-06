@@ -4,15 +4,16 @@ import { useRef } from "react"
 import ModalOverlay from "../ModalOverlay/modal_overlay"
 import styles from './modal.module.css'
 import close_image from '../../images/modal_close.png'
-import { useSelector } from "react-redux"
+import { useAppSelector } from "../../services/hooks"
+import { ModalPropsType } from "../../types/types"
 
-export default function Modal({children, onClose}) {
+export default function Modal({children, onClose}: ModalPropsType) {
 
-  const orderDataSpinnerActive = useSelector((store) => store.orderData.spinnerActive)
+  const orderDataSpinnerActive = useAppSelector((store) => store.orderData.spinnerActive)
 
-  const modal = useRef()
+  const modal = useRef<HTMLDivElement>(null)
 
-  function handleEscClose(e) {
+  function handleEscClose(e: KeyboardEvent) {
     if(orderDataSpinnerActive) {
       return
     }
@@ -21,14 +22,16 @@ export default function Modal({children, onClose}) {
     }
   }
 
-  function overlayClosePopup(e) {
+  function overlayClosePopup(e: MouseEvent) {
     if(orderDataSpinnerActive) {
       return
     }
-    if (modal.current && !modal.current.contains(e.target)) {
-      onClose()
+    if (e.target instanceof Node) {
+      if (modal.current  && !modal.current.contains(e.target)) {
+        onClose()  
+      }
+      return;
     }
-    return;
   }
 
   React.useEffect(() => {

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IngrediencesDataType, IngredientType, IngrediencesSetErrorPayload } from '../types/types'
 
 const initialState: IngrediencesDataType = {
-  ingrediences: [], 
+  ingrediences: null, 
   hasError: false, 
   errorMessage: ''
 }

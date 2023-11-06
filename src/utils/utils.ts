@@ -37,7 +37,7 @@ export function getCountOfIngredientWithIndexes(ingredient: IngredientType, arra
 }
 
 export function getIngredientById(array: IngredientType[], id: string) {
-  return array.find(item => item._id === id)
+  return array.find(item => item._id === id) as IngredientType
 }
 
 export function checkArrayProperties(array: String[]) {

@@ -1,3 +1,4 @@
+import { ReactElement } from "react"
 import { RootState, AppDispatch } from "../services/store"
 
 export type IngredientType = {
@@ -22,6 +23,15 @@ export type IngredientProps = {
 
 export type IngredientDetailsProps = {
   fullScrin: boolean
+}
+
+export type ModalPropsType = {
+  onClose: () => void,
+  children?: ReactElement
+}
+
+export type OrderPropsType = {
+  order: WebSocketOrderType
 }
 
 export type OrderType = {
@@ -97,7 +107,7 @@ export type SetWebSocketPayloadType = {
 }
 
 export type IngrediencesDataType = {
-  ingrediences: IngredientType[] | [], 
+  ingrediences: IngredientType[] | null, 
   hasError: boolean, 
   errorMessage: string
 }

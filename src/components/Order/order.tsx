@@ -3,17 +3,18 @@ import { ReactDOM } from "react"
 import styles from "./order.module.css"
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useSelector } from "react-redux"
+import { useAppSelector } from "../../services/hooks"
 import { getIngredientById } from "../../utils/utils"
 import { Link, useLocation } from "react-router-dom"
+import { OrderPropsType } from "../../types/types"
 
-export default function Order({order}) {
+export default function Order({order}: OrderPropsType) {
 
   const location = useLocation()
-  const { ingrediences } = useSelector(state => state.ingrediencesData)
+  const { ingrediences } = useAppSelector(state => state.ingrediencesData)
 
-  const selectedIngrediences = order.ingredients.map(item => getIngredientById(ingrediences, item))
-  const orderPrice = selectedIngrediences.reduce((sum, item) => {
+  const selectedIngrediences = ingrediences != null && order.ingredients.map(item => getIngredientById(ingrediences, item))
+  const orderPrice = selectedIngrediences &&  selectedIngrediences.reduce((sum, item) => {
     return sum + item.price
   }, 0)
 
@@ -22,7 +23,8 @@ export default function Order({order}) {
     return <FormattedDate date={new Date(dateFromServer)} className='text text_type_main-default text_color_inactive'/>
   }
 
-  let url
+  let url: string = ""
+  
     if(location.pathname === '/feed') {
       url = `/feed/${order.number}`
     }
@@ -64,6 +66,7 @@ export default function Order({order}) {
           <div className={styles.order_summary}>
             <ul className={styles.ingrediences}>
               {
+                selectedIngrediences &&
                 selectedIngrediences.map((item, index, array) => {
                   if(index <= 4) {
                     const zIndex = 6 - index
@@ -73,6 +76,7 @@ export default function Order({order}) {
                 })
               }
               {
+                selectedIngrediences &&
                 selectedIngrediences.length > 5
                 &&
                 (

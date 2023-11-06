@@ -107,12 +107,8 @@ export default function App() {
                   <Modal onClose={handleModalClose}>
                     {
                       orderDataSpinnerActive
-                      &&
-                      <Spinner typeModal={true} />
-                    }
-                    {
-                      !orderDataSpinnerActive  
-                      &&
+                      ?
+                      <Spinner typeModal={true} /> :
                       <OrderDetails />
                     }
                   </Modal>
