@@ -4,14 +4,15 @@ import styles from "./order_id.module.css"
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { getIngredientById, getCountOfIngredientWithIndexes, isEmptyObj } from "../../utils/utils"
-import { useSelector } from "react-redux"
+import { useAppSelector } from "../../services/hooks"
 import { getOrder } from "../../utils/api"
 import { useParams } from "react-router-dom"
+import { IngredientType } from "../../types/types"
 
 export default function OrderId() {
 
   const { number } = useParams()
-  const { ingrediences } = useSelector(state => state.ingrediencesData)
+  const { ingrediences } = useAppSelector(state => state.ingrediencesData)
 
   const [order, setOrder] = useState(
     {
@@ -21,12 +22,14 @@ export default function OrderId() {
   )
   
   useEffect(() => {
-    getOrder(number)
+    if (number) {
+      getOrder(number)
       .then(res => {
         setOrder({...order, data: res.orders[0]})})
+    }
   }, [])
 
-  let selectedIngrediences, orderPrice
+  let selectedIngrediences: IngredientType[], orderPrice
   if(!isEmptyObj(order.data)) {
         selectedIngrediences = order.data.ingredients.map(item => getIngredientById(ingrediences, item))
         orderPrice = selectedIngrediences.reduce((sum, item) => {

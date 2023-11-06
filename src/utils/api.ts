@@ -1,4 +1,4 @@
-import {OrderType, RefreshTokenRequestType, GetIngredienceRequestType, RequestWithUserType, RefreshUserInfoRequestType, GetUserRequestType, ChangeUserDataType } from "../types/types";
+import {OrderType, RefreshTokenRequestType, GetIngredienceRequestType, RequestWithUserType, RefreshUserInfoRequestType, GetUserRequestType, ChangeUserDataType, GetOrderRequestType } from "../types/types";
 
 const config = {
   ingredienceUrl: 'https://norma.nomoreparties.space/api/ingredients',
@@ -203,6 +203,6 @@ export function ChangeUserWithRefreshRequest(data: {name: string, login: string,
 
 
 export function getOrder(number: string) {
-  return requestApi(`${config.orderUrl}/${number}`, {method: 'GET',})
+  return requestApi<GetOrderRequestType>(`${config.orderUrl}/${number}`, {method: 'GET',})
 }
 

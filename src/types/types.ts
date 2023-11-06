@@ -88,7 +88,9 @@ export type WebSocketOrderType = {
   name: string,
   createdAt: string,
   updatedAt: string,
-  number: number
+  number: number,
+  owner?: string,
+  __v: number
 }
 
 export type WebSocketDataType = {
@@ -169,5 +171,10 @@ export type RefreshUserInfoRequestType = {
 export type GetUserRequestType = {
   success: true,
   user: UserType
+}
+
+export type GetOrderRequestType = {
+  success: true,
+  orders: WebSocketOrderType[]
 }
   
