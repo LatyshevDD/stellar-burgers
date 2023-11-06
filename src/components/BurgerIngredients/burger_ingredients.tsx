@@ -19,9 +19,9 @@ export default function BurgerIngredients() {
   const sauceRef = useRef<HTMLParagraphElement>(null)
   const mainRef = useRef<HTMLParagraphElement>(null)
 
-  const buns = React.useMemo(() => ingrediences.filter((item) => item.type === BUN), [ingrediences])
-  const mains = React.useMemo(() => ingrediences.filter((item) => item.type === MAIN), [ingrediences])
-  const sauces = React.useMemo(() => ingrediences.filter((item) => item.type === SAUCE), [ingrediences])
+  const buns = ingrediences != null &&  React.useMemo(() => ingrediences.filter((item) => item.type === BUN), [ingrediences])
+  const mains = ingrediences != null &&  React.useMemo(() => ingrediences.filter((item) => item.type === MAIN), [ingrediences])
+  const sauces = ingrediences != null &&  React.useMemo(() => ingrediences.filter((item) => item.type === SAUCE), [ingrediences])
 
   const handleScroll = () => {
     const containerScroll = ingredientsContainer.current != null ? ingredientsContainer.current.getBoundingClientRect().top : 0
@@ -98,6 +98,7 @@ export default function BurgerIngredients() {
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
+            buns &&
             buns.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
           }
         </ul>
@@ -106,6 +107,7 @@ export default function BurgerIngredients() {
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
           {
+            sauces &&
             sauces.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
           } 
         </ul>
@@ -113,7 +115,8 @@ export default function BurgerIngredients() {
           Начинки
         </p>
         <ul className={`${styles.ingredients} ml-4`}>
-          {
+          { 
+            mains &&
             mains.map(item => (<Ingredient ingredientData={item} key={item._id}/>))
           } 
         </ul>

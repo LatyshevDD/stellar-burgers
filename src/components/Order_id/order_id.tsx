@@ -7,16 +7,16 @@ import { getIngredientById, getCountOfIngredientWithIndexes, isEmptyObj } from "
 import { useAppSelector } from "../../services/hooks"
 import { getOrder } from "../../utils/api"
 import { useParams } from "react-router-dom"
-import { IngredientType } from "../../types/types"
+import { IngredientType, WebSocketOrderType } from "../../types/types"
 
 export default function OrderId() {
 
   const { number } = useParams()
   const { ingrediences } = useAppSelector(state => state.ingrediencesData)
 
-  const [order, setOrder] = useState(
+  const [order, setOrder] = useState<{data: WebSocketOrderType | null, error: boolean}>(
     {
-      data: {}, 
+      data: null, 
       error: false, 
     }
   )
@@ -29,8 +29,8 @@ export default function OrderId() {
     }
   }, [])
 
-  let selectedIngrediences: IngredientType[], orderPrice
-  if(!isEmptyObj(order.data)) {
+  let selectedIngrediences: IngredientType[] = [], orderPrice: number = 0
+  if(order.data && ingrediences != null) {
         selectedIngrediences = order.data.ingredients.map(item => getIngredientById(ingrediences, item))
         orderPrice = selectedIngrediences.reduce((sum, item) => {
           return sum + item.price
@@ -38,20 +38,20 @@ export default function OrderId() {
   }
 
   const date = () => {
-    const dateFromServer = order.data.createdAt
+    const dateFromServer = order.data != null ? order.data.createdAt : ''
     return <FormattedDate date={new Date(dateFromServer)} className='text text_type_main-default text_color_inactive'/>
   }
   
   return (
     <section className={styles.section}>
       <p className={`${styles.order_number} text text_type_digits-default`}>
-        {`#${order.data.number}`}
+        {`#${order.data != null && order.data.number}`}
       </p>
       <p className={`${styles.order_title} text text_type_main-medium`}>
-        {order.data.name}
+        {order.data != null && order.data.name}
       </p>
       <p className={`${styles.order_status} text text_type_main-default text_color_inactive`}>
-        {order.data.status === 'done' ? 'Выполнен' : 'Готовится'}
+        {order.data != null && order.data.status === 'done' ? 'Выполнен' : 'Готовится'}
       </p>
       <p className={`${styles.order_structure} text text_type_main-medium`}>
         Состав:
