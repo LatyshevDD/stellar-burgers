@@ -19,9 +19,9 @@ export default function BurgerIngredients() {
   const sauceRef = useRef<HTMLParagraphElement>(null)
   const mainRef = useRef<HTMLParagraphElement>(null)
 
-  const buns = ingrediences != null &&  React.useMemo(() => ingrediences.filter((item) => item.type === BUN), [ingrediences])
-  const mains = ingrediences != null &&  React.useMemo(() => ingrediences.filter((item) => item.type === MAIN), [ingrediences])
-  const sauces = ingrediences != null &&  React.useMemo(() => ingrediences.filter((item) => item.type === SAUCE), [ingrediences])
+  const buns = ingrediences != null &&  ingrediences.filter((item) => item.type === BUN)
+  const mains = ingrediences != null &&  ingrediences.filter((item) => item.type === MAIN)
+  const sauces = ingrediences != null &&  ingrediences.filter((item) => item.type === SAUCE)
 
   const handleScroll = () => {
     const containerScroll = ingredientsContainer.current != null ? ingredientsContainer.current.getBoundingClientRect().top : 0
