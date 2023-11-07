@@ -4,21 +4,21 @@ import { ReactDOM } from "react"
 import styles from "./login.module.css"
 import { Link } from "react-router-dom"
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useDispatch, useSelector } from "react-redux"
+import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import { login } from "../../services/userDataSlice"
 import { useNavigate, useLocation } from "react-router-dom"
 
 export default function Login() {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const location = useLocation()
-  const error = useSelector((store) => store.userData.isError)
+  const error = useAppSelector((store) => store.userData.isError)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     await dispatch(login({email: email, password: password}))
     navigate(location.state.from || '/profile')

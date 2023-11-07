@@ -2,14 +2,14 @@ import React from "react"
 import styles from "./home.module.css"
 import BurgerIngredients from '../../components/BurgerIngredients/burger_ingredients'
 import BurgerConstructor from '../../components/BurgerConstructor/burger_constructor'
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector } from "../../services/hooks"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { DndProvider } from "react-dnd"
 
 
 function Home() {
   
-  const ingrediencesData = useSelector((state) => state.ingrediencesData)
+  const ingrediencesData = useAppSelector((state) => state.ingrediencesData)
   
   return (
     <DndProvider backend={HTML5Backend}>

@@ -3,19 +3,18 @@ import { ReactDOM } from "react"
 import styles from "./profile.module.css"
 import { NavLink } from "react-router-dom"
 import { useLocation } from "react-router-dom"
-import { Input } from "@ya.praktikum/react-developer-burger-ui-components"
 import { Outlet, useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import { useAppDispatch } from "../../services/hooks"
 import { logout } from "../../services/userDataSlice"
 
 export default function Profile() {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation().pathname
   const navigate = useNavigate()
   const [active, setActive] = useState(false)
 
-   function onLogout(e) {
+   function onLogout(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     setActive(true)
     e.preventDefault()
     dispatch(logout())

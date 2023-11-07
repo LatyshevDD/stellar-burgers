@@ -4,14 +4,14 @@ import { ReactDOM } from "react"
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './profile_form.module.css'
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useDispatch, useSelector } from "react-redux"
+import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import { changeUser } from "../../services/userDataSlice"
 
 export default function ProfileForm() {
 
-  const userData = useSelector(store => store.userData.user)
+  const userData = useAppSelector(store => store.userData.user)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const [name, setName] = useState({active: true, value: ''})
   const [login, setLogin] = useState({active: true, value:''})
@@ -20,34 +20,34 @@ export default function ProfileForm() {
 
   useEffect(
     () => {
-      setName({active: true, value: userData.name})
-      setLogin({active: true, value: userData.email})
+      setName({active: true, value: userData != null ? userData.name : ''})
+      setLogin({active: true, value: userData != null ? userData.email : ''})
     },
-    []
+    [userData]
   )
 
-  const nameRef = useRef(null)
-  const loginRef = useRef(null)
-  const passwordRef = useRef(null)
+  const nameRef = useRef<HTMLInputElement>(null)
+  const loginRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
 
   function handleNameIconClick() {
     setName({...name, active: !name.active})
     if (nameRef.current !== document.activeElement) {
-      setTimeout(() => nameRef.current.focus(), 100)
+      setTimeout(() => nameRef.current && nameRef.current.focus(), 100)
     } 
   }
 
   function handleLoginIconClick() {
     setLogin({...login, active: !login.active})
     if (loginRef.current !== document.activeElement) {
-      setTimeout(() => loginRef.current.focus(), 100)
+      setTimeout(() => loginRef.current && loginRef.current.focus(), 100)
     } 
   }
 
   function handlePasswordIconClick() {
     setPassword({...password, active: !password.active})
     if (passwordRef.current !== document.activeElement) {
-      setTimeout(() => passwordRef.current.focus(), 100)
+      setTimeout(() => passwordRef.current && passwordRef.current.focus(), 100)
     } 
   }
 
@@ -58,7 +58,7 @@ export default function ProfileForm() {
     setButtonsState(false)
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     dispatch(changeUser({name: name.value, login: login.value, password: password.value }))
   }

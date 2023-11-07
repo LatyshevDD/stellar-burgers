@@ -2,7 +2,6 @@ import React from "react"
 import { useState } from "react"
 import { ReactDOM } from "react"
 import styles from "./register.module.css"
-import AppHeader from "../../components/AppHeader/app_header"
 import { Link } from "react-router-dom"
 import { Input, Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
 import { registerRequest } from "../../utils/api"
@@ -13,7 +12,7 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     registerRequest({email: email, password: password, name: name});
   }

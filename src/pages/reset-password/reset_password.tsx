@@ -15,13 +15,13 @@ export default function ResetPassword() {
   const [error, setError] = useState({hasError: false, errorMessage: ''})
   const [success, setSuccess] = useState({hasSuccess: false, successMessage: ''})
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     try {
       const res = await resetPasswordRequest({password: password, token: token})
       setSuccess({hasSuccess: res.success, successMessage: res.message})
     } catch(e) {
-      setError({hasError: true, errorMessage: e})
+      setError({hasError: true, errorMessage: e as string})
     }
   }
 
