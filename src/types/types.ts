@@ -1,4 +1,4 @@
-import { ReactElement } from "react"
+import React, { ReactElement } from "react"
 import { RootState, AppDispatch } from "../services/store"
 
 export type IngredientType = {
@@ -32,6 +32,11 @@ export type ModalPropsType = {
 
 export type OrderPropsType = {
   order: WebSocketOrderType
+}
+
+export type ProtectedRoutePropsType = {
+  onlyUnAuth?: boolean, 
+  component: JSX.Element
 }
 
 export type OrderType = {

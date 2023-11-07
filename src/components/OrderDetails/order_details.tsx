@@ -1,11 +1,11 @@
 import styles from './order_details.module.css'
 import orderAccept from '../../images/order_accept.png'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../services/hooks'
 
 export default function OrderDetails() {
 
 
-  const orderNumber = useSelector((state) => state.orderData.order.number)
+  const orderNumber = useAppSelector((state) => state.orderData.order.number)
   
   return (
     <div className={styles.container}>
