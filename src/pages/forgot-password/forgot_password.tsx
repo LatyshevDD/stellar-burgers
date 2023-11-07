@@ -12,13 +12,13 @@ export default function ForgotPassword() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     try {
       await forgotPasswordRequest(email)
       navigate('/reset-password', {state:{from: location}})
     } catch (e) {
-      setError({hasError: true, errorMessage: e})
+      setError({hasError: true, errorMessage: e as string})
     }
   }
 
