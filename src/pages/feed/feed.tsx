@@ -1,18 +1,16 @@
 import React, {useEffect} from "react"
 import { ReactDOM } from "react"
 import styles from "./feed.module.css"
-import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { Outlet } from "react-router-dom"
 import { useLocation } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import Order from "../../components/Order/order"
 
 export default function Feed() {
 
-  const { orders, total, totalToday} = useSelector(state => state.feedData)
+  const { orders, total, totalToday} = useAppSelector(state => state.feedData)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation()
 
   useEffect(
