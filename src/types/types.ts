@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react"
 import { RootState, AppDispatch } from "../services/store"
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 
 export type IngredientType = {
   _id: string,
@@ -84,6 +85,17 @@ export type BurgerDataType = {
 export type sortIngredientsPayloadType = {
   dragIndex: number,
   dropIndex: number
+}
+
+// Websocket
+
+export interface WSConfigType {
+  onStart: string,
+  onStop: string,
+  onOpen: ActionCreatorWithPayload<string>,
+  onMessage: ActionCreatorWithPayload<SetWebSocketPayloadType>,
+  onClose: ActionCreatorWithPayload<string>,
+  onError: ActionCreatorWithPayload<string>,
 }
 
 export type WebSocketOrderType = {

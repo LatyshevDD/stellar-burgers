@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import ingrediencesDataSlice from './ingrediencesDataSlice'
 import burgerDataSlice from './burgerDataSlice'
 import orderDataSlice from './orderDataSlice'
@@ -13,16 +13,17 @@ import { setProfileOrdersSocketConnectionStatus, setProfileOrders, profileOrders
 
 
 
+const rootReducer = combineReducers({ 
+  ingrediencesData: ingrediencesDataSlice,
+  burgerData: burgerDataSlice,
+  orderData: orderDataSlice,
+  userData: userDataSlice,
+  feedData: feedDataSlice,
+  profileOrdersData: profileOrdersDataSlice,
+  })
 
 export const store = configureStore({
-  reducer: {
-    ingrediencesData: ingrediencesDataSlice,
-    burgerData: burgerDataSlice,
-    orderData: orderDataSlice,
-    userData: userDataSlice,
-    feedData: feedDataSlice,
-    profileOrdersData: profileOrdersDataSlice,
-  },
+  reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
       .concat(
         socketMiddleware({
@@ -45,6 +46,6 @@ export const store = configureStore({
 
 })
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof rootReducer>
 
 export type AppDispatch = typeof store.dispatch

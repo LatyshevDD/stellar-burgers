@@ -1,13 +1,17 @@
 import { checkOrdersIngredients } from "../utils/utils"
 import { refreshTokenRequest } from "../utils/api"
+import { WSConfigType } from "../types/types"
+import { RootState } from "./store"
+import { Middleware } from "redux"
 
-export const socketMiddleware = wsConfig => store => {
-  let socket = null
+
+export const socketMiddleware = (wsConfig: WSConfigType): Middleware<{}, RootState>  => store => {
+  let socket: WebSocket | null = null
   let isConnected = false
-  let reconnectTimer = 0;
+  let reconnectTimer = 0
   const { onStart, onStop, onOpen, onMessage, onClose, onError } = wsConfig
 
-  return next => action => {
+  return next=> action => {
     const { type, payload } = action
     const { dispatch } = store
     
@@ -30,7 +34,7 @@ export const socketMiddleware = wsConfig => store => {
 
       socket.onclose = event => {
         if (isConnected) {
-          reconnectTimer = setTimeout(() => {
+          reconnectTimer = window.setTimeout(() => {
             dispatch({type: onStart});
           }, 3000)
         }
@@ -43,7 +47,7 @@ export const socketMiddleware = wsConfig => store => {
       }
 
       socket.onerror = event => {
-        dispatch(onError(event.message))
+        dispatch(onError('Ошибка'))
       }
     
       socket.onmessage = event => {
@@ -55,9 +59,10 @@ export const socketMiddleware = wsConfig => store => {
                   localStorage.setItem("accessToken", res.accessToken);
                 })
                 .then((res) => {
+                  let token = localStorage.getItem('accessToken')
                   dispatch({
                   type: 'PROFILE_ORDERS_WS_CONNECTION_START', 
-                  payload: `wss://norma.nomoreparties.space/orders?token=${localStorage.getItem('accessToken').split('Bearer ')[1]}`})
+                  payload: `wss://norma.nomoreparties.space/orders?token=${token ? token.split('Bearer ')[1] : ''}`})
                 })
                 .catch((err) => {
                   return Promise.reject(err)
