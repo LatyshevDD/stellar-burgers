@@ -11,7 +11,7 @@ export default function IngredientDetails({fullScrin}: IngredientDetailsProps) {
   
   let ingredient: IngredientType | undefined
   
-  if (ingrediences.length > 0) {
+  if (ingrediences != null && ingrediences.length > 0) {
      ingredient = ingredientId !== undefined ? getIngredientById(ingrediences, ingredientId) : undefined
   }
 
